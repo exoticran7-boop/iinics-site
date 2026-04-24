@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>인덕티브 로터리 엔코더 - 아이닉스(INICS)</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    @font-face {
+      font-family: 'Noto Sans KR';
+      src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Oxanium';
+      src: url('oxanium-v21-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+  </style>
+
+  <style>
+    /* ════════════════════════════════════════════
+       인덕티브 로터리 엔코더 — ire-* 네임스페이스
+    ════════════════════════════════════════════ */
+    main { padding: 0 !important; }
+
+    :root {
+      --ire-bg:      #080c14;
+      --ire-grid:    rgba(0,180,255,0.04);
+      --ire-accent:  #00b4ff;
+      --ire-accent2: #0062cc;
+      --ire-gold:    #c8a84b;
+      --ire-purple:  #a78bfa;
+      --ire-text:    #e8edf5;
+      --ire-muted:   #6a7a92;
+      --ire-divider: rgba(0,180,255,0.16);
+      --ire-card:    rgba(13,20,32,0.90);
+    }
+
+    /* ── 배경 ── */
+    .ire-page {
+      background: var(--ire-bg);
+      color: var(--ire-text);
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 80vh;
+      position: relative; overflow: hidden;
+    }
+    .ire-page::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(var(--ire-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--ire-grid) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    .ire-page::after {
+      content: '';
+      position: absolute; top: -200px; right: -120px;
+      width: 750px; height: 650px;
+      background: radial-gradient(ellipse, rgba(100,60,200,0.16) 0%, transparent 70%);
+      z-index: 0; pointer-events: none;
+    }
+
+    /* ── 레이아웃 ── */
+    .ire-layout {
+      position: relative; z-index: 1;
+      max-width: 1260px; margin: 0 auto;
+      padding: 60px 40px 100px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      align-items: start;
+    }
+
+    /* ══════════════════
+       사이드바
+    ══════════════════ */
+    .ire-sidebar {
+      border-right: 1px solid var(--ire-divider);
+      padding-right: 32px;
+      position: sticky; top: 80px;
+    }
+    .ire-sidebar-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 12px; letter-spacing: 0.3em;
+      color: var(--ire-accent); text-transform: uppercase;
+      margin-bottom: 20px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--ire-divider);
+    }
+    .ire-nav { list-style: none; padding: 0; margin: 0; }
+    .ire-nav li { border-bottom: 1px solid rgba(0,180,255,0.07); }
+    .ire-nav li a {
+      display: block; padding: 12px 10px;
+      font-size: 13px; color: var(--ire-muted);
+      text-decoration: none; line-height: 1.5;
+      transition: color .25s, padding-left .25s, background .25s;
+      position: relative;
+    }
+    .ire-nav li a::before {
+      content: ''; position: absolute;
+      left: 0; top: 50%; transform: translateY(-50%);
+      width: 2px; height: 0;
+      background: var(--ire-accent); transition: height .25s;
+    }
+    .ire-nav li a:hover,
+    .ire-nav li a.active {
+      color: var(--ire-accent); padding-left: 18px;
+      background: rgba(0,180,255,0.04);
+    }
+    .ire-nav li a:hover::before,
+    .ire-nav li a.active::before { height: 60%; }
+    .ire-nav li a.active { font-weight: 600; }
+
+    /* ══════════════════
+       콘텐츠 영역
+    ══════════════════ */
+    .ire-content { padding-left: 52px; }
+
+    /* 브레드크럼 */
+    .ire-breadcrumb {
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: 0.18em;
+      color: var(--ire-muted); margin-bottom: 36px;
+      display: flex; align-items: center; gap: 10px;
+      animation: ire-up .7s ease both;
+    }
+    .ire-breadcrumb span { color: var(--ire-accent); }
+    .ire-breadcrumb::before { content: '//'; color: var(--ire-accent); opacity: .5; }
+
+    /* ── 제품 헤더 ── */
+    .ire-header {
+      border-bottom: 1px solid var(--ire-divider);
+      padding-bottom: 32px; margin-bottom: 40px;
+      animation: ire-up .7s .08s ease both;
+    }
+    .ire-series-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: 0.28em;
+      color: var(--ire-accent); text-transform: uppercase;
+      margin-bottom: 14px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .ire-series-tag::after { content: ''; width: 40px; height: 1px; background: var(--ire-accent); }
+    .ire-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: clamp(32px, 4.5vw, 60px);
+      font-weight: 900; line-height: 1.05;
+      color: #fff; letter-spacing: -0.01em;
+    }
+    .ire-title em { font-style: normal; color: var(--ire-accent); }
+    .ire-fullname {
+      margin-top: 10px; font-size: 15px; font-weight: 300;
+      color: rgba(232,237,245,.65); letter-spacing: .04em;
+    }
+    .ire-badges {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px;
+    }
+    .ire-badge {
+      font-family: 'Oxanium', monospace; font-size: 10px;
+      letter-spacing: .14em; padding: 5px 13px;
+      border: 1px solid var(--ire-divider);
+      color: var(--ire-muted); text-transform: uppercase;
+      background: rgba(0,180,255,.04);
+    }
+    .ire-badge.hl { border-color: var(--ire-accent); color: var(--ire-accent); background: rgba(0,180,255,.08); }
+    .ire-badge.pu { border-color: var(--ire-purple); color: var(--ire-purple); background: rgba(167,139,250,.07); }
+
+    /* ══════════════════════════════════
+       핵심 기술 3종 하이라이트 배너
+    ══════════════════════════════════ */
+    .ire-tech-banner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px; margin-bottom: 2px;
+      animation: ire-up .7s .14s ease both;
+    }
+    .ire-tech-item {
+      background: var(--ire-card);
+      border: 1px solid var(--ire-divider);
+      padding: 24px 20px 26px;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+      position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+    .ire-tech-item:hover { border-color: var(--ire-accent); transform: translateY(-3px); }
+    .ire-tech-item::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--ire-accent), var(--ire-accent2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .ire-tech-item:hover::before { transform: scaleX(1); }
+    .ire-tech-icon { width: 44px; height: 44px; margin-bottom: 14px; }
+    .ire-tech-icon svg { width: 100%; height: 100%; }
+    .ire-tech-ko {
+      font-size: 14px; font-weight: 600;
+      color: var(--ire-text); margin-bottom: 5px; line-height: 1.4;
+    }
+    .ire-tech-en {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .08em;
+      color: var(--ire-muted); line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════
+       제품 타입 3종 카드
+    ══════════════════════════════════ */
+    .ire-type-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .28em;
+      color: var(--ire-accent); text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+      animation: ire-up .7s .2s ease both;
+    }
+    .ire-type-label::after { content: ''; flex: 1; height: 1px; background: var(--ire-divider); }
+
+    .ire-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px; margin-bottom: 32px;
+      animation: ire-up .7s .24s ease both;
+    }
+    .ire-type-card {
+      background: var(--ire-card);
+      border: 1px solid var(--ire-divider);
+      overflow: hidden; position: relative;
+      display: flex; flex-direction: column;
+      transition: border-color .3s, transform .3s;
+    }
+    .ire-type-card:hover { border-color: var(--ire-accent); transform: translateY(-4px); }
+    .ire-type-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--ire-accent), var(--ire-accent2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .ire-type-card:hover::before { transform: scaleX(1); }
+
+    .ire-img-wrap {
+      width: 100%; aspect-ratio: 4/3;
+      background: #0b1220;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--ire-divider);
+    }
+    .ire-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: contain; padding: 20px;
+      transition: transform .4s ease;
+      filter: drop-shadow(0 0 16px rgba(0,180,255,.12));
+    }
+    .ire-type-card:hover .ire-img-wrap img { transform: scale(1.05); }
+
+    /* 이미지 플레이스홀더 */
+    .ire-img-ph {
+      width: 80px; height: 80px; opacity: .18;
+    }
+
+    .ire-type-body { padding: 20px 18px 24px; flex: 1; }
+    .ire-type-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .22em;
+      color: var(--ire-accent); text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+    .ire-type-name {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: #fff; line-height: 1.3; margin-bottom: 5px;
+    }
+    .ire-type-name-en {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; color: var(--ire-muted);
+      letter-spacing: .05em; margin-bottom: 12px; line-height: 1.5;
+    }
+    .ire-type-spec {
+      font-size: 12px; font-weight: 300;
+      color: rgba(232,237,245,.6); line-height: 1.85;
+    }
+    .ire-type-spec strong {
+      color: var(--ire-gold); font-weight: 600;
+      font-family: 'Oxanium', monospace;
+    }
+
+    /* ══════════════════════════════════
+       성능 스펙 카드 2×2
+    ══════════════════════════════════ */
+    .ire-perf-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .28em;
+      color: var(--ire-accent); text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+      animation: ire-up .7s .32s ease both;
+    }
+    .ire-perf-label::after { content: ''; flex: 1; height: 1px; background: var(--ire-divider); }
+
+    .ire-perf-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px; margin-bottom: 2px;
+      animation: ire-up .7s .36s ease both;
+    }
+    .ire-perf-card {
+      background: var(--ire-card);
+      border: 1px solid var(--ire-divider);
+      padding: 26px 24px 30px;
+      position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+    .ire-perf-card:hover { border-color: var(--ire-accent); transform: translateY(-3px); }
+    .ire-perf-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--ire-accent), var(--ire-accent2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .ire-perf-card:hover::before { transform: scaleX(1); }
+    .ire-perf-num {
+      font-family: 'Oxanium', monospace;
+      font-size: 62px; font-weight: 900;
+      color: rgba(0,180,255,.06);
+      position: absolute; top: 8px; right: 14px;
+      line-height: 1; user-select: none;
+    }
+    .ire-perf-icon { width: 36px; height: 36px; margin-bottom: 14px; }
+    .ire-perf-icon svg { width: 100%; height: 100%; }
+    .ire-perf-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .2em;
+      color: var(--ire-accent); text-transform: uppercase; margin-bottom: 7px;
+    }
+    .ire-perf-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: #fff; margin-bottom: 12px; line-height: 1.25;
+    }
+    .ire-perf-value {
+      font-family: 'Oxanium', monospace;
+      font-size: 24px; font-weight: 700;
+      color: var(--ire-gold); margin-bottom: 6px; line-height: 1.1;
+    }
+    .ire-perf-sub {
+      font-size: 12px; font-weight: 300;
+      color: rgba(232,237,245,.55); line-height: 1.8;
+    }
+
+    /* ══════════════════════════════════
+       출력 / 통신 인터페이스 테이블
+    ══════════════════════════════════ */
+    .ire-io-block {
+      background: var(--ire-card);
+      border: 1px solid var(--ire-divider);
+      margin-bottom: 2px;
+      animation: ire-up .7s .44s ease both;
+    }
+    .ire-io-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 26px;
+      border-bottom: 1px solid var(--ire-divider);
+      background: rgba(0,180,255,.025);
+    }
+    .ire-io-header-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .28em;
+      color: var(--ire-accent); text-transform: uppercase; white-space: nowrap;
+    }
+    .ire-io-line { flex: 1; height: 1px; background: var(--ire-divider); }
+
+    /* 출력 코드 행 */
+    .ire-code-row {
+      display: grid; grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--ire-divider);
+    }
+    .ire-code-row:last-child { border-bottom: none; }
+    .ire-code-left {
+      padding: 18px 24px;
+      border-right: 1px solid var(--ire-divider);
+      background: rgba(0,180,255,.02);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .ire-code-left svg { width: 28px; height: 28px; flex-shrink: 0; }
+    .ire-code-title {
+      font-family: 'Oxanium', monospace;
+      font-size: 11px; font-weight: 700;
+      color: var(--ire-accent); letter-spacing: .1em;
+    }
+    .ire-code-right {
+      padding: 18px 24px;
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    }
+    .ire-chip {
+      font-family: 'Oxanium', monospace;
+      font-size: 12px; font-weight: 700;
+      padding: 6px 16px;
+      border: 1px solid var(--ire-divider);
+      color: var(--ire-gold);
+      background: rgba(200,168,75,.06);
+      transition: border-color .25s, background .25s;
+    }
+    .ire-chip:hover { border-color: var(--ire-gold); background: rgba(200,168,75,.12); }
+    .ire-chip.blue { color: var(--ire-accent); background: rgba(0,180,255,.06); border-color: var(--ire-divider); }
+    .ire-chip.blue:hover { border-color: var(--ire-accent); }
+    .ire-chip.pu { color: var(--ire-purple); background: rgba(167,139,250,.06); border-color: rgba(167,139,250,.2); }
+    .ire-chip.pu:hover { border-color: var(--ire-purple); }
+
+    /* ══════════════════════════════════
+       응용 분야
+    ══════════════════════════════════ */
+    .ire-app-block {
+      background: var(--ire-card);
+      border: 1px solid var(--ire-divider);
+      padding: 22px 26px 26px;
+      margin-bottom: 2px;
+      animation: ire-up .7s .52s ease both;
+    }
+    .ire-app-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .28em;
+      color: var(--ire-accent); text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .ire-app-label::after { content: ''; flex: 1; height: 1px; background: var(--ire-divider); }
+    .ire-app-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .ire-app-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid rgba(0,180,255,.1);
+      background: rgba(0,180,255,.02);
+      transition: border-color .25s, background .25s;
+    }
+    .ire-app-item:hover { border-color: var(--ire-accent); background: rgba(0,180,255,.06); }
+    .ire-app-icon { width: 32px; height: 32px; flex-shrink: 0; }
+    .ire-app-icon svg { width: 100%; height: 100%; }
+    .ire-app-name { font-size: 13px; font-weight: 400; color: var(--ire-text); line-height: 1.4; }
+    .ire-app-en { font-family: 'Oxanium', monospace; font-size: 9px; color: var(--ire-muted); letter-spacing: .1em; margin-top: 2px; }
+
+    /* ══════════════════════════════════
+       출력 타입 (Incremental / Absolute)
+    ══════════════════════════════════ */
+    .ire-outtype-block {
+      background: var(--ire-card);
+      border: 1px solid var(--ire-divider);
+      padding: 22px 26px 26px;
+      margin-bottom: 2px;
+      animation: ire-up .7s .58s ease both;
+    }
+    .ire-outtype-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .28em;
+      color: var(--ire-accent); text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .ire-outtype-label::after { content: ''; flex: 1; height: 1px; background: var(--ire-divider); }
+    .ire-outtype-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .ire-outtype-item {
+      padding: 20px 18px;
+      border: 1px solid var(--ire-divider);
+      text-align: center;
+      background: rgba(0,180,255,.02);
+      transition: border-color .25s, background .25s;
+    }
+    .ire-outtype-item:hover { border-color: var(--ire-accent); background: rgba(0,180,255,.06); }
+    .ire-outtype-icon { width: 36px; height: 36px; margin: 0 auto 12px; }
+    .ire-outtype-icon svg { width: 100%; height: 100%; }
+    .ire-outtype-name {
+      font-family: 'Oxanium', monospace;
+      font-size: 12px; font-weight: 700;
+      color: var(--ire-accent); margin-bottom: 5px; letter-spacing: .08em;
+    }
+    .ire-outtype-desc {
+      font-size: 11px; font-weight: 300;
+      color: var(--ire-muted); line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════
+       스펙 요약 바
+    ══════════════════════════════════ */
+    .ire-spec-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--ire-divider);
+      border-top: none;
+      animation: ire-up .7s .64s ease both;
+    }
+    .ire-bar-item {
+      padding: 22px 16px; text-align: center;
+      border-right: 1px solid var(--ire-divider);
+    }
+    .ire-bar-item:last-child { border-right: none; }
+    .ire-bar-value {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--ire-accent); line-height: 1; margin-bottom: 6px;
+    }
+    .ire-bar-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .12em;
+      color: var(--ire-muted); text-transform: uppercase; line-height: 1.5;
+    }
+
+    /* ── CTA ── */
+    .ire-cta {
+      margin-top: 48px; padding: 28px 32px;
+      border: 1px solid var(--ire-divider);
+      background: rgba(0,100,200,.06);
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      animation: ire-up .7s .7s ease both;
+    }
+    .ire-cta-text { font-size: 14px; font-weight: 300; color: rgba(232,237,245,.7); line-height: 1.7; }
+    .ire-cta-text strong { color: var(--ire-text); font-weight: 600; }
+    .ire-cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 28px; background: var(--ire-accent); color: #000;
+      font-family: 'Oxanium', sans-serif; font-size: 14px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      text-decoration: none; transition: background .25s, transform .2s;
+      white-space: nowrap;
+    }
+    .ire-cta-btn:hover { background: #33c8ff; transform: translateY(-2px); }
+    .ire-cta-btn svg { width: 16px; height: 16px; }
+
+    /* ── 애니메이션 ── */
+    @keyframes ire-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════════════
+       모바일 반응형
+    ══════════════════════════════════ */
+    @media (max-width: 960px) {
+      .ire-layout { grid-template-columns: 1fr; padding: 36px 24px 70px; }
+      .ire-sidebar {
+        position: static; border-right: none;
+        border-bottom: 1px solid var(--ire-divider);
+        padding-right: 0; padding-bottom: 24px; margin-bottom: 32px;
+      }
+      .ire-nav { display: flex; flex-wrap: wrap; gap: 4px; }
+      .ire-nav li { border-bottom: none; }
+      .ire-nav li a { padding: 7px 12px; border: 1px solid var(--ire-divider); font-size: 12px; line-height: 1.4; }
+      .ire-nav li a::before { display: none; }
+      .ire-nav li a:hover, .ire-nav li a.active { padding-left: 12px; }
+      .ire-content { padding-left: 0; }
+
+      .ire-tech-banner { grid-template-columns: 1fr; gap: 2px; }
+      .ire-type-grid { grid-template-columns: 1fr; }
+      .ire-perf-grid { grid-template-columns: 1fr; }
+      .ire-code-row { grid-template-columns: 1fr; }
+      .ire-code-left { border-right: none; border-bottom: 1px solid var(--ire-divider); }
+      .ire-app-grid { grid-template-columns: 1fr 1fr; }
+      .ire-outtype-grid { grid-template-columns: 1fr; gap: 2px; }
+      .ire-spec-bar { grid-template-columns: repeat(2, 1fr); }
+      .ire-bar-item:nth-child(2) { border-right: none; }
+      .ire-bar-item:nth-child(3),
+      .ire-bar-item:nth-child(4) { border-top: 1px solid var(--ire-divider); }
+    }
+
+    @media (max-width: 700px) {
+      .ire-tech-banner { grid-template-columns: 1fr; }
+      .ire-app-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 540px) {
+      .ire-layout { padding: 28px 16px 60px; }
+      .ire-title { font-size: clamp(26px, 7.5vw, 44px); }
+      .ire-outtype-grid { grid-template-columns: 1fr; }
+      .ire-spec-bar { grid-template-columns: repeat(2, 1fr); }
+      .ire-cta { flex-direction: column; align-items: flex-start; padding: 20px; }
+      .ire-cta-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════
+       HEADER
+  ════════════════════════ -->
+  <header>
+    <h1>
+      <a href="index.html"><img src="logo.png" alt="아이닉스 로고" height="60" /></a>
+    </h1>
+    <nav>
+      <ul>
+        <li>
+          <a href="product0.html">Product</a>
+          <ul class="submenu">
+            <li><a href="product1.html">프로그래머블 고속 카운터 타이머</a></li>
+            <li><a href="product2.html">에어리어센서</a></li>
+            <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="product6.html" class="active">인덕티브 로터리 엔코더</a></li>
+            <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="product8.html">엔코더 전용 카운터</a></li>
+            <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+          </ul>
+        </li>
+
+       <li><a href="manu0.html">Manual</a>
+            <ul class="submenu">
+            <li><a href="manu1.html">프로그래머블<br>고속 카운터 타이머</a></li>
+            <li><a href="manu2.html">에어리어센서</a></li>
+            <li><a href="manu3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="manu4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="manu5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="manu6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="manu7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="manu8.html">엔코더 전용 카운터</a></li>
+        </ul>
+        </li>
+
+        <li><a href="#">Customer Service</a></li>
+        <li><a href="#">Notice</a></li>
+        <li>
+          <a href="about.html">Company</a>
+          <ul class="submenu">
+            <li><a href="about.html">회사소개</a></li>
+            <li><a href="timeline.html">제품 개발 타임라인</a></li>
+            <li><a href="location.html">오시는 길</a></li>
+          </ul>
+        <li>
+            <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+              </li>
+    </nav>
+  </header>
+
+  <!-- ════════════════════════
+       MAIN
+  ════════════════════════ -->
+  <main>
+    <div class="ire-page">
+      <div class="ire-layout">
+
+        <!-- ══ 사이드바 ══ -->
+        <aside class="ire-sidebar">
+          <div class="ire-sidebar-label">Product Line-up</div>
+          <ul class="ire-nav">
+            <li><a href="product1.html">프로그래머블<br>고속 카운터 타이머</a></li>
+            <li><a href="product2.html">에어리어센서</a></li>
+            <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="product6.html" class="active">인덕티브 로터리 엔코더</a></li>
+            <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="product8.html">엔코더 전용 카운터</a></li>
+            <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+          </ul>
+        </aside>
+
+        <!-- ══ 콘텐츠 ══ -->
+        <div class="ire-content">
+
+          <!-- 브레드크럼 -->
+          <div class="ire-breadcrumb">
+            Product &nbsp;/&nbsp; <span>인덕티브 로터리 엔코더</span>
+          </div>
+
+          <!-- ── 제품 헤더 ── -->
+          <div class="ire-header">
+            <div class="ire-series-tag">INICS · IA Series</div>
+            <h2 class="ire-title"> <em>인덕티브</em> 로터리 엔코더</h2>
+            <p class="ire-fullname"> Inductive Rotary Encoder &nbsp;|&nbsp; IA Series</p>
+            <div class="ire-badges">
+              <span class="ire-badge hl">Inductive Scanning</span>
+              <span class="ire-badge hl">자기장 무영향</span>
+              <span class="ire-badge hl">초고정밀</span>
+              <span class="ire-badge pu">16bit Single-turn</span>
+              <span class="ire-badge pu">23bit Multi-turn</span>
+              <span class="ire-badge">SSI / Parallel</span>
+              <span class="ire-badge hl">CE CERTIFIED</span>
+            </div>
+          </div>
+
+ <!-- ══ 제품 타입 3종 ══ -->
+          <div class="ire-type-label">제품 타입 · Product Types</div>
+          <div class="ire-type-grid">
+
+            <!-- 중공축 -->
+            <div class="ire-type-card">
+              <div class="ire-img-wrap">
+                <img src="IA중공축.png" alt="인덕티브 중공축 엔코더"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+                <svg class="ire-img-ph" style="display:none;" viewBox="0 0 80 80" fill="none">
+                  <circle cx="40" cy="40" r="30" stroke="#00b4ff" stroke-width="1.5"/>
+                  <circle cx="40" cy="40" r="14" stroke="#00b4ff" stroke-width="1.5"/>
+                  <circle cx="40" cy="40" r="6"  stroke="#c8a84b" stroke-width="1.5"/>
+                  <line x1="40" y1="10" x2="40" y2="26" stroke="#00b4ff" stroke-width="1.2"/>
+                  <line x1="40" y1="54" x2="40" y2="70" stroke="#00b4ff" stroke-width="1.2"/>
+                  <line x1="10" y1="40" x2="26" y2="40" stroke="#00b4ff" stroke-width="1.2"/>
+                  <line x1="54" y1="40" x2="70" y2="40" stroke="#00b4ff" stroke-width="1.2"/>
+                </svg>
+              </div>
+              <div class="ire-type-body">
+                <div class="ire-type-tag">Type 01 · Hollow Shaft</div>
+                <div class="ire-type-name"> 중공축 타입</div>
+                <div class="ire-type-name-en">Inductive Hollow Shaft Encoder</div>
+                <div class="ire-type-spec">
+                  외경 &nbsp;<strong>Ø 40 mm</strong> / <strong>Ø 50 mm</strong><br>
+                  축 외경 &nbsp;<strong>Ø 6 mm</strong> / <strong>Ø 8 mm</strong><br>
+                  좁은 공간 설치 · 관성 모멘트 최소화
+                </div>
+              </div>
+            </div>
+
+            <!-- 빌트인 -->
+            <div class="ire-type-card">
+              <div class="ire-img-wrap">
+                <img src="IA빌트인.png" alt="인덕티브 빌트인 엔코더"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+                <svg class="ire-img-ph" style="display:none;" viewBox="0 0 80 80" fill="none">
+                  <rect x="15" y="15" width="50" height="50" rx="4" stroke="#00b4ff" stroke-width="1.5"/>
+                  <circle cx="40" cy="40" r="14" stroke="#00b4ff" stroke-width="1.5"/>
+                  <circle cx="40" cy="40" r="6"  stroke="#c8a84b" stroke-width="1.5"/>
+                  <line x1="40" y1="26" x2="40" y2="15" stroke="#00b4ff" stroke-width="1.2"/>
+                  <line x1="40" y1="54" x2="40" y2="65" stroke="#00b4ff" stroke-width="1.2"/>
+                </svg>
+              </div>
+              <div class="ire-type-body">
+                <div class="ire-type-tag">Type 02 · Built-in</div>
+                <div class="ire-type-name"> 빌트인 타입</div>
+                <div class="ire-type-name-en">Inductive Built-in Type Encoder</div>
+                <div class="ire-type-spec">
+                  외경 &nbsp;<strong>Ø 40 mm</strong>/ <strong>Ø 50 mm</strong><br>
+                  축 외경 &nbsp;<strong>Ø 6 mm</strong> / <strong>Ø 8 mm</strong><br>
+                  내장형 구조 · 콤팩트 설치
+                </div>
+              </div>
+            </div>
+
+            <!-- 샤프트 -->
+            <div class="ire-type-card">
+              <div class="ire-img-wrap">
+                <img src="IA샤프트.png" alt="인덕티브 샤프트 엔코더"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+                <svg class="ire-img-ph" style="display:none;" viewBox="0 0 80 80" fill="none">
+                  <circle cx="40" cy="42" r="26" stroke="#00b4ff" stroke-width="1.5"/>
+                  <circle cx="40" cy="42" r="10" stroke="#00b4ff" stroke-width="1.5"/>
+                  <line x1="40" y1="6"  x2="40" y2="16" stroke="#c8a84b" stroke-width="3" stroke-linecap="round"/>
+                  <line x1="40" y1="16" x2="40" y2="30" stroke="#6a7a92" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="ire-type-body">
+                <div class="ire-type-tag">Type 03 · Shaft</div>
+                <div class="ire-type-name">샤프트 타입</div>
+                <div class="ire-type-name-en">Inductive Shaft Type Encoder</div>
+                <div class="ire-type-spec">
+                  외경 &nbsp;<strong>Ø 40 mm</strong>/ <strong>Ø 50 mm</strong><br>
+                  축 외경 &nbsp;<strong>Ø 6 mm</strong>/ <strong>Ø 8 mm</strong><br>
+                  표준 샤프트 타입 · 범용 산업 적용
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /ire-type-grid -->
+
+
+          <!-- ══ 핵심 기술 3종 배너 ══ -->
+          <div class="ire-tech-banner">
+
+            <!-- Inductive Scanning -->
+            <div class="ire-tech-item">
+              <div class="ire-tech-icon">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="22" cy="22" r="16" stroke="#00b4ff" stroke-width="1.6"/>
+                  <circle cx="22" cy="22" r="9"  stroke="#00b4ff" stroke-width="1.2" stroke-dasharray="3 2"/>
+                  <circle cx="22" cy="22" r="4"  fill="#00b4ff" opacity=".5"/>
+                  <path d="M6 22 Q14 10 22 22 Q30 34 38 22" stroke="#a78bfa" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+                  <path d="M6 22 Q14 34 22 22 Q30 10 38 22" stroke="#a78bfa" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".5"/>
+                </svg>
+              </div>
+              <div class="ire-tech-ko">Inductive Scanning 기술</div>
+              <div class="ire-tech-en">Inductive scanning technology<br>전자기 유도 방식 비접촉 검출</div>
+            </div>
+
+            <!-- 자기장 무영향 -->
+            <div class="ire-tech-item">
+              <div class="ire-tech-icon">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="22" cy="22" r="16" stroke="#00b4ff" stroke-width="1.6"/>
+                  <!-- 자석 표시 -->
+                  <path d="M12 16 Q12 28 22 28 Q32 28 32 16" stroke="#c8a84b" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                  <line x1="12" y1="16" x2="12" y2="12" stroke="#c8a84b" stroke-width="1.4" stroke-linecap="round"/>
+                  <line x1="32" y1="16" x2="32" y2="12" stroke="#c8a84b" stroke-width="1.4" stroke-linecap="round"/>
+                  <!-- 차단 X -->
+                  <line x1="12" y1="12" x2="32" y2="32" stroke="#00b4ff" stroke-width="1.8" stroke-linecap="round" opacity=".7"/>
+                  <line x1="32" y1="12" x2="12" y2="32" stroke="#00b4ff" stroke-width="1.8" stroke-linecap="round" opacity=".7"/>
+                </svg>
+              </div>
+              <div class="ire-tech-ko">외부 자기장에 영향 없음</div>
+              <div class="ire-tech-en">Not affected by external magnetic fields<br>강자성체 환경에서도 안정 동작</div>
+            </div>
+
+            <!-- 초고정밀 -->
+            <div class="ire-tech-item">
+              <div class="ire-tech-icon">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="22" cy="22" r="16" stroke="#00b4ff" stroke-width="1.6"/>
+                  <path d="M22 8 L24 18 L22 16 L20 18 Z" fill="#c8a84b"/>
+                  <line x1="22" y1="16" x2="22" y2="26" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="22" cy="26" r="2.5" fill="#00b4ff"/>
+                  <line x1="22" y1="6" x2="22" y2="10" stroke="#00b4ff" stroke-width="1.2"/>
+                  <line x1="22" y1="34" x2="22" y2="38" stroke="#00b4ff" stroke-width="1.2"/>
+                  <line x1="6"  y1="22" x2="10" y2="22" stroke="#00b4ff" stroke-width="1.2"/>
+                  <line x1="34" y1="22" x2="38" y2="22" stroke="#00b4ff" stroke-width="1.2"/>
+                </svg>
+              </div>
+              <div class="ire-tech-ko">정밀도가 매우 높다</div>
+              <div class="ire-tech-en">Extremely high precision<br>최대 싱글턴 16bit · 멀티턴 23bit</div>
+            </div>
+
+          </div><!-- /ire-tech-banner -->
+
+        
+
+          <!-- ══ 성능 스펙 2×2 ══ -->
+          <div class="ire-perf-label">성능 사양 · Performance Specifications</div>
+          <div class="ire-perf-grid">
+
+            <!-- 분해능 -->
+            <div class="ire-perf-card">
+              <div class="ire-perf-num">01</div>
+              <div class="ire-perf-icon">
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="18" cy="18" r="13" stroke="#00b4ff" stroke-width="1.5"/>
+                  <circle cx="18" cy="18" r="7"  stroke="#a78bfa" stroke-width="1.3" stroke-dasharray="2.5 2"/>
+                  <circle cx="18" cy="18" r="2.5" fill="#c8a84b"/>
+                  <line x1="18" y1="5"  x2="18" y2="9"  stroke="#00b4ff" stroke-width="1.4" stroke-linecap="round"/>
+                  <line x1="18" y1="27" x2="18" y2="31" stroke="#00b4ff" stroke-width="1.4" stroke-linecap="round"/>
+                  <line x1="5"  y1="18" x2="9"  y2="18" stroke="#00b4ff" stroke-width="1.4" stroke-linecap="round"/>
+                  <line x1="27" y1="18" x2="31" y2="18" stroke="#00b4ff" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="ire-perf-tag">Resolution · 분해능</div>
+              <div class="ire-perf-title">최대 분해능</div>
+              <div class="ire-perf-value">16bit / 23bit</div>
+              <div class="ire-perf-sub">
+                싱글턴 (Single-turn) : <strong style="color:var(--ire-gold);font-family:'Oxanium',monospace;">최대 16 bit</strong><br>
+                멀티턴 (Multi-turn)  : <strong style="color:var(--ire-gold);font-family:'Oxanium',monospace;">최대 23 bit</strong>
+              </div>
+            </div>
+
+            <!-- 응답 주파수 -->
+            <div class="ire-perf-card">
+              <div class="ire-perf-num">02</div>
+              <div class="ire-perf-icon">
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 22 L9 22 L12 10 L16 28 L20 14 L23 22 L32 22" stroke="#00b4ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  <line x1="4" y1="26" x2="32" y2="26" stroke="#00b4ff" stroke-width="1" opacity=".3"/>
+                </svg>
+              </div>
+              <div class="ire-perf-tag">Response Frequency</div>
+              <div class="ire-perf-title">최대 응답 주파수</div>
+              <div class="ire-perf-value">30 kHz</div>
+              <div class="ire-perf-sub">Maximum response frequency of 30kHz<br>고속 회전 정밀 계측 가능</div>
+            </div>
+
+            <!-- 외경 40mm -->
+            <div class="ire-perf-card">
+              <div class="ire-perf-num">03</div>
+              <div class="ire-perf-icon">
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="18" cy="18" r="13" stroke="#00b4ff" stroke-width="1.5"/>
+                  <circle cx="18" cy="18" r="5"  stroke="#c8a84b" stroke-width="1.3"/>
+                  <line x1="5"  y1="18" x2="31" y2="18" stroke="#00b4ff" stroke-width="1" stroke-dasharray="2 1.5" opacity=".5"/>
+                  <line x1="5"  y1="16" x2="5"  y2="20" stroke="#c8a84b" stroke-width="1.2"/>
+                  <line x1="31" y1="16" x2="31" y2="20" stroke="#c8a84b" stroke-width="1.2"/>
+                </svg>
+              </div>
+              <div class="ire-perf-tag">Outer Diameter · 외경</div>
+              <div class="ire-perf-title">제품 외경 Ø40mm</div>
+              <div class="ire-perf-value">Ø 40 mm</div>
+              <div class="ire-perf-sub">축 외경 Ø8mm 또는 Ø6mm<br>중공축 · 빌트인 타입 공통 적용</div>
+            </div>
+
+            <!-- 외경 50mm -->
+            <div class="ire-perf-card">
+              <div class="ire-perf-num">04</div>
+              <div class="ire-perf-icon">
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="18" cy="18" r="14" stroke="#00b4ff" stroke-width="1.5"/>
+                  <circle cx="18" cy="18" r="5"  stroke="#c8a84b" stroke-width="1.3"/>
+                  <line x1="4"  y1="18" x2="32" y2="18" stroke="#00b4ff" stroke-width="1" stroke-dasharray="2 1.5" opacity=".5"/>
+                  <line x1="4"  y1="16" x2="4"  y2="20" stroke="#c8a84b" stroke-width="1.2"/>
+                  <line x1="32" y1="16" x2="32" y2="20" stroke="#c8a84b" stroke-width="1.2"/>
+                </svg>
+              </div>
+              <div class="ire-perf-tag">Outer Diameter · 외경</div>
+              <div class="ire-perf-title">제품 외경 Ø50mm</div>
+              <div class="ire-perf-value">Ø 50 mm</div>
+              <div class="ire-perf-sub">축 외경 Ø8mm<br>샤프트 타입 적용</div>
+            </div>
+
+          </div><!-- /ire-perf-grid -->
+
+          <!-- ══ 출력 코드 / 통신 인터페이스 ══ -->
+          <div class="ire-io-block">
+            <div class="ire-io-header">
+              <div class="ire-io-header-label">출력 코드 &amp; 통신 인터페이스 · Output &amp; Communication</div>
+              <div class="ire-io-line"></div>
+            </div>
+
+            <!-- 출력 코드 -->
+            <div class="ire-code-row">
+              <div class="ire-code-left">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="6" width="24" height="16" rx="2" stroke="#00b4ff" stroke-width="1.4"/>
+                  <text x="14" y="18" font-family="monospace" font-size="8" fill="#00b4ff" text-anchor="middle">CODE</text>
+                </svg>
+                <div class="ire-code-title">출력 코드</div>
+              </div>
+              <div class="ire-code-right">
+                <span class="ire-chip">Binary</span>
+                <span class="ire-chip">Gray</span>
+                <span class="ire-chip">BCD</span>
+              </div>
+            </div>
+
+            <!-- 통신 인터페이스 -->
+            <div class="ire-code-row">
+              <div class="ire-code-left">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="8" width="10" height="12" rx="1.5" stroke="#00b4ff" stroke-width="1.4"/>
+                  <rect x="16" y="8" width="10" height="12" rx="1.5" stroke="#c8a84b" stroke-width="1.4"/>
+                  <line x1="12" y1="11" x2="16" y2="11" stroke="#00b4ff" stroke-width="1.1" stroke-dasharray="1.5 1"/>
+                  <line x1="12" y1="14" x2="16" y2="14" stroke="#00b4ff" stroke-width="1.1" stroke-dasharray="1.5 1"/>
+                  <line x1="12" y1="17" x2="16" y2="17" stroke="#00b4ff" stroke-width="1.1" stroke-dasharray="1.5 1"/>
+                </svg>
+                <div class="ire-code-title">통신 &amp; 출력</div>
+              </div>
+              <div class="ire-code-right">
+                <span class="ire-chip blue">SSI 통신</span>
+                <span class="ire-chip blue">Parallel 출력</span>
+              </div>
+            </div>
+
+            <!-- 출력 타입 -->
+            <div class="ire-code-row">
+              <div class="ire-code-left">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="14" cy="14" r="10" stroke="#a78bfa" stroke-width="1.4"/>
+                  <path d="M14 6 A8 8 0 1 1 6 14" stroke="#a78bfa" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+                  <polygon points="4,10 8,16 12,10" fill="#a78bfa" opacity=".8"/>
+                </svg>
+                <div class="ire-code-title" style="color:var(--ire-purple);">출력 타입</div>
+              </div>
+              <div class="ire-code-right">
+                <span class="ire-chip pu">인크리멘탈</span>
+                <span class="ire-chip pu">싱글턴 앱솔루트</span>
+                <span class="ire-chip pu">멀티턴 앱솔루트</span>
+              </div>
+            </div>
+
+          </div><!-- /ire-io-block -->
+
+          <!-- ══ 응용 분야 ══ -->
+          <div class="ire-app-block">
+            <div class="ire-app-label">응용 분야 · Applications</div>
+            <div class="ire-app-grid">
+
+              <!-- 로봇 -->
+              <div class="ire-app-item">
+                <div class="ire-app-icon">
+                  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="9" y="12" width="14" height="13" rx="2" stroke="#00b4ff" stroke-width="1.4"/>
+                    <rect x="12" y="7" width="8" height="5" rx="1" stroke="#00b4ff" stroke-width="1.4"/>
+                    <circle cx="13" cy="18" r="1.5" fill="#00b4ff"/>
+                    <circle cx="19" cy="18" r="1.5" fill="#00b4ff"/>
+                    <line x1="9"  y1="21" x2="4"  y2="21" stroke="#00b4ff" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="23" y1="21" x2="28" y2="21" stroke="#00b4ff" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="13" y1="25" x2="13" y2="29" stroke="#c8a84b" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="19" y1="25" x2="19" y2="29" stroke="#c8a84b" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="ire-app-name">로봇</div>
+                  <div class="ire-app-en">Robot</div>
+                </div>
+              </div>
+
+              <!-- 드론 -->
+              <div class="ire-app-item">
+                <div class="ire-app-icon">
+                  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="4" stroke="#00b4ff" stroke-width="1.4"/>
+                    <line x1="16" y1="12" x2="16" y2="6"  stroke="#00b4ff" stroke-width="1.2"/>
+                    <line x1="16" y1="20" x2="16" y2="26" stroke="#00b4ff" stroke-width="1.2"/>
+                    <line x1="12" y1="16" x2="6"  y2="16" stroke="#00b4ff" stroke-width="1.2"/>
+                    <line x1="20" y1="16" x2="26" y2="16" stroke="#00b4ff" stroke-width="1.2"/>
+                    <ellipse cx="6"  cy="6"  rx="4" ry="2" stroke="#c8a84b" stroke-width="1.2"/>
+                    <ellipse cx="26" cy="6"  rx="4" ry="2" stroke="#c8a84b" stroke-width="1.2"/>
+                    <ellipse cx="6"  cy="26" rx="4" ry="2" stroke="#c8a84b" stroke-width="1.2"/>
+                    <ellipse cx="26" cy="26" rx="4" ry="2" stroke="#c8a84b" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="ire-app-name">드론</div>
+                  <div class="ire-app-en">Drone</div>
+                </div>
+              </div>
+
+              <!-- 자동차 -->
+              <div class="ire-app-item">
+                <div class="ire-app-icon">
+                  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 18 L8 12 L24 12 L28 18 L28 22 L4 22 Z" stroke="#00b4ff" stroke-width="1.4" fill="rgba(0,180,255,0.05)" stroke-linejoin="round"/>
+                    <circle cx="9"  cy="23" r="3" stroke="#c8a84b" stroke-width="1.4"/>
+                    <circle cx="23" cy="23" r="3" stroke="#c8a84b" stroke-width="1.4"/>
+                    <line x1="12" y1="12" x2="14" y2="18" stroke="#00b4ff" stroke-width="1" opacity=".5"/>
+                    <line x1="20" y1="12" x2="18" y2="18" stroke="#00b4ff" stroke-width="1" opacity=".5"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="ire-app-name">자동차</div>
+                  <div class="ire-app-en">Motor Vehicle</div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- /ire-app-block -->
+
+          <!-- ══ 스펙 요약 바 ══ -->
+          <div class="ire-spec-bar">
+            <div class="ire-bar-item">
+              <div class="ire-bar-value">3 Type</div>
+              <div class="ire-bar-label">제품 타입<br>Product Types</div>
+            </div>
+            <div class="ire-bar-item">
+              <div class="ire-bar-value">23bit</div>
+              <div class="ire-bar-label">멀티턴 최대<br>Multi-turn Max</div>
+            </div>
+            <div class="ire-bar-item">
+              <div class="ire-bar-value">30kHz</div>
+              <div class="ire-bar-label">응답 주파수<br>Response Freq.</div>
+            </div>
+            <div class="ire-bar-item">
+              <div class="ire-bar-value">SSI</div>
+              <div class="ire-bar-label">통신 방식<br>Communication</div>
+            </div>
+          </div>
+
+          <!-- ══ CTA ══ -->
+          
+
+        </div><!-- /ire-content -->
+      </div><!-- /ire-layout -->
+    </div><!-- /ire-page -->
+  </main>
+
+  
+
+</body>
+</html>
