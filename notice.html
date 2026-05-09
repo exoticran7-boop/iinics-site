@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공지사항 - 아이닉스(INICS)</title>
+
+  <style>
+    @font-face {
+      font-family: 'Noto Sans KR';
+      src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Oxanium';
+      src: url('oxanium-v21-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+  </style>
+
+  <style>
+    /* ════════════════════════════════════════
+       공지사항 페이지 — ntc-* 네임스페이스
+       배경: 흰색, 대표색: 주황색, 회색→검정
+    ════════════════════════════════════════ */
+    main { padding: 0 !important; }
+
+    :root {
+      --ntc-bg:      #ffffff;
+      --ntc-accent:  #f07000;
+      --ntc-accent2: #c75a00;
+      --ntc-gold:    #c8a84b;
+      --ntc-green:   #1a8a5a;
+      --ntc-red:     #d63030;
+      --ntc-text:    #111111;
+      --ntc-muted:   #000000;
+      --ntc-divider: rgba(240,112,0,0.22);
+      --ntc-card:    #f9f5f0;
+      --ntc-input:   #fff8f2;
+    }
+
+    body {
+      background: #ffffff;
+      color: #111111;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    /* ── 헤더 (기존 style.css 없으므로 간단히 재현) ── */
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 72px;
+      background: #ffffff;
+      border-bottom: 2px solid var(--ntc-accent);
+      position: sticky; top: 0; z-index: 200;
+      box-shadow: 0 2px 12px rgba(240,112,0,0.10);
+    }
+    header h1 { margin: 0; }
+    header h1 a { text-decoration: none; display: flex; align-items: center; }
+    header h1 a img { height: 44px; }
+    header nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; }
+    header nav > ul > li { position: relative; }
+    header nav > ul > li > a {
+      display: block; padding: 10px 14px;
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; font-weight: 600; letter-spacing: .10em; text-transform: uppercase;
+      color: #111111; text-decoration: none;
+      transition: color .2s;
+    }
+    header nav > ul > li > a:hover,
+    header nav > ul > li > a.active { color: var(--ntc-accent); }
+    header nav > ul > li > a.shop-link {
+      background: var(--ntc-accent); color: #fff; padding: 8px 16px;
+    }
+    header nav > ul > li > a.shop-link:hover { background: var(--ntc-accent2); color: #fff; }
+    .submenu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: #fff; border: 1px solid var(--ntc-divider);
+      min-width: 200px; list-style: none; padding: 6px 0; margin: 0;
+      box-shadow: 0 8px 24px rgba(240,112,0,0.10);
+      z-index: 300;
+    }
+    header nav > ul > li:hover .submenu { display: block; }
+    .submenu li a {
+      display: block; padding: 9px 18px;
+      font-size: 13px; color: #111111; text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .submenu li a:hover { background: #fff5ec; color: var(--ntc-accent); }
+
+    .ntc-page {
+      background: var(--ntc-bg);
+      color: var(--ntc-text);
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 80vh;
+      position: relative; overflow: hidden;
+    }
+
+    .ntc-layout {
+      position: relative; z-index: 1;
+      max-width: 1260px; margin: 0 auto;
+      padding: 60px 40px 100px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      align-items: start;
+    }
+
+    /* ── 사이드바 ── */
+    
+
+    .ntc-sidebar {
+      border-right: 1px solid var(--ntc-divider);
+      padding-right: 32px; position: sticky; top: 90px;
+    }
+    .ntc-sidebar-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .3em;
+      color: var(--ntc-accent); text-transform: uppercase;
+      margin-bottom: 20px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--ntc-divider);
+    }
+
+    /* 관리자 로그인 버튼 */
+    .ntc-admin-btn {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; padding: 10px 14px; margin-top: 20px;
+      background: rgba(240,112,0,.07);
+      border: 1px solid var(--ntc-divider);
+      color: #000000;
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+      cursor: pointer; transition: all .25s;
+    }
+    .ntc-admin-btn:hover { border-color: var(--ntc-accent); color: var(--ntc-accent); background: rgba(240,112,0,.12); }
+    .ntc-admin-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .ntc-admin-btn.logged { border-color: var(--ntc-green); color: var(--ntc-green); background: rgba(26,138,90,.07); }
+    .ntc-admin-btn.logged:hover { background: rgba(26,138,90,.14); }
+
+    /* ── 콘텐츠 ── */
+    .ntc-content { padding-left: 52px; }
+
+    .ntc-breadcrumb {
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: .18em;
+      color: #000000; margin-bottom: 36px;
+      display: flex; align-items: center; gap: 10px;
+      animation: ntc-up .7s ease both;
+    }
+    .ntc-breadcrumb span { color: var(--ntc-accent); }
+    .ntc-breadcrumb::before { content: '//'; color: var(--ntc-accent); opacity: .6; }
+
+    .ntc-header {
+      border-bottom: 1px solid var(--ntc-divider);
+      padding-bottom: 28px; margin-bottom: 36px;
+      animation: ntc-up .7s .08s ease both;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    }
+    .ntc-series-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: .28em;
+      color: var(--ntc-accent); text-transform: uppercase;
+      margin-bottom: 14px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .ntc-series-tag::after { content: ''; width: 40px; height: 1px; background: var(--ntc-accent); }
+    .ntc-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: clamp(28px, 4vw, 50px);
+      font-weight: 900; line-height: 1.05;
+      color: #111111; letter-spacing: -.01em;
+    }
+    .ntc-title em { font-style: normal; color: var(--ntc-accent); }
+    .ntc-subtitle {
+      margin-top: 8px; font-size: 14px; font-weight: 300;
+      color: #333333; letter-spacing: .04em;
+    }
+
+    /* 글쓰기 버튼 (관리자) */
+    .ntc-write-btn {
+      display: none;
+      align-items: center; gap: 8px;
+      padding: 11px 22px;
+      background: var(--ntc-accent); color: #fff;
+      font-family: 'Oxanium', monospace;
+      font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: background .25s, transform .2s;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .ntc-write-btn:hover { background: var(--ntc-accent2); transform: translateY(-2px); }
+    .ntc-write-btn svg { width: 14px; height: 14px; }
+    .ntc-write-btn.visible { display: inline-flex; }
+
+    /* ════════════════════════════════════
+       글쓰기 폼 (관리자 전용)
+    ════════════════════════════════════ */
+    .ntc-form-wrap {
+      display: none;
+      background: var(--ntc-card);
+      border: 1px solid var(--ntc-divider);
+      padding: 28px 28px 32px;
+      margin-bottom: 32px;
+      position: relative; overflow: hidden;
+      animation: ntc-up .4s ease both;
+    }
+    .ntc-form-wrap::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--ntc-accent), var(--ntc-accent2));
+    }
+    .ntc-form-wrap.open { display: block; }
+
+    .ntc-form-title {
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: .26em;
+      color: var(--ntc-accent); text-transform: uppercase;
+      margin-bottom: 22px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .ntc-form-title::after { content: ''; flex: 1; height: 1px; background: var(--ntc-divider); }
+
+    .ntc-form-group { margin-bottom: 18px; }
+    .ntc-form-label {
+      display: block;
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+      color: #000000; margin-bottom: 8px;
+    }
+    .ntc-form-label span { color: var(--ntc-red); margin-left: 3px; }
+
+    .ntc-input, .ntc-textarea {
+      width: 100%; padding: 12px 16px;
+      background: var(--ntc-input);
+      border: 1px solid var(--ntc-divider);
+      color: #111111;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .25s;
+      box-sizing: border-box;
+    }
+    .ntc-input:focus, .ntc-textarea:focus { border-color: var(--ntc-accent); }
+    .ntc-input::placeholder, .ntc-textarea::placeholder { color: #555555; }
+    .ntc-textarea { min-height: 180px; resize: vertical; line-height: 1.8; }
+
+    /* 파일 업로드 */
+    .ntc-file-group {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      margin-bottom: 18px;
+    }
+    .ntc-file-box {
+      border: 1px dashed var(--ntc-divider);
+      padding: 18px 16px;
+      background: rgba(240,112,0,.02);
+      transition: border-color .25s, background .25s;
+      cursor: pointer;
+      position: relative;
+    }
+    .ntc-file-box:hover { border-color: var(--ntc-accent); background: rgba(240,112,0,.05); }
+    .ntc-file-box input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .ntc-file-icon { width: 28px; height: 28px; margin-bottom: 8px; }
+    .ntc-file-icon svg { width: 100%; height: 100%; }
+    .ntc-file-type {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--ntc-accent); margin-bottom: 4px;
+    }
+    .ntc-file-desc { font-size: 13px; font-weight: 300; color: #000000; line-height: 1.6; }
+    .ntc-file-name {
+      margin-top: 8px; font-size: 11px;
+      color: var(--ntc-green); font-family: 'Oxanium', monospace;
+      letter-spacing: .06em; word-break: break-all;
+    }
+
+    /* 미리보기 이미지 */
+    .ntc-img-preview {
+      margin-top: 10px; max-width: 100%; max-height: 140px;
+      object-fit: contain; border: 1px solid var(--ntc-divider);
+      display: none;
+    }
+
+    /* 폼 버튼 그룹 */
+    .ntc-form-btns {
+      display: flex; gap: 10px; justify-content: flex-end;
+      padding-top: 8px;
+    }
+    .ntc-form-cancel {
+      padding: 10px 22px;
+      background: transparent;
+      border: 1px solid #000000;
+      color: #000000;
+      font-family: 'Oxanium', monospace;
+      font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+      cursor: pointer; transition: all .25s;
+    }
+    .ntc-form-cancel:hover { border-color: var(--ntc-accent); color: var(--ntc-accent); }
+    .ntc-form-submit {
+      padding: 10px 28px;
+      background: var(--ntc-accent); color: #fff;
+      border: none;
+      font-family: 'Oxanium', monospace;
+      font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      cursor: pointer; transition: background .25s, transform .2s;
+    }
+    .ntc-form-submit:hover { background: var(--ntc-accent2); transform: translateY(-2px); }
+
+    /* ════════════════════════════════════
+       공지 목록
+    ════════════════════════════════════ */
+    .ntc-list-header {
+      display: grid;
+      grid-template-columns: 60px 1fr 120px 100px;
+      gap: 0;
+      padding: 12px 16px;
+      background: rgba(240,112,0,.07);
+      border: 1px solid var(--ntc-divider);
+      border-bottom: none;
+    }
+    .ntc-list-header span {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+      color: #000000;
+    }
+    .ntc-list-header span:last-child { text-align: center; }
+
+    .ntc-list { list-style: none; padding: 0; margin: 0; animation: ntc-up .7s .2s ease both; }
+
+    .ntc-list-item {
+      display: grid;
+      grid-template-columns: 60px 1fr 120px 100px;
+      align-items: center; gap: 0;
+      padding: 0;
+      border: 1px solid var(--ntc-divider);
+      border-top: none;
+      transition: background .25s;
+      cursor: pointer;
+      position: relative;
+    }
+    .ntc-list-item:hover { background: rgba(240,112,0,.04); }
+
+    .ntc-item-num {
+      padding: 16px 16px;
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; color: #000000;
+      text-align: center;
+    }
+    .ntc-item-title-wrap { padding: 16px 8px 16px 0; }
+    .ntc-item-title {
+      font-size: 14px; font-weight: 400; color: #111111;
+      line-height: 1.4; margin-bottom: 4px;
+    }
+    .ntc-item-title:hover { color: var(--ntc-accent); }
+    .ntc-item-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .ntc-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 8px; letter-spacing: .12em; text-transform: uppercase;
+      padding: 2px 7px;
+      border: 1px solid; line-height: 1.5;
+    }
+    .ntc-tag.pdf  { border-color: rgba(214,48,48,.4);   color: var(--ntc-red);   background: rgba(214,48,48,.06); }
+    .ntc-tag.img  { border-color: rgba(26,138,90,.4);   color: var(--ntc-green); background: rgba(26,138,90,.06); }
+    .ntc-item-date {
+      padding: 16px 8px;
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; color: #000000; letter-spacing: .06em;
+    }
+    .ntc-item-actions {
+      padding: 16px 16px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .ntc-del-btn {
+      display: none;
+      align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      background: rgba(214,48,48,.10);
+      border: 1px solid rgba(214,48,48,.3);
+      color: var(--ntc-red); cursor: pointer;
+      transition: background .2s;
+    }
+    .ntc-del-btn:hover { background: rgba(214,48,48,.25); }
+    .ntc-del-btn svg { width: 12px; height: 12px; }
+    .ntc-del-btn.visible { display: flex; }
+
+    /* 비어있을 때 */
+    .ntc-empty {
+      text-align: center; padding: 64px 20px;
+      border: 1px solid var(--ntc-divider); border-top: none;
+    }
+    .ntc-empty svg { width: 48px; height: 48px; opacity: .25; margin-bottom: 16px; }
+    .ntc-empty-text {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .2em; color: #000000;
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════════
+       글 상세 뷰
+    ════════════════════════════════════ */
+    .ntc-detail {
+      display: none;
+      animation: ntc-up .4s ease both;
+    }
+    .ntc-detail.open { display: block; }
+
+    .ntc-detail-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-bottom: 24px;
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+      color: #000000; cursor: pointer;
+      transition: color .25s;
+      background: none; border: none;
+    }
+    .ntc-detail-back:hover { color: var(--ntc-accent); }
+    .ntc-detail-back svg { width: 13px; height: 13px; }
+
+    .ntc-detail-card {
+      background: var(--ntc-card);
+      border: 1px solid var(--ntc-divider);
+      overflow: hidden; position: relative;
+    }
+    .ntc-detail-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--ntc-accent), var(--ntc-accent2));
+    }
+
+    .ntc-detail-head {
+      padding: 28px 28px 22px;
+      border-bottom: 1px solid var(--ntc-divider);
+    }
+    .ntc-detail-meta {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .18em; color: #000000;
+      margin-bottom: 12px;
+    }
+    .ntc-detail-h {
+      font-size: clamp(18px, 2.5vw, 26px); font-weight: 700;
+      color: #111111; line-height: 1.4; margin-bottom: 12px;
+    }
+
+    .ntc-detail-body { padding: 28px; }
+
+    /* 이미지 표시 */
+    .ntc-detail-img {
+      max-width: 100%; max-height: 500px;
+      object-fit: contain;
+      border: 1px solid var(--ntc-divider);
+      margin-bottom: 24px; display: block;
+    }
+
+    /* 본문 텍스트 */
+    .ntc-detail-text {
+      font-size: 15px; font-weight: 300; color: #222222;
+      line-height: 2; white-space: pre-wrap; word-break: break-word;
+    }
+
+    /* PDF 다운로드 버튼 */
+    .ntc-detail-pdf {
+      margin-top: 28px; padding: 18px 22px;
+      background: rgba(214,48,48,.06);
+      border: 1px solid rgba(214,48,48,.25);
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .ntc-detail-pdf svg { width: 28px; height: 28px; flex-shrink: 0; }
+    .ntc-detail-pdf-name { font-size: 13px; color: #111111; flex: 1; word-break: break-all; }
+    .ntc-detail-pdf-dl {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px;
+      background: var(--ntc-red); color: #fff;
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      text-decoration: none; transition: opacity .2s;
+      flex-shrink: 0;
+    }
+    .ntc-detail-pdf-dl:hover { opacity: .85; }
+    .ntc-detail-pdf-dl svg { width: 12px; height: 12px; }
+
+    /* ════════════════════════════════════
+       로그인 모달
+    ════════════════════════════════════ */
+    .ntc-login-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(255,255,255,.90);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .ntc-login-overlay.open { display: flex; }
+
+    .ntc-login-box {
+      background: #ffffff;
+      border: 1px solid var(--ntc-divider);
+      box-shadow: 0 16px 48px rgba(240,112,0,.12);
+      width: 100%; max-width: 380px;
+      padding: 36px 32px;
+      position: relative;
+      animation: ntc-up .3s ease both;
+    }
+    .ntc-login-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--ntc-accent), var(--ntc-accent2));
+    }
+    .ntc-login-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 30px; height: 30px;
+      background: rgba(0,0,0,.05); border: 1px solid var(--ntc-divider);
+      color: #000000; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; transition: all .2s;
+    }
+    .ntc-login-close:hover { color: var(--ntc-accent); background: rgba(240,112,0,.08); }
+
+    .ntc-login-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .26em; text-transform: uppercase;
+      color: var(--ntc-accent); margin-bottom: 12px;
+    }
+    .ntc-login-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 22px; font-weight: 700; color: #111111;
+      margin-bottom: 6px;
+    }
+    .ntc-login-sub {
+      font-size: 13px; font-weight: 300; color: #000000;
+      margin-bottom: 24px; line-height: 1.7;
+    }
+    .ntc-login-label {
+      display: block;
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+      color: #000000; margin-bottom: 8px;
+    }
+    .ntc-login-input {
+      width: 100%; padding: 12px 16px; margin-bottom: 18px;
+      background: var(--ntc-input);
+      border: 1px solid var(--ntc-divider);
+      color: #111111;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 14px; outline: none;
+      transition: border-color .25s; box-sizing: border-box;
+    }
+    .ntc-login-input:focus { border-color: var(--ntc-accent); }
+    .ntc-login-err {
+      font-size: 13px; color: var(--ntc-red);
+      margin-bottom: 14px; display: none;
+      font-family: 'Oxanium', monospace; letter-spacing: .06em;
+    }
+    .ntc-login-err.show { display: block; }
+    .ntc-login-submit {
+      width: 100%; padding: 13px;
+      background: var(--ntc-accent); color: #fff;
+      border: none;
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      cursor: pointer; transition: background .25s;
+    }
+    .ntc-login-submit:hover { background: var(--ntc-accent2); }
+
+    /* 애니메이션 */
+    @keyframes ntc-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ════════════════════════════════════
+       반응형
+    ════════════════════════════════════ */
+    @media (max-width: 960px) {
+      .ntc-layout { grid-template-columns: 1fr; padding: 36px 24px 70px; }
+      .ntc-sidebar { position: static; border-right: none; border-bottom: 1px solid var(--ntc-divider); padding-right: 0; padding-bottom: 24px; margin-bottom: 32px; }
+      .ntc-nav { display: flex; flex-wrap: wrap; gap: 4px; }
+      .ntc-nav li { border-bottom: none; }
+      .ntc-nav li a { padding: 7px 12px; border: 1px solid var(--ntc-divider); font-size: 13px; }
+      .ntc-nav li a::before { display: none; }
+      .ntc-nav li a:hover, .ntc-nav li a.active { padding-left: 12px; }
+      .ntc-nav-divider { display: none; }
+      .ntc-admin-btn { margin-top: 12px; }
+      .ntc-content { padding-left: 0; }
+      .ntc-file-group { grid-template-columns: 1fr; }
+      .ntc-list-header { grid-template-columns: 50px 1fr 100px; }
+      .ntc-list-header span:nth-child(4) { display: none; }
+      .ntc-list-item { grid-template-columns: 50px 1fr 100px; }
+      .ntc-item-actions { display: none; }
+      header { padding: 0 20px; }
+      header nav { display: none; }
+    }
+    @media (max-width: 600px) {
+      .ntc-layout { padding: 28px 16px 60px; }
+      .ntc-title { font-size: clamp(22px, 7vw, 36px); }
+      .ntc-list-header { grid-template-columns: 44px 1fr; }
+      .ntc-list-header span:nth-child(3),
+      .ntc-list-header span:nth-child(4) { display: none; }
+      .ntc-list-item { grid-template-columns: 44px 1fr; }
+      .ntc-item-date, .ntc-item-actions { display: none; }
+      .ntc-detail-head { padding: 20px 18px 16px; }
+      .ntc-detail-body { padding: 18px; }
+      .ntc-form-wrap { padding: 20px 16px 24px; }
+      .ntc-form-btns { flex-direction: column; }
+      .ntc-form-submit, .ntc-form-cancel { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="index.html"><img src="logo.png" alt="아이닉스 로고" height="44" /></a></h1>
+    <nav>
+      <ul>
+        <li>
+          <a href="product0.html">Product</a>
+          <ul class="submenu">
+            <li><a href="product1.html">프로그래머블 고속 카운터 타이머</a></li>
+            <li><a href="product2.html">에어리어센서</a></li>
+            <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="product6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="product8.html">엔코더 전용 카운터</a></li>
+            <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+          </ul>
+        </li>
+        <li><a href="manu0.html">Manual</a>
+          <ul class="submenu">
+            <li><a href="manu1.html">프로그래머블 고속 카운터 타이머</a></li>
+            <li><a href="manu2.html">에어리어센서</a></li>
+            <li><a href="manu3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="manu4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="manu5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="manu6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="manu7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="manu8.html">엔코더 전용 카운터</a></li>
+          </ul>
+        </li>
+        <li><a href="cs1.html">Customer Service</a>
+          <ul class="submenu">
+            <li><a href="cs1.html">자료실</a></li>
+            <li><a href="cs2.html">고객문의</a></li>
+          </ul>
+        </li>
+        <li><a href="notice.html" class="active">Notice</a></li>
+        <li>
+          <a href="about.html">Company</a>
+          <ul class="submenu">
+            <li><a href="about.html">회사소개</a></li>
+            <li><a href="timeline.html">제품 개발 타임라인</a></li>
+            <li><a href="location.html">오시는 길</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="ntc-page">
+      <div class="ntc-layout">
+
+        <!-- 사이드바 -->
+           <aside class="ntc-sidebar">
+          <div class="ntc-sidebar-label">NOTICE</div>
+         
+
+          <!-- 관리자 버튼 -->
+          <button class="ntc-admin-btn" id="adminToggleBtn" onclick="toggleLogin()">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M8 2 A4 4 0 1 0 8 10 A4 4 0 0 0 8 2Z" stroke="currentColor" stroke-width="1.3"/><path d="M2 15 Q2 11 8 11 Q14 11 14 15" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><rect x="10" y="8" width="5" height="4" rx="1" stroke="currentColor" stroke-width="1.1"/><line x1="12.5" y1="8" x2="12.5" y2="6.5" stroke="currentColor" stroke-width="1.1"/></svg>
+            <span id="adminBtnText">관리자 로그인</span>
+          </button>
+        </aside>
+
+        <!-- 콘텐츠 -->
+        <div class="ntc-content">
+
+          <div class="ntc-header">
+            <div>
+              <div class="ntc-series-tag">INICS · News &amp; Updates</div>
+              <h2 class="ntc-title"><em>공지 사항</em></h2>
+              <p class="ntc-subtitle">Notice &nbsp;|&nbsp; 아이닉스 회사 소식 및 공지</p>
+            </div>
+            <button class="ntc-write-btn" id="writeBtn" onclick="toggleForm()">
+              <svg viewBox="0 0 16 16" fill="none"><line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              새 글 작성
+            </button>
+          </div>
+
+          <!-- 글쓰기 폼 (관리자) -->
+          <div class="ntc-form-wrap" id="writeForm">
+            <div class="ntc-form-title">새 공지 작성 · Write New Notice</div>
+
+            <div class="ntc-form-group">
+              <label class="ntc-form-label">제목 · Title <span>*</span></label>
+              <input class="ntc-input" id="postTitle" type="text" placeholder="공지 제목을 입력하세요" />
+            </div>
+
+            <div class="ntc-form-group">
+              <label class="ntc-form-label">내용 · Content <span>*</span></label>
+              <textarea class="ntc-textarea" id="postContent" placeholder="공지 내용을 입력하세요&#10;&#10;회사 소식, 제품 업데이트, 이벤트 등을 자유롭게 작성해 주세요."></textarea>
+            </div>
+
+            <div class="ntc-file-group">
+              <!-- 사진 업로드 -->
+              <div class="ntc-file-box" id="imgBox">
+                <input type="file" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
+                  id="postImg" onchange="handleImgChange(this)" />
+                <div class="ntc-file-icon">
+                  <svg viewBox="0 0 28 28" fill="none"><rect x="3" y="5" width="22" height="18" rx="2" stroke="#1a8a5a" stroke-width="1.4"/><path d="M3 18 L8 13 L12 17 L17 11 L25 18" stroke="#1a8a5a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="10" r="2" stroke="#1a8a5a" stroke-width="1.2"/></svg>
+                </div>
+                <div class="ntc-file-type">사진 · Image</div>
+                <div class="ntc-file-desc">PNG, JPG, GIF, WEBP<br>클릭하여 파일 선택</div>
+                <div class="ntc-file-name" id="imgName"></div>
+                <img class="ntc-img-preview" id="imgPreview" src="" alt="미리보기" />
+              </div>
+
+              <!-- PDF 업로드 -->
+              <div class="ntc-file-box" id="pdfBox">
+                <input type="file" accept=".pdf"
+                  id="postPdf" onchange="handlePdfChange(this)" />
+                <div class="ntc-file-icon">
+                  <svg viewBox="0 0 28 28" fill="none"><rect x="4" y="2" width="16" height="24" rx="2" stroke="#d63030" stroke-width="1.4"/><path d="M16 2 L24 10 L20 10 L20 2" stroke="#d63030" stroke-width="1.3" fill="rgba(214,48,48,0.1)" stroke-linejoin="round"/><line x1="8" y1="14" x2="18" y2="14" stroke="#d63030" stroke-width="1.2"/><line x1="8" y1="18" x2="15" y2="18" stroke="#d63030" stroke-width="1.2"/></svg>
+                </div>
+                <div class="ntc-file-type">PDF 파일</div>
+                <div class="ntc-file-desc">PDF 문서 첨부<br>클릭하여 파일 선택</div>
+                <div class="ntc-file-name" id="pdfName"></div>
+              </div>
+            </div>
+
+            <div class="ntc-form-btns">
+              <button class="ntc-form-cancel" onclick="toggleForm()">취소</button>
+              <button class="ntc-form-submit" onclick="submitPost()">공지 등록</button>
+            </div>
+          </div>
+
+          <!-- 목록 뷰 -->
+          <div id="listView">
+            <div class="ntc-list-header">
+              <span>번호</span>
+              <span>제목</span>
+              <span>날짜</span>
+              <span style="text-align:center;">관리</span>
+            </div>
+            <ul class="ntc-list" id="postList"></ul>
+            <div class="ntc-empty" id="emptyMsg" style="display:none;">
+              <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="#333333" stroke-width="1.5"/><line x1="16" y1="20" x2="32" y2="20" stroke="#333333" stroke-width="1.3"/><line x1="16" y1="26" x2="26" y2="26" stroke="#333333" stroke-width="1.3"/></svg>
+              <div class="ntc-empty-text">등록된 공지사항이 없습니다<br>No notices yet</div>
+            </div>
+          </div>
+
+          <!-- 상세 뷰 -->
+          <div class="ntc-detail" id="detailView">
+            <button class="ntc-detail-back" onclick="closeDetail()">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M9 2 L4 7 L9 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              목록으로 / Back to List
+            </button>
+
+            <div class="ntc-detail-card">
+              <div class="ntc-detail-head">
+                <div class="ntc-detail-meta" id="detailMeta"></div>
+                <div class="ntc-detail-h" id="detailTitle"></div>
+                <div class="ntc-item-tags" id="detailTags"></div>
+              </div>
+              <div class="ntc-detail-body">
+                <img class="ntc-detail-img" id="detailImg" src="" alt="" />
+                <div class="ntc-detail-text" id="detailContent"></div>
+                <div class="ntc-detail-pdf" id="detailPdf" style="display:none;">
+                  <svg viewBox="0 0 28 28" fill="none"><rect x="4" y="2" width="14" height="24" rx="2" stroke="#d63030" stroke-width="1.4"/><path d="M14 2 L22 10 L18 10 L18 2" stroke="#d63030" stroke-width="1.3" fill="rgba(214,48,48,0.1)" stroke-linejoin="round"/><line x1="7" y1="14" x2="16" y2="14" stroke="#d63030" stroke-width="1.2"/><line x1="7" y1="18" x2="13" y2="18" stroke="#d63030" stroke-width="1.2"/></svg>
+                  <div class="ntc-detail-pdf-name" id="detailPdfName"></div>
+                  <a class="ntc-detail-pdf-dl" id="detailPdfDl" href="#" download>
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M8 2 L8 10 M5 7 L8 10 L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="2" y1="13" x2="14" y2="13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                    PDF 다운로드
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 로그인 모달 -->
+  <div class="ntc-login-overlay" id="loginModal" onclick="handleLoginOverlay(event)">
+    <div class="ntc-login-box">
+      <button class="ntc-login-close" onclick="closeLogin()">✕</button>
+      <div class="ntc-login-tag">Admin · 관리자 전용</div>
+      <div class="ntc-login-title">관리자 로그인</div>
+      <div class="ntc-login-sub">아이닉스 홈페이지 관리자만 접근 가능합니다.<br>비밀번호를 입력해 주세요.</div>
+      <label class="ntc-login-label">비밀번호 · Password</label>
+      <input class="ntc-login-input" id="pwInput" type="password"
+        placeholder="관리자 비밀번호"
+        onkeydown="if(event.key==='Enter') doLogin()" />
+      <div class="ntc-login-err" id="loginErr">비밀번호가 올바르지 않습니다.</div>
+      <button class="ntc-login-submit" onclick="doLogin()">로그인</button>
+    </div>
+  </div>
+
+
+  <script>
+    const ADMIN_PW = 'inics*3';
+
+    let isAdmin = false;
+    let posts   = JSON.parse(localStorage.getItem('INICS_notices') || '[]');
+    let currentPost = null;
+
+    renderList();
+
+    function toggleLogin() {
+      if (isAdmin) {
+        isAdmin = false;
+        updateAdminUI();
+      } else {
+        document.getElementById('loginModal').classList.add('open');
+        document.getElementById('pwInput').value = '';
+        document.getElementById('loginErr').classList.remove('show');
+        setTimeout(() => document.getElementById('pwInput').focus(), 100);
+      }
+    }
+
+    function doLogin() {
+      const pw = document.getElementById('pwInput').value;
+      if (pw === ADMIN_PW) {
+        isAdmin = true;
+        closeLogin();
+        updateAdminUI();
+      } else {
+        document.getElementById('loginErr').classList.add('show');
+        document.getElementById('pwInput').value = '';
+        document.getElementById('pwInput').focus();
+      }
+    }
+
+    function closeLogin() {
+      document.getElementById('loginModal').classList.remove('open');
+    }
+
+    function handleLoginOverlay(e) {
+      if (e.target === document.getElementById('loginModal')) closeLogin();
+    }
+
+    function updateAdminUI() {
+      const btn     = document.getElementById('adminToggleBtn');
+      const btnText = document.getElementById('adminBtnText');
+      const writeBtn = document.getElementById('writeBtn');
+      const delBtns  = document.querySelectorAll('.ntc-del-btn');
+
+      if (isAdmin) {
+        btn.classList.add('logged');
+        btnText.textContent = '관리자 로그아웃';
+        writeBtn.classList.add('visible');
+        delBtns.forEach(b => b.classList.add('visible'));
+      } else {
+        btn.classList.remove('logged');
+        btnText.textContent = '관리자 로그인';
+        writeBtn.classList.remove('visible');
+        delBtns.forEach(b => b.classList.remove('visible'));
+        document.getElementById('writeForm').classList.remove('open');
+      }
+    }
+
+    function toggleForm() {
+      const form = document.getElementById('writeForm');
+      form.classList.toggle('open');
+      if (form.classList.contains('open')) {
+        document.getElementById('postTitle').focus();
+        document.getElementById('postTitle').value = '';
+        document.getElementById('postContent').value = '';
+        document.getElementById('imgName').textContent = '';
+        document.getElementById('pdfName').textContent = '';
+        document.getElementById('imgPreview').style.display = 'none';
+        document.getElementById('imgPreview').src = '';
+        document.getElementById('postImg').value = '';
+        document.getElementById('postPdf').value = '';
+      }
+    }
+
+    function handleImgChange(input) {
+      const file = input.files[0];
+      if (!file) return;
+      document.getElementById('imgName').textContent = '✓ ' + file.name;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('imgPreview');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handlePdfChange(input) {
+      const file = input.files[0];
+      if (!file) return;
+      document.getElementById('pdfName').textContent = '✓ ' + file.name;
+    }
+
+    function submitPost() {
+      const title   = document.getElementById('postTitle').value.trim();
+      const content = document.getElementById('postContent').value.trim();
+      const imgFile = document.getElementById('postImg').files[0];
+      const pdfFile = document.getElementById('postPdf').files[0];
+
+      if (!title) { alert('제목을 입력해주세요.'); return; }
+      if (!content) { alert('내용을 입력해주세요.'); return; }
+
+      const now  = new Date();
+      const date = now.getFullYear() + '.' +
+                   String(now.getMonth()+1).padStart(2,'0') + '.' +
+                   String(now.getDate()).padStart(2,'0');
+
+      const post = {
+        id: Date.now(),
+        title, content, date,
+        imgName: imgFile ? imgFile.name : null,
+        imgData: null,
+        pdfName: pdfFile ? pdfFile.name : null,
+        pdfData: null,
+      };
+
+      let pending = 2;
+      const done = () => { pending--; if (pending <= 0) savePost(post); };
+
+      if (imgFile) {
+        const r = new FileReader();
+        r.onload = e => { post.imgData = e.target.result; done(); };
+        r.readAsDataURL(imgFile);
+      } else { done(); }
+
+      if (pdfFile) {
+        const r = new FileReader();
+        r.onload = e => { post.pdfData = e.target.result; done(); };
+        r.readAsDataURL(pdfFile);
+      } else { done(); }
+    }
+
+    function savePost(post) {
+      posts.unshift(post);
+      try {
+        localStorage.setItem('INICS_notices', JSON.stringify(posts));
+      } catch(e) {
+        alert('저장 공간 부족으로 일부 파일이 저장되지 않을 수 있습니다.');
+      }
+      toggleForm();
+      renderList();
+    }
+
+    function renderList() {
+      const list  = document.getElementById('postList');
+      const empty = document.getElementById('emptyMsg');
+      list.innerHTML = '';
+
+      if (posts.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      posts.forEach((post, idx) => {
+        const li = document.createElement('li');
+        li.className = 'ntc-list-item';
+
+        const tags = [
+          post.imgData ? '<span class="ntc-tag img">사진</span>' : '',
+          post.pdfData ? '<span class="ntc-tag pdf">PDF</span>' : ''
+        ].join('');
+
+        li.innerHTML = `
+          <div class="ntc-item-num">${posts.length - idx}</div>
+          <div class="ntc-item-title-wrap" onclick="openDetail(${post.id})">
+            <div class="ntc-item-title">${escHtml(post.title)}</div>
+            <div class="ntc-item-tags">${tags}</div>
+          </div>
+          <div class="ntc-item-date">${post.date}</div>
+          <div class="ntc-item-actions">
+            <button class="ntc-del-btn ${isAdmin ? 'visible' : ''}"
+              onclick="event.stopPropagation(); deletePost(${post.id})"
+              title="삭제">
+              <svg viewBox="0 0 14 14" fill="none">
+                <path d="M2 4 H12 M5 4 V2 H9 V4 M5 6 V11 M9 6 V11 M3 4 L4 12 H10 L11 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function openDetail(id) {
+      const post = posts.find(p => p.id === id);
+      if (!post) return;
+      currentPost = post;
+
+      document.getElementById('detailMeta').textContent = 'INICS Notice · ' + post.date;
+      document.getElementById('detailTitle').textContent = post.title;
+      document.getElementById('detailContent').textContent = post.content;
+
+      const tags = [
+        post.imgData ? '<span class="ntc-tag img">사진 첨부</span>' : '',
+        post.pdfData ? '<span class="ntc-tag pdf">PDF 첨부</span>' : ''
+      ].join('');
+      document.getElementById('detailTags').innerHTML = tags;
+
+      const img = document.getElementById('detailImg');
+      if (post.imgData) { img.src = post.imgData; img.style.display = 'block'; }
+      else               { img.src = '';           img.style.display = 'none'; }
+
+      const pdfWrap = document.getElementById('detailPdf');
+      if (post.pdfData) {
+        document.getElementById('detailPdfName').textContent = post.pdfName || 'document.pdf';
+        document.getElementById('detailPdfDl').href     = post.pdfData;
+        document.getElementById('detailPdfDl').download = post.pdfName || 'document.pdf';
+        pdfWrap.style.display = 'flex';
+      } else {
+        pdfWrap.style.display = 'none';
+      }
+
+      document.getElementById('listView').style.display  = 'none';
+      document.getElementById('detailView').classList.add('open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function closeDetail() {
+      document.getElementById('detailView').classList.remove('open');
+      document.getElementById('listView').style.display = 'block';
+    }
+
+    function deletePost(id) {
+      if (!confirm('이 공지를 삭제하시겠습니까?')) return;
+      posts = posts.filter(p => p.id !== id);
+      localStorage.setItem('INICS_notices', JSON.stringify(posts));
+      renderList();
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLogin();
+    });
+  </script>
+
+</body>
+</html>
