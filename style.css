@@ -78,8 +78,8 @@ header a {
 
 /* 하단 정보 (Footer) */
 footer {
-    background-color:#e67e00;
-    color: rgb(250, 249, 249);
+    background-color:#ffffff;
+    color: #111111;
     text-align: center;
     padding: 1px 0;
     position: fixed;
