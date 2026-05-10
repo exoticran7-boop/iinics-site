@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이닉스(INICS) - 센서 솔루션 전문 기업</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        @font-face {
+            font-family: 'Noto Sans KR';
+            src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Oxanium';
+            src: url('oxanium-v21-latin-regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* =============================================
+           모바일 반응형 추가 스타일
+        ============================================= */
+
+        /* 햄버거 버튼 - 기본 숨김 */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            gap: 5px;
+            z-index: 1100;
+            flex-shrink: 0;
+        }
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background-color: currentColor;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* 모바일 오버레이 */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 900;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .nav-overlay.active {
+            opacity: 1;
+        }
+
+        /* ── 태블릿 (≤ 1024px) ── */
+        @media (max-width: 1024px) {
+            header {
+                flex-wrap: wrap;
+            }
+            nav ul {
+                gap: 0.5rem;
+            }
+            nav ul li a {
+                font-size: 0.875rem;
+                padding: 0.5rem 0.6rem;
+            }
+        }
+
+        /* ── 모바일 (≤ 768px) ── */
+        @media (max-width: 768px) {
+
+            /* 헤더 레이아웃 */
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 1rem;
+                min-height: 64px;
+                box-sizing: border-box;
+            }
+
+            header h1 {
+                margin: 0;
+                line-height: 1;
+            }
+            header h1 img {
+                height: 48px !important;
+                display: block;
+            }
+
+            /* 햄버거 표시 */
+            .hamburger {
+                display: flex;
+            }
+
+            /* 네비게이션 드로어 */
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: min(280px, 80vw);
+                height: 100dvh;
+                overflow-y: auto;
+                z-index: 1050;
+                transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                padding: 80px 0 2rem;
+                box-sizing: border-box;
+            }
+            nav.open {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            nav > ul > li {
+                border-bottom: 1px solid rgba(128,128,128,0.2);
+            }
+
+            nav > ul > li > a {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+            }
+
+            /* 모바일 서브메뉴 아코디언 */
+            .submenu {
+                position: static !important;
+                display: none;
+                flex-direction: column !important;
+                gap: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                background: rgba(0,0,0,0.08) !important;
+            }
+            .submenu.open {
+                display: flex !important;
+            }
+            .submenu li a {
+                padding: 0.75rem 2rem !important;
+                font-size: 0.9rem !important;
+                display: block;
+            }
+
+            /* 아코디언 화살표 */
+            nav > ul > li.has-sub > a::after {
+                content: '›';
+                font-size: 1.2rem;
+                transition: transform 0.3s ease;
+                display: inline-block;
+                margin-left: 0.5rem;
+            }
+            nav > ul > li.has-sub.sub-open > a::after {
+                transform: rotate(90deg);
+            }
+
+            /* hero 영역: 헤더 높이만큼 패딩 */
+            .hero {
+                margin-top: 64px;
+                min-height: calc(100dvh - 64px);
+            }
+
+            /* 오버레이 표시 */
+            .nav-overlay {
+                display: block;
+            }
+        }
+
+        /* ── 소형 모바일 (≤ 480px) ── */
+        @media (max-width: 480px) {
+            .hero-content h2 {
+                font-size: clamp(1.2rem, 5vw, 1.6rem);
+            }
+            .hero-content p {
+                font-size: clamp(0.8rem, 3.5vw, 1rem);
+            }
+            header h1 img {
+                height: 40px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 네비게이션 오버레이 (모바일) -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- 상단 메뉴 -->
+    <header>
+        <h1>
+            <a href="index.html">
+                <img src="logo.png" alt="아이닉스 로고" height="70">
+            </a>
+        </h1>
+
+        <!-- 햄버거 버튼 (모바일) -->
+        <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mainNav">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="mainNav" aria-label="주 메뉴">
+            <ul>
+                <li class="has-sub">
+                    <a href="product0.html">Product</a>
+                    <ul class="submenu">
+                        <li><a href="product1.html">프로그래머블 고속 카운터 타이머</a></li>
+                        <li><a href="product2.html">에어리어센서</a></li>
+                        <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+                        <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+                        <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+                        <li><a href="product6.html">인덕티브 로터리 엔코더</a></li>
+                        <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+                        <li><a href="product8.html">엔코더 전용 카운터</a></li>
+                        <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a href="manu0.html">Manual</a>
+                    <ul class="submenu">
+                        <li><a href="manu1.html">프로그래머블 고속 카운터 타이머</a></li>
+                        <li><a href="manu2.html">에어리어센서</a></li>
+                        <li><a href="manu3.html">마그네틱 리니어 엔코더</a></li>
+                        <li><a href="manu4.html">광학식 로터리 엔코더</a></li>
+                        <li><a href="manu5.html">마그네틱 로터리 엔코더</a></li>
+                        <li><a href="manu6.html">인덕티브 로터리 엔코더</a></li>
+                        <li><a href="manu7.html">바퀴형 로터리 엔코더</a></li>
+                        <li><a href="manu8.html">엔코더 전용 카운터</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a href="cs1.html">Customer Service</a>
+                    <ul class="submenu">
+                        <li><a href="cs1.html">자료실</a></li>
+                        <li><a href="cs2.html">고객문의</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="notice.html">Notice</a></li>
+
+                <li class="has-sub">
+                    <a href="about.html">Company</a>
+                    <ul class="submenu">
+                        <li><a href="about.html">회사소개</a></li>
+                        <li><a href="timeline.html">제품 개발 타임라인</a></li>
+                        <li><a href="location.html">오시는 길</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 메인 배너 영역 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>세상을 편리하게 하는 센서 전문기업</h2>
+            <p>A sensor specialist company that makes the world more convenient</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 INICS. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mainNav   = document.getElementById('mainNav');
+        const overlay   = document.getElementById('navOverlay');
+
+        // 드로어 열기 / 닫기
+        function openNav() {
+            mainNav.classList.add('open');
+            hamburger.classList.add('active');
+            overlay.classList.add('active');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeNav() {
+            mainNav.classList.remove('open');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', () => {
+            mainNav.classList.contains('open') ? closeNav() : openNav();
+        });
+
+        overlay.addEventListener('click', closeNav);
+
+        // ESC 키로 닫기
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeNav();
+        });
+
+        // 모바일 아코디언 서브메뉴
+        document.querySelectorAll('nav > ul > li.has-sub > a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                // 모바일 너비일 때만 아코디언 동작
+                if (window.innerWidth > 768) return;
+
+                e.preventDefault();
+                const parentLi  = this.parentElement;
+                const submenu   = parentLi.querySelector('.submenu');
+                const isOpen    = parentLi.classList.contains('sub-open');
+
+                // 다른 열린 메뉴 닫기
+                document.querySelectorAll('nav > ul > li.has-sub.sub-open').forEach(li => {
+                    li.classList.remove('sub-open');
+                    li.querySelector('.submenu').classList.remove('open');
+                });
+
+                if (!isOpen) {
+                    parentLi.classList.add('sub-open');
+                    submenu.classList.add('open');
+                }
+            });
+        });
+
+        // 화면 크기 변경 시 드로어·스크롤 초기화
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                closeNav();
+                document.querySelectorAll('nav > ul > li.has-sub.sub-open').forEach(li => {
+                    li.classList.remove('sub-open');
+                    li.querySelector('.submenu').classList.remove('open');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
