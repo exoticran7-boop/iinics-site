@@ -38,7 +38,7 @@ header a {
 
 /* 메인 배너 스타일링 */
 .hero {
-  height: calc(100vh - 80px);
+  height: calc(100vh - 90px); /* 80 → 90 수정: 실제 헤더 높이 반영 */
   background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('main-bg.png');
   background-size: cover;
   background-position: center;
@@ -80,10 +80,9 @@ footer {
   color: #111;
   text-align: center;
   padding: 10px 0;
-  /* position: fixed; ← 제거 */
-  /* bottom: 0;       ← 제거 */
   width: 100%;
 }
+
 /* 1. 서브 메뉴가 들어있는 부모 항목 설정 */
 header ul li {
   position: relative;
@@ -92,7 +91,7 @@ header ul li {
 /* 2. 서브 메뉴 기본 상태 (숨김) */
 .submenu {
   display: none;
-  flex-direction: column; 
+  flex-direction: column;
   position: absolute;
   top: 100%;
   left: 0;
@@ -119,7 +118,7 @@ header ul li {
   border-bottom: 1px solid #eee;
 }
 
-/* 4. 마우스를 올렸을 때 서브 메뉴 보이기 */
+/* 4. 마우스를 올렸을 때 서브 메뉴 보이기 (데스크탑 전용) */
 header ul li:hover .submenu {
   display: block;
 }
@@ -131,6 +130,9 @@ header ul li:hover .submenu {
 }
 
 
+/* ================================
+   모바일 반응형 (480px 이하)
+   ================================ */
 @media (max-width: 480px) {
 
   /* 헤더 세로 배치 */
@@ -169,15 +171,20 @@ header ul li:hover .submenu {
     white-space: nowrap;
   }
 
+  /* ✅ 수정 1: 모바일에서 hover 비활성화 → JS 토글만 사용 */
+  header ul li:hover .submenu {
+    display: none;
+  }
+
   /* 서브메뉴: 세로 목록으로 표시 */
   .submenu {
-    flex-direction: column !important; /* 세로 강제 */
+    flex-direction: column !important;
     position: absolute;
     top: 100%;
     left: 0;
     min-width: 200px;
     max-height: 60vh;
-    overflow-y: auto;        /* 항목 많을 때 스크롤 */
+    overflow-y: auto;
     z-index: 9999;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
@@ -194,13 +201,13 @@ header ul li:hover .submenu {
   .submenu li a {
     font-size: 13px !important;
     padding: 14px 20px !important;
-    white-space: normal !important; /* 긴 텍스트 줄바꿈 허용 */
+    white-space: normal !important;
     line-height: 1.4 !important;
   }
 
-  /* 히어로 배너: 잘림 방지 */
+  /* ✅ 수정 2: 히어로 배너 잘림 방지 */
   .hero {
-    height: auto;            /* 고정 height 제거 */
+    height: auto;
     min-height: 60vh;
     padding: 60px 1.2rem;
     box-sizing: border-box;
@@ -211,7 +218,7 @@ header ul li:hover .submenu {
   .hero h2 {
     font-size: 1.4rem;
     line-height: 1.5;
-    word-break: keep-all;    /* 한글 단어 단위 줄바꿈 */
+    word-break: keep-all;
   }
 
   .hero p {
