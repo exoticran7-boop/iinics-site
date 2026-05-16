@@ -1,250 +1,134 @@
 /* 전체 설정 */
 body {
-  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
-  letter-spacing: -0.5px;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    letter-spacing: -0.5px; /* 글자 간격을 살짝 좁혀서 세련되게 */
 }
 
 /* 상단 메뉴 (Header) */
 header {
-  background-color: #fffefe;
-  color: rgb(11, 11, 11);
-  padding: 0.5rem 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* 헤더 구분선 추가 */
+    background-color: #fffefe;
+    color: rgb(11, 11, 11);
+    padding: 0.5rem 5%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header img {
-  display: block;
+    display: block; 
 }
+
 
 header ul {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
+    list-style: none;
+    display: flex;
 }
 
-/* 1. 서브 메뉴가 들어있는 부모 항목 설정 */
 header ul li {
-  margin-left: 20px;
-  position: relative;
+    margin-left: 20px;
 }
 
 header a {
-  color: rgb(10, 10, 10);
-  text-decoration: none;
-  font-weight: bold;
+    color: rgb(10, 10, 10);
+    text-decoration: none;
+    font-weight: bold;
 }
+
 
 /* 메인 배너 스타일링 */
 .hero {
-  height: calc(100vh - 90px);
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('main-bg.png');
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
+     height: calc(100vh - 80px);
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('main-bg.png'); /* 배경 어둡게 처리 */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
 }
 
 .hero h2 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
 }
 
 .hero h2 strong {
-  color: #ff8c00;
+    color: #ff8c00; /* 로고에 있는 주황색 포인트 사용 */
 }
 
 .hero-content .btn-more {
-  display: inline-block;
-  padding: 12px 30px;
-  background-color: #ff8c00;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  margin-top: 20px;
-  transition: 0.3s;
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #ff8c00;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: 0.3s;
 }
 
 .hero-content .btn-more:hover {
-  background-color: #e67e00;
+    background-color: #e67e00; /* 마우스 올렸을 때 색상 변화 */
 }
 
 /* 하단 정보 (Footer) */
 footer {
-  background-color: #ffffff;
-  color: #111;
-  text-align: center;
-  padding: 15px 0;
-  width: 100%;
-  border-top: 1px solid #eee;
+    background-color:#ffffff;
+    color: #111;
+    text-align: center;
+    padding: 1px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* 1. 서브 메뉴가 들어있는 부모 항목 설정 */
+header ul li {
+    position: relative; /* 서브 메뉴 위치의 기준점 */
 }
 
 /* 2. 서브 메뉴 기본 상태 (숨김) */
 .submenu {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%); /* 데스크탑에서 중앙 정렬로 이탈 방지 */
-  background-color: white;
-  min-width: 200px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  padding: 10px 0;
-  list-style: none;
-  z-index: 100;
+    display: none; /* 기존에 block !important; 로 되어있다면 반드시 none으로 바꾸세요 */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    list-style: none;
+    z-index: 10;
 }
 
-/* 3. 서브 메뉴 안의 항목 디자인 (!important 제거) */
+/* 3. 서브 메뉴 안의 항목 디자인 */
 .submenu li {
-  margin: 0;
+    margin: 0; /* 간격 제거 */
 }
 
 .submenu li a {
-  color: #333333;
-  background-color: #ffffff;
-  padding: 12px 20px;
-  display: block;
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: normal; /* 서브메뉴는 두께를 보통으로 변경 */
-  border-bottom: 1px solid #f5f5f5;
-  transition: background-color 0.2s, color 0.2s;
+    color: #333333 !important; /* 확실한 검은색 */
+    background-color: #ffffff !important; /* 확실한 흰색 배경 */
+    padding: 12px 20px !important;
+    display: block !important;
+    font-size: 14px !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid #eee; /* 항목 간 구분선 추가 */
 }
 
-.submenu li:last-child a {
-  border-bottom: none; /* 마지막 항목 밑줄 제거 */
-}
-
-/* 4. 마우스를 올렸을 때 서브 메뉴 보이기 (데스크탑 전용) */
-@media (min-width: 481px) {
-  header ul li:hover .submenu {
-    display: flex;
-  }
-}
-
-/* 5. 서브 메뉴 항목에 마우스 올렸을 때 배경색 변화 (정상 작동) */
-.submenu li a:hover {
-  background-color: #f4f4f4;
-  color: #ff8c00;
-}
-
-
-/* ================================
-   모바일 반응형 (480px 이하)
-   ================================ */
-@media (max-width: 480px) {
-
-  /* 헤더 세로 배치 */
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.8rem 5%;
-    gap: 0.5rem;
-    position: relative;
-  }
-
-  header img {
-    height: 36px;
-  }
-
-  /* 메뉴 가로 스크롤 유지하되 잘림 방지 */
-  header ul {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    flex-wrap: nowrap;
-    /* 서브메뉴가 튀어나올 때 잘리지 않도록 padding 하단 확보 또는 overflow 해제 검토 필요 */
-    /* 가로스크롤 레이아웃 특성상 fixed 배치가 안전합니다 */
-  }
-
-  header ul li {
-    margin-left: 0;
-    flex-shrink: 0;
-    position: static; /* 부모 가두기를 해제하여 fixed 기준을 화면으로 잡음 */
-  }
-
-  header a {
-    font-size: 13px;
-    padding: 8px 12px;
+/* 4. 마우스를 올렸을 때 서브 메뉴 보이기 */
+header ul li:hover .submenu {
     display: block;
-    white-space: nowrap;
-  }
-
-  /* 모바일 서브메뉴: 가로 스크롤에 갇히지 않도록 화면 하단 전체에 fixed 레이아웃 적용 */
-  .submenu {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-height: 50vh;
-    transform: none;
-    box-shadow: 0 -4px 15px rgba(0,0,0,0.15);
-    border-radius: 16px 16px 0 0; /* 모바일 감성의 상단 라운드 처리 */
-    padding: 15px 0;
-    overflow-y: auto;
-    z-index: 9999;
-  }
-
-  /* JS 토글 클래스 */
-  header ul li.open > .submenu {
-    display: flex;
-  }
-
-  .submenu li {
-    width: 100%;
-  }
-
-  .submenu li a {
-    font-size: 14px;
-    padding: 14px 24px;
-    white-space: normal;
-    line-height: 1.4;
-    border-bottom: 1px solid #eee;
-  }
-
-  /* 히어로 배너 잘림 방지 */
-  .hero {
-    height: auto;
-    min-height: 60vh;
-    padding: 60px 1.2rem;
-    box-sizing: border-box;
-    overflow: hidden;
-    background-position: center center;
-  }
-
-  .hero h2 {
-    font-size: 1.5rem;
-    line-height: 1.4;
-    word-break: keep-all;
-  }
-
-  .hero p {
-    font-size: 0.85rem;
-    word-break: break-word;
-    margin-top: 10px;
-  }
-
-  .hero-content .btn-more {
-    padding: 10px 24px;
-    font-size: 14px;
-  }
-
-  footer {
-    padding: 15px 0;
-    font-size: 12px;
-    margin-bottom: 0;
-  }
 }
+
+/* 5. 서브 메뉴 항목에 마우스 올렸을 때 배경색 변화 */
+.submenu li a:hover {
+    background-color: #f4f4f4;
+    color: #ff8c00 !important;
+}
+
