@@ -47,7 +47,7 @@
         </ul>    
                 </li>
 
-                <li><a href="manu0.html">Manual</a>
+                <li><a href="manu0">Manual</a>
                 <ul class="submenu">
         <li><a href="manu1.html">프로그래머블 고속 카운터 타이머</a></li>
         <li><a href="manu2.html">에어리어센서</a></li>
@@ -95,34 +95,5 @@
         <p>© 2026 INICS. All Rights Reserved.</p>
     </footer>   
 
-  <script>
-    document.querySelectorAll('header ul > li.has-submenu').forEach(function(li) {
-        var mainLink = li.querySelector('a'); // 대메뉴 링크 (예: Product)
-        
-        mainLink.addEventListener('click', function(e) {
-            // 현재 내 메뉴가 닫혀있는 상태라면?
-            if (!li.classList.contains('open')) {
-                e.preventDefault(); // 링크 이동을 막고
-                e.stopPropagation();
-                
-                // 다른 열려있는 메뉴들은 모두 닫음
-                document.querySelectorAll('header ul > li.open').forEach(function(other) {
-                    other.classList.remove('open');
-                });
-                
-                li.classList.add('open'); // 내 서브메뉴만 열기
-            } 
-            // 이미 open 클래스가 있다면 원래 링크(product0.html 등)로 정상 이동합니다.
-        });
-    });
-
-    // 메뉴 외부 클릭 시 전체 닫기
-    document.addEventListener('click', function() {
-        document.querySelectorAll('header ul > li.open').forEach(function(li) {
-            li.classList.remove('open');
-        });
-    });
-    </script>
-    
 </body>
 </html>
