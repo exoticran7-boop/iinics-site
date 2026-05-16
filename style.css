@@ -92,6 +92,7 @@ header ul li {
 /* 2. 서브 메뉴 기본 상태 (숨김) */
 .submenu {
   display: none;
+  flex-direction: column; 
   position: absolute;
   top: 100%;
   left: 0;
@@ -130,9 +131,6 @@ header ul li:hover .submenu {
 }
 
 
-/* ================================
-   모바일 반응형 (480px 이하)
-   ================================ */
 @media (max-width: 480px) {
 
   /* 헤더 세로 배치 */
@@ -141,6 +139,7 @@ header ul li:hover .submenu {
     align-items: flex-start;
     padding: 0.8rem 5%;
     gap: 0.5rem;
+    position: relative;
   }
 
   header img {
@@ -154,12 +153,13 @@ header ul li:hover .submenu {
     -webkit-overflow-scrolling: touch;
     padding: 0;
     margin: 0;
-    gap: 4px;
+    flex-wrap: nowrap;
   }
 
   header ul li {
     margin-left: 0;
     flex-shrink: 0;
+    position: relative;
   }
 
   header a {
@@ -169,35 +169,54 @@ header ul li:hover .submenu {
     white-space: nowrap;
   }
 
-  /* 서브 메뉴: 모바일용 위치 */
+  /* 서브메뉴: 세로 목록으로 표시 */
   .submenu {
+    flex-direction: column !important; /* 세로 강제 */
     position: absolute;
     top: 100%;
     left: 0;
-    min-width: 160px;
-    z-index: 999;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-width: 200px;
+    max-height: 60vh;
+    overflow-y: auto;        /* 항목 많을 때 스크롤 */
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
 
-  /* JS 토글로 열리는 클래스 */
-  header ul li.open .submenu {
-    display: block !important;
+  /* JS 토글 클래스 */
+  header ul li.open > .submenu {
+    display: flex !important; /* flex + column = 세로 목록 */
+  }
+
+  .submenu li {
+    width: 100%;
   }
 
   .submenu li a {
     font-size: 13px !important;
     padding: 14px 20px !important;
+    white-space: normal !important; /* 긴 텍스트 줄바꿈 허용 */
+    line-height: 1.4 !important;
   }
 
-  /* 히어로 배너 */
+  /* 히어로 배너: 잘림 방지 */
   .hero {
-    height: calc(100vh - 120px);
-    padding: 0 1rem;
+    height: auto;            /* 고정 height 제거 */
+    min-height: 60vh;
+    padding: 60px 1.2rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-position: center center;
   }
 
   .hero h2 {
-    font-size: 1.6rem;
-    line-height: 1.4;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    word-break: keep-all;    /* 한글 단어 단위 줄바꿈 */
+  }
+
+  .hero p {
+    font-size: 0.85rem;
+    word-break: break-word;
   }
 
   .hero-content .btn-more {
@@ -206,7 +225,7 @@ header ul li:hover .submenu {
   }
 
   footer {
-    padding: 6px 0;
+    padding: 8px 0;
     font-size: 12px;
   }
 }
