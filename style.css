@@ -7,7 +7,7 @@ body {
   letter-spacing: -0.5px;
 }
 
-/* 상단 메뉴 (Header) */ㅁ
+/* 상단 메뉴 (Header) */
 header {
   background-color: #fffefe;
   color: rgb(11, 11, 11);
@@ -79,12 +79,11 @@ footer {
   background-color: #ffffff;
   color: #111;
   text-align: center;
-  padding: 1px 0;
-  position: fixed;
-  bottom: 0;
+  padding: 10px 0;
+  /* position: fixed; ← 제거 */
+  /* bottom: 0;       ← 제거 */
   width: 100%;
 }
-
 /* 1. 서브 메뉴가 들어있는 부모 항목 설정 */
 header ul li {
   position: relative;
