@@ -95,5 +95,31 @@
         <p>© 2026 INICS. All Rights Reserved.</p>
     </footer>   
 
+   <script>
+  // 모바일 서브메뉴 터치 토글
+  if (window.innerWidth <= 480) {
+    document.querySelectorAll('header ul > li').forEach(function(li) {
+      var submenu = li.querySelector('.submenu');
+      if (!submenu) return;
+
+      li.addEventListener('click', function(e) {
+        e.stopPropagation();
+        // 다른 열린 메뉴 닫기
+        document.querySelectorAll('header ul > li.open').forEach(function(other) {
+          if (other !== li) other.classList.remove('open');
+        });
+        li.classList.toggle('open');
+      });
+    });
+
+    // 메뉴 외부 클릭 시 닫기
+    document.addEventListener('click', function() {
+      document.querySelectorAll('header ul > li.open').forEach(function(li) {
+        li.classList.remove('open');
+      });
+    });
+  }
+</script>
+    
 </body>
 </html>
