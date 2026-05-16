@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이닉스(INICS) - 센서 솔루션 전문 기업</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        @font-face {
+            font-family: 'Noto Sans KR';
+            src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Oxanium';
+            src: url('oxanium-v21-latin-regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 메뉴 -->
+    <header>
+        <h1>
+            <a href="index.html">
+                <img src="logo.png" alt="아이닉스 로고" height="70">
+            </a>
+        </h1>
+
+        <!-- 햄버거 버튼 (모바일 전용) -->
+        <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="main-nav">
+            <ul>
+                <li class="has-submenu">
+                    <a href="product0.html">Product <span class="arrow">▾</span></a>
+                    <ul class="submenu">
+                        <li><a href="product1.html">프로그래머블 고속 카운터 타이머</a></li>
+                        <li><a href="product2.html">에어리어센서</a></li>
+                        <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+                        <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+                        <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+                        <li><a href="product6.html">인덕티브 로터리 엔코더</a></li>
+                        <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+                        <li><a href="product8.html">엔코더 전용 카운터</a></li>
+                        <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="manu0">Manual <span class="arrow">▾</span></a>
+                    <ul class="submenu">
+                        <li><a href="manu1.html">프로그래머블 고속 카운터 타이머</a></li>
+                        <li><a href="manu2.html">에어리어센서</a></li>
+                        <li><a href="manu3.html">마그네틱 리니어 엔코더</a></li>
+                        <li><a href="manu4.html">광학식 로터리 엔코더</a></li>
+                        <li><a href="manu5.html">마그네틱 로터리 엔코더</a></li>
+                        <li><a href="manu6.html">인덕티브 로터리 엔코더</a></li>
+                        <li><a href="manu7.html">바퀴형 로터리 엔코더</a></li>
+                        <li><a href="manu8.html">엔코더 전용 카운터</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-submenu">
+                    <a href="cs1.html">Customer Service <span class="arrow">▾</span></a>
+                    <ul class="submenu">
+                        <li><a href="cs1.html">자료실</a></li>
+                        <li><a href="cs2.html">고객문의</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="notice.html">Notice</a></li>
+
+                <li class="has-submenu">
+                    <a href="about.html">Company <span class="arrow">▾</span></a>
+                    <ul class="submenu">
+                        <li><a href="about.html">회사소개</a></li>
+                        <li><a href="timeline.html">제품 개발 타임라인</a></li>
+                        <li><a href="location.html">오시는 길</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 메인 배너 영역 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>세상을 편리하게 하는 센서 전문기업</h2>
+            <p>A sensor specialist company that makes the world more convenient</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 INICS. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('main-nav');
+
+        hamburger.addEventListener('click', function () {
+            nav.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.has-submenu > a').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const parent = this.parentElement;
+                    const isOpen = parent.classList.contains('submenu-open');
+
+                    document.querySelectorAll('.has-submenu.submenu-open').forEach(function (el) {
+                        el.classList.remove('submenu-open');
+                    });
+
+                    if (!isOpen) {
+                        parent.classList.add('submenu-open');
+                    }
+                }
+            });
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 768) {
+                nav.classList.remove('open');
+                hamburger.classList.remove('active');
+                document.querySelectorAll('.has-submenu.submenu-open').forEach(function (el) {
+                    el.classList.remove('submenu-open');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
