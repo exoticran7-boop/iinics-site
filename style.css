@@ -141,6 +141,8 @@ header nav ul li:hover > .submenu {
 /* ==============================
    메인 배너 (Hero) - PC
 ============================== */
+
+
 .hero {
     height: calc(100vh - 87px); /* 헤더 실제 높이(로고 70px + padding) 기반 */
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('main-bg.png');
@@ -286,11 +288,11 @@ footer {
     }
 
     /* Hero 모바일 최적화 */
-    .hero {
-        height: calc(100svh - 87px); /* 모바일 주소창 고려한 svh 단위 */
-        min-height: 400px;
-        background-position: center center;
-    }
+   .hero {
+    height: calc(100svh - 57px); /* 모바일 헤더 실제 높이에 맞게 조정 */
+    min-height: 400px;
+    background-position: top center; /* ← center → top center 로 변경: 위쪽 잘림 방지 */
+}
 
     .hero h2 {
         font-size: 1.7rem;
@@ -314,6 +316,10 @@ footer {
         height: 54px;
     }
 
+    .hero {
+        height: calc(100svh - 70px); /* 54px 이미지 + 패딩 16px */
+    }
+
     .hero h2 {
         font-size: 1.4rem;
     }
@@ -322,6 +328,4 @@ footer {
         font-size: 0.85rem;
     }
 }
-
-
 
