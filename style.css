@@ -7,7 +7,7 @@ body {
   letter-spacing: -0.5px;
 }
 
-/* 상단 메뉴 (Header) */
+/* 상단 메뉴 (Header) */ㅁ
 header {
   background-color: #fffefe;
   color: rgb(11, 11, 11);
@@ -136,7 +136,7 @@ header ul li:hover .submenu {
    ================================ */
 @media (max-width: 480px) {
 
-  /* 헤더: 로고 위, 메뉴 아래로 세로 배치 */
+  /* 헤더 세로 배치 */
   header {
     flex-direction: column;
     align-items: flex-start;
@@ -145,10 +145,10 @@ header ul li:hover .submenu {
   }
 
   header img {
-    height: 36px; /* 로고 크기 축소 */
+    height: 36px;
   }
 
-  /* 메뉴 전체를 가로 스크롤 가능하도록 */
+  /* 메뉴 가로 스크롤 */
   header ul {
     width: 100%;
     overflow-x: auto;
@@ -160,7 +160,7 @@ header ul li:hover .submenu {
 
   header ul li {
     margin-left: 0;
-    flex-shrink: 0; /* 메뉴 항목이 줄어들지 않도록 */
+    flex-shrink: 0;
   }
 
   header a {
@@ -170,24 +170,29 @@ header ul li:hover .submenu {
     white-space: nowrap;
   }
 
-  /* 서브 메뉴: 모바일에서 hover 대신 클릭으로 동작하도록 위치 조정 */
+  /* 서브 메뉴: 모바일용 위치 */
   .submenu {
-    position: fixed; /* absolute → fixed 로 변경해 화면 밖으로 안 잘림 */
-    top: auto;
+    position: absolute;
+    top: 100%;
     left: 0;
-    right: 0;
-    min-width: 100%;
+    min-width: 160px;
+    z-index: 999;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  /* JS 토글로 열리는 클래스 */
+  header ul li.open .submenu {
+    display: block !important;
   }
 
   .submenu li a {
     font-size: 13px !important;
-    padding: 14px 20px !important; /* 터치 영역 확보 */
+    padding: 14px 20px !important;
   }
 
   /* 히어로 배너 */
   .hero {
-    height: calc(100vh - 120px); /* 헤더 높이 증가 반영 */
+    height: calc(100vh - 120px);
     padding: 0 1rem;
   }
 
@@ -201,7 +206,6 @@ header ul li:hover .submenu {
     font-size: 14px;
   }
 
-  /* 푸터: 고정 높이 확보 (하단 홈 인디케이터 여백) */
   footer {
     padding: 6px 0;
     font-size: 12px;
