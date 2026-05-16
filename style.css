@@ -1,3 +1,5 @@
+
+
 /* ==============================
    전체 기본 설정
 ============================== */
@@ -144,7 +146,7 @@ header nav ul li:hover > .submenu {
 .hero {
     height: calc(100vh - 87px); /* 헤더 실제 높이(로고 70px + padding) 기반 */
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('main-bg.png');
-    background-size: 100% auto;
+    background-size: cover;
     background-position: center;
     display: flex;
     justify-content: center;
@@ -322,3 +324,6 @@ footer {
         font-size: 0.85rem;
     }
 }
+
+
+
