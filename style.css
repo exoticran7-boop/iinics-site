@@ -24,10 +24,13 @@ header img {
 header ul {
   list-style: none;
   display: flex;
+  margin: 0;
+  padding: 0;
 }
 
 header ul li {
   margin-left: 20px;
+  position: relative; /* PC 서브메뉴 기준점 */
 }
 
 header a {
@@ -74,23 +77,16 @@ header a {
   background-color: #e67e00;
 }
 
-/* 하단 정보 (Footer) */
+/* 하단 정보 (Footer) - 화면 고정 해제 */
 footer {
   background-color: #ffffff;
   color: #111;
   text-align: center;
-  padding: 1px 0;
-  position: fixed;
-  bottom: 0;
+  padding: 20px 0; /* 여백 확보 */
   width: 100%;
 }
 
-/* 1. 서브 메뉴가 들어있는 부모 항목 설정 */
-header ul li {
-  position: relative;
-}
-
-/* 2. 서브 메뉴 기본 상태 (숨김) */
+/* 서브 메뉴 기본 상태 (숨김) */
 .submenu {
   display: none;
   position: absolute;
@@ -104,30 +100,32 @@ header ul li {
   z-index: 10;
 }
 
-/* 3. 서브 메뉴 안의 항목 디자인 */
+/* 서브 메뉴 안의 항목 디자인 (!important 제거) */
 .submenu li {
   margin: 0;
 }
 
 .submenu li a {
-  color: #333333 !important;
-  background-color: #ffffff !important;
-  padding: 12px 20px !important;
-  display: block !important;
-  font-size: 14px !important;
-  text-decoration: none !important;
+  color: #333333;
+  background-color: #ffffff;
+  padding: 12px 20px;
+  display: block;
+  font-size: 14px;
+  text-decoration: none;
   border-bottom: 1px solid #eee;
 }
 
-/* 4. 마우스를 올렸을 때 서브 메뉴 보이기 */
-header ul li:hover .submenu {
-  display: block;
+/* 마우스를 올렸을 때 서브 메뉴 보이기 (PC 전용) */
+@media (min-width: 481px) {
+  header ul li:hover .submenu {
+    display: block;
+  }
 }
 
-/* 5. 서브 메뉴 항목에 마우스 올렸을 때 배경색 변화 */
+/* 서브 메뉴 항목에 마우스 올렸을 때 배경색 변화 */
 .submenu li a:hover {
   background-color: #f4f4f4;
-  color: #ff8c00 !important;
+  color: #ff8c00;
 }
 
 
@@ -136,7 +134,6 @@ header ul li:hover .submenu {
    ================================ */
 @media (max-width: 480px) {
 
-  /* 헤더: 로고 위, 메뉴 아래로 세로 배치 */
   header {
     flex-direction: column;
     align-items: flex-start;
@@ -145,22 +142,20 @@ header ul li:hover .submenu {
   }
 
   header img {
-    height: 36px; /* 로고 크기 축소 */
+    height: 36px;
   }
 
-  /* 메뉴 전체를 가로 스크롤 가능하도록 */
+  /* 메뉴 가로 스크롤 활성화 */
   header ul {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 0;
-    margin: 0;
     gap: 4px;
   }
 
   header ul li {
     margin-left: 0;
-    flex-shrink: 0; /* 메뉴 항목이 줄어들지 않도록 */
+    flex-shrink: 0;
   }
 
   header a {
@@ -170,24 +165,27 @@ header ul li:hover .submenu {
     white-space: nowrap;
   }
 
-  /* 서브 메뉴: 모바일에서 hover 대신 클릭으로 동작하도록 위치 조정 */
+  /* 모바일 토글 방식 지원을 위한 변경 (JS로 li에 .is-open 토글 추천) */
+  header ul li.is-open .submenu {
+    display: block;
+  }
+
   .submenu {
-    position: fixed; /* absolute → fixed 로 변경해 화면 밖으로 안 잘림 */
-    top: auto;
+    position: absolute; /* 고정 해제하여 레이아웃 꼬임 방지 */
+    top: 100%;
     left: 0;
-    right: 0;
-    min-width: 100%;
+    min-width: 150px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
 
   .submenu li a {
-    font-size: 13px !important;
-    padding: 14px 20px !important; /* 터치 영역 확보 */
+    font-size: 13px;
+    padding: 14px 20px;
   }
 
   /* 히어로 배너 */
   .hero {
-    height: calc(100vh - 120px); /* 헤더 높이 증가 반영 */
+    height: calc(100vh - 120px);
     padding: 0 1rem;
   }
 
@@ -201,9 +199,9 @@ header ul li:hover .submenu {
     font-size: 14px;
   }
 
-  /* 푸터: 고정 높이 확보 (하단 홈 인디케이터 여백) */
+  /* 푸터 여백 */
   footer {
-    padding: 6px 0;
+    padding: 15px 0;
     font-size: 12px;
   }
 }
