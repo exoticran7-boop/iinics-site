@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>style.css — 모바일 반응형 추가본</title>
+<style>
+/*
+  ※ 이 파일은 style.css 내용 전체를 그대로 유지하고
+     하단에 모바일 반응형(@media) 코드만 추가한 버전입니다.
+  ※ 실제 적용 시 이 파일의 <style> 안 내용을 style.css에 붙여넣으세요.
+*/
+
+/* ════════════════════════════════════════
+   기존 style.css — 원본 그대로
+════════════════════════════════════════ */
+
+/* 전체 설정 */
+body {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    letter-spacing: -0.5px;
+}
+
+/* 상단 메뉴 (Header) */
+header {
+    background-color: #fffefe;
+    color: rgb(11, 11, 11);
+    padding: 0.5rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header img {
+    display: block;
+}
+
+header ul {
+    list-style: none;
+    display: flex;
+}
+
+header ul li {
+    margin-left: 20px;
+}
+
+header a {
+    color: rgb(10, 10, 10);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* 메인 배너 스타일링 */
+.hero {
+    height: calc(100vh - 80px);
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('main-bg.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero h2 strong {
+    color: #ff8c00;
+}
+
+.hero-content .btn-more {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #ff8c00;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.hero-content .btn-more:hover {
+    background-color: #e67e00;
+}
+
+/* 하단 정보 (Footer) */
+footer {
+    background-color: #ffffff;
+    color: #111;
+    text-align: center;
+    padding: 1px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* 1. 서브 메뉴가 들어있는 부모 항목 설정 */
+header ul li {
+    position: relative;
+}
+
+/* 2. 서브 메뉴 기본 상태 (숨김) */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    list-style: none;
+    z-index: 10;
+}
+
+/* 3. 서브 메뉴 안의 항목 디자인 */
+.submenu li {
+    margin: 0;
+}
+
+.submenu li a {
+    color: #333333 !important;
+    background-color: #ffffff !important;
+    padding: 12px 20px !important;
+    display: block !important;
+    font-size: 14px !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid #eee;
+}
+
+/* 4. 마우스를 올렸을 때 서브 메뉴 보이기 */
+header ul li:hover .submenu {
+    display: block;
+}
+
+/* 5. 서브 메뉴 항목에 마우스 올렸을 때 배경색 변화 */
+.submenu li a:hover {
+    background-color: #f4f4f4;
+    color: #ff8c00 !important;
+}
+
+
+/* ════════════════════════════════════════
+   모바일 반응형 추가 — 기존 디자인 유지
+════════════════════════════════════════ */
+
+/* ── 태블릿 (768px 이하) ── */
+@media (max-width: 768px) {
+
+    /* 헤더: 로고와 햄버거 버튼만 한 줄에 */
+    header {
+        padding: 0.5rem 4%;
+        position: relative;
+        flex-wrap: wrap;
+    }
+
+    /* 햄버거 버튼 */
+    .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        margin-left: auto;
+        z-index: 200;
+    }
+    .nav-toggle span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: #111;
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+    /* 열렸을 때 X 모양 */
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* 네비게이션: 기본 숨김 → 토글 시 세로 펼침 */
+    header nav {
+        display: none;
+        width: 100%;
+        order: 3;
+        border-top: 1px solid #eee;
+        margin-top: 6px;
+    }
+    header nav.open { display: block; }
+
+    /* 최상위 메뉴 세로 배열 */
+    header ul {
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+    }
+    header ul li {
+        margin-left: 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    header ul li > a {
+        display: block;
+        padding: 13px 16px;
+        font-size: 15px;
+    }
+
+    /* 서브메뉴: 모바일에서 hover 대신 click으로 열림 */
+    .submenu {
+        position: static;
+        box-shadow: none;
+        padding: 0;
+        border-left: 3px solid #ff8c00;
+        background-color: #fafafa !important;
+        min-width: 100%;
+    }
+    .submenu li a {
+        padding: 11px 28px !important;
+        font-size: 14px !important;
+        background-color: #fafafa !important;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* 모바일에서 hover 서브메뉴 비활성화 (JS로 대체) */
+    header ul li:hover .submenu { display: none; }
+    header ul li.open .submenu  { display: block; }
+
+    /* 히어로 폰트 크기 */
+    .hero h2 { font-size: 2rem; }
+
+    /* 버튼 */
+    .hero-content .btn-more {
+        padding: 10px 24px;
+        font-size: 14px;
+    }
+}
+
+/* ── 모바일 소형 (480px 이하) ── */
+@media (max-width: 480px) {
+
+    header {
+        padding: 0.5rem 3%;
+    }
+
+    header img { height: 44px; } /* 로고 살짝 축소 */
+
+    .hero h2 { font-size: 1.5rem; }
+
+    .hero-content .btn-more {
+        padding: 9px 20px;
+        font-size: 13px;
+    }
+
+    .submenu li a {
+        padding: 10px 24px !important;
+        font-size: 13px !important;
+    }
+}
+</style>
+
+<!-- ════════════════════════════════════════
+     모바일 햄버거 메뉴 JS
+     (style.css 적용 시 별도 <script> 태그로 HTML에 추가하세요)
+════════════════════════════════════════ -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* ── 햄버거 버튼 생성 ── */
+    const header = document.querySelector('header');
+    const nav    = document.querySelector('header nav') || header.querySelector('nav');
+
+    if (nav) {
+        const btn = document.createElement('button');
+        btn.className = 'nav-toggle';
+        btn.setAttribute('aria-label', '메뉴 열기');
+        btn.innerHTML = '<span></span><span></span><span></span>';
+        header.appendChild(btn);
+
+        btn.addEventListener('click', function () {
+            btn.classList.toggle('open');
+            nav.classList.toggle('open');
+        });
+    }
+
+    /* ── 모바일: 최상위 메뉴 클릭 시 서브메뉴 토글 ── */
+    const topItems = document.querySelectorAll('header ul > li');
+    topItems.forEach(function (li) {
+        const sub  = li.querySelector('.submenu');
+        const link = li.querySelector(':scope > a');
+        if (!sub || !link) return;
+
+        link.addEventListener('click', function (e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                /* 다른 열린 항목 닫기 */
+                topItems.forEach(function (other) {
+                    if (other !== li) other.classList.remove('open');
+                });
+                li.classList.toggle('open');
+            }
+        });
+    });
+
+    /* ── 리사이즈 시 초기화 ── */
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) {
+            topItems.forEach(function (li) { li.classList.remove('open'); });
+            document.querySelectorAll('header nav').forEach(function (n) {
+                n.classList.remove('open');
+            });
+            document.querySelectorAll('.nav-toggle').forEach(function (b) {
+                b.classList.remove('open');
+            });
+        }
+    });
+});
+</script>
+
+<body>
+<!--
+  ════════════════════════════════════════════════════════
+  적용 방법 안내
+  ════════════════════════════════════════════════════════
+
+  1. <style> 태그 안의 내용 전체를 복사해서 style.css 파일에 붙여넣으세요.
+     (기존 내용 뒤에 이어 붙이거나, 이 파일 전체로 교체하면 됩니다.)
+
+  2. <script> 태그 안의 내용을 각 HTML 파일 </body> 바로 앞에 붙여넣으세요.
+     또는 mobile-menu.js 파일로 저장 후 <script src="mobile-menu.js"></script>로 불러오세요.
+
+  3. 각 HTML 파일의 header 구조가 아래 형태여야 정상 동작합니다:
+     <header>
+       <h1>...</h1>
+       <nav>
+         <ul>
+           <li><a href="...">메뉴</a>
+             <ul class="submenu">...</ul>
+           </li>
+         </ul>
+       </nav>
+     </header>
+
+  ════════════════════════════════════════════════════════
+-->
+<p style="font-family:sans-serif;padding:40px;color:#333;max-width:700px;margin:auto;line-height:2;">
+  이 파일은 <strong>style.css</strong> 모바일 반응형 추가 버전입니다.<br>
+  위 <strong>적용 방법 안내</strong>(주석)를 참고해 CSS와 JS를 각각 복사하세요.
+</p>
+</body>
+</html>
