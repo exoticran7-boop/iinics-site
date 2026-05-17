@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>마그네틱 리니어 엔코더 ML Series - 아이닉스(INICS)</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    @font-face {
+      font-family: 'Noto Sans KR';
+      src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Oxanium';
+      src: url('oxanium-v21-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+  </style>
+
+  <style>
+    /* ════════════════════════════════════════════════
+       마그네틱 리니어 엔코더 페이지 — mle-* 네임스페이스
+       (흰색 배경 / 주황색 대표색 / 검정 텍스트)
+    ════════════════════════════════════════════════ */
+    main { padding: 0 !important; }
+
+    :root {
+      --mle-bg:      #FFFFFF;
+      --mle-accent:  #FF7F00;
+      --mle-accent2: #E06600;
+      --mle-gold:    #E06600;
+      --mle-green:   #0D7A52;
+      --mle-text:    #111111;
+      --mle-muted:   #111111;
+      --mle-divider: rgba(255,127,0,0.22);
+      --mle-card:    #FAFAFA;
+    }
+
+    .mle-page {
+      background: var(--mle-bg);
+      color: var(--mle-text);
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 80vh;
+      position: relative; overflow: hidden;
+    }
+
+    .mle-layout {
+      position: relative; z-index: 1;
+      max-width: 1260px; margin: 0 auto;
+      padding: 60px 40px 100px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      align-items: start;
+    }
+
+    /* ── 사이드바 ── */
+    .mle-sidebar {
+      border-right: 1px solid var(--mle-divider);
+      padding-right: 32px; position: sticky; top: 80px;
+    }
+    .mle-sidebar-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .3em;
+      color: var(--mle-accent); text-transform: uppercase;
+      margin-bottom: 20px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--mle-divider);
+      font-weight: 700;
+    }
+    .mle-nav { list-style: none; padding: 0; margin: 0; }
+    .mle-nav li { border-bottom: 1px solid rgba(255,127,0,0.09); }
+    .mle-nav li a {
+      display: block; padding: 12px 10px;
+      font-size: 13px; color: var(--mle-muted);
+      text-decoration: none; line-height: 1.5;
+      transition: color .25s, padding-left .25s, background .25s;
+      position: relative;
+    }
+    .mle-nav li a::before {
+      content: ''; position: absolute;
+      left: 0; top: 50%; transform: translateY(-50%);
+      width: 2px; height: 0;
+      background: var(--mle-accent); transition: height .25s;
+    }
+    .mle-nav li a:hover,
+    .mle-nav li a.active { color: var(--mle-accent); padding-left: 18px; background: rgba(255,127,0,0.05); }
+    .mle-nav li a:hover::before,
+    .mle-nav li a.active::before { height: 60%; }
+    .mle-nav li a.active { font-weight: 700; }
+
+    /* ── 콘텐츠 ── */
+    .mle-content {
+      padding-left: 52px;
+      min-width: 0;
+    }
+
+    /* ── 제품 헤더 ── */
+    .mle-header {
+      border-bottom: 1px solid var(--mle-divider);
+      padding-bottom: 32px; margin-bottom: 40px;
+      animation: mle-up .7s .08s ease both;
+    }
+    .mle-series-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .28em;
+      color: var(--mle-accent); text-transform: uppercase;
+      margin-bottom: 14px;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 700;
+    }
+    .mle-series-tag::after { content: ''; width: 40px; height: 1px; background: var(--mle-accent); }
+    .mle-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: clamp(28px, 4vw, 54px);
+      font-weight: 900; line-height: 1.05;
+      color: #111111; letter-spacing: -0.01em;
+    }
+    .mle-title em { font-style: normal; color: var(--mle-accent); }
+    .mle-fullname { margin-top: 10px; font-size: 17px; font-weight: 400; color: #111111; letter-spacing: .04em; }
+
+    .mle-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .mle-badge {
+      font-family: 'Oxanium', monospace; font-size: 13px;
+      letter-spacing: .14em; padding: 5px 13px;
+      border: 1.5px solid var(--mle-divider);
+      color: #111111; text-transform: uppercase;
+      background: #FFF9F3;
+    }
+    .mle-badge.hl { border-color: var(--mle-accent); color: var(--mle-accent2); background: #FFF3E0; font-weight: 700; }
+    .mle-badge.gn { border-color: var(--mle-green); color: var(--mle-green); background: #E6F5EF; font-weight: 700; }
+
+    /* ══════════════════════════════
+       유튜브 비디오 패널
+    ══════════════════════════════ */
+    .mle-video-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      border: 1.5px solid var(--mle-divider);
+      background: #111;
+      overflow: hidden;
+      margin-bottom: 2px;
+      animation: mle-up .7s .16s ease both;
+    }
+    .mle-video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ══════════════════════════════
+       리졸루션 블록
+    ══════════════════════════════ */
+    .mle-resolution-block {
+      background: var(--mle-card);
+      border: 1.5px solid var(--mle-divider);
+      padding: 28px 28px 32px;
+      margin-bottom: 2px;
+      position: relative; overflow: hidden;
+      animation: mle-up .7s .24s ease both;
+    }
+    .mle-resolution-block::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--mle-accent), var(--mle-accent2));
+    }
+    .mle-block-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .28em;
+      color: var(--mle-accent); text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+      font-weight: 700;
+    }
+    .mle-block-label::after { content: ''; flex: 1; height: 1px; background: var(--mle-divider); }
+
+    .mle-res-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+    .mle-res-grid + .mle-res-grid { margin-top: 8px; }
+    .mle-res-item {
+      text-align: center;
+      padding: 14px 8px 16px;
+      border: 1.5px solid var(--mle-divider);
+      background: #FFF9F3;
+      transition: border-color .25s, background .25s, transform .25s;
+      cursor: default;
+    }
+    .mle-res-item:hover {
+      border-color: var(--mle-accent);
+      background: #FFF3E0;
+      transform: translateY(-3px);
+    }
+    .mle-res-value {
+      font-family: 'Oxanium', monospace;
+      font-size: 18px; font-weight: 700;
+      color: var(--mle-gold);
+      line-height: 1; margin-bottom: 6px;
+    }
+    .mle-res-unit {
+      font-family: 'Oxanium', monospace;
+      font-size: 15px; letter-spacing: .16em;
+      color: #111111;
+      font-weight: 500;
+    }
+
+    /* ══════════════════════
+       스펙 카드 2열
+    ══════════════════════ */
+    .mle-spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 28px;
+    }
+    .mle-spec-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--mle-divider);
+      padding: 26px 22px 30px;
+      position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .mle-spec-card:hover {
+      border-color: var(--mle-accent);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 32px rgba(255,127,0,0.10);
+    }
+    .mle-spec-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--mle-accent), var(--mle-accent2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .mle-spec-card:hover::before { transform: scaleX(1); }
+    .mle-card-num {
+      font-family: 'Oxanium', monospace;
+      font-size: 60px; font-weight: 900;
+      color: rgba(255,127,0,0.07);
+      position: absolute; top: 8px; right: 14px;
+      line-height: 1; user-select: none;
+    }
+    .mle-card-icon { width: 36px; height: 36px; margin-bottom: 14px; }
+    .mle-card-icon svg { width: 100%; height: 100%; }
+    .mle-card-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .2em;
+      color: var(--mle-accent); text-transform: uppercase;
+      margin-bottom: 7px; font-weight: 700;
+    }
+    .mle-card-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 16px; font-weight: 700;
+      color: #111111; line-height: 1.25;
+      margin-bottom: 14px;
+    }
+    .mle-card-value {
+      font-family: 'Oxanium', monospace;
+      font-size: 24px; font-weight: 700;
+      color: var(--mle-gold);
+      margin-bottom: 6px; line-height: 1.1;
+    }
+    .mle-card-value .small {
+      font-size: 16px; color: #111111;
+    }
+    .mle-card-sub {
+      font-size: 13px; font-weight: 400;
+      color: #111111; line-height: 1.7;
+    }
+
+    /* ══════════════════════════════
+       출력 타입 테이블
+    ══════════════════════════════ */
+    .mle-output-table {
+      background: #FFFFFF;
+      border: 1.5px solid var(--mle-divider);
+      margin-top: 2px;
+    }
+    .mle-table-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--mle-divider);
+      background: #FFF9F3;
+    }
+    .mle-table-header-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .26em;
+      color: var(--mle-accent); text-transform: uppercase;
+      white-space: nowrap; font-weight: 700;
+    }
+    .mle-table-line { flex: 1; height: 1px; background: var(--mle-divider); }
+
+    .mle-output-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .mle-output-item {
+      padding: 22px 16px;
+      border-right: 1px solid var(--mle-divider);
+      text-align: center;
+      transition: background .25s;
+      min-width: 0;
+    }
+    .mle-output-item:last-child { border-right: none; }
+    .mle-output-item:hover { background: rgba(255,127,0,0.05); }
+    .mle-output-icon { width: 36px; height: 36px; margin: 0 auto 12px; }
+    .mle-output-icon svg { width: 100%; height: 100%; }
+    .mle-output-name {
+      font-family: 'Oxanium', monospace;
+      font-size: 15px; font-weight: 700;
+      color: var(--mle-accent); margin-bottom: 6px;
+    }
+    .mle-output-desc {
+      font-size: 13px; font-weight: 400;
+      color: #111111; line-height: 1.6;
+    }
+
+    /* Incremental 안내 바 */
+    .mle-incre-bar {
+      padding: 14px 24px;
+      border-top: 1px solid var(--mle-divider);
+      display: flex; align-items: center; gap: 12px;
+      background: #FFF9F3;
+      flex-wrap: wrap;
+    }
+    .mle-incre-bar svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .mle-incre-text {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .12em;
+      color: #111111; font-weight: 500;
+    }
+    .mle-incre-text strong {
+      color: var(--mle-accent);
+      font-weight: 700;
+    }
+
+    @keyframes mle-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════════════════
+       반응형
+    ══════════════════════════════════════ */
+    @media (max-width: 960px) {
+      .mle-layout {
+        grid-template-columns: 1fr;
+        padding: 36px 24px 70px;
+      }
+      .mle-sidebar {
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--mle-divider);
+        padding-right: 0; padding-bottom: 24px; margin-bottom: 32px;
+      }
+      .mle-nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+      .mle-nav li { border-bottom: none; }
+      .mle-nav li a {
+        padding: 8px 12px;
+        border: 1px solid var(--mle-divider);
+        font-size: 12.5px;
+        line-height: 1.4;
+        text-align: left;
+        word-break: keep-all;
+      }
+      .mle-nav li a::before { display: none; }
+      .mle-nav li a:hover,
+      .mle-nav li a.active { padding-left: 12px; }
+
+      .mle-content { padding-left: 0; }
+
+      .mle-resolution-block { padding: 24px 22px 28px; }
+      .mle-res-grid { grid-template-columns: repeat(3, 1fr); }
+      .mle-spec-grid { grid-template-columns: 1fr; }
+
+      .mle-output-grid { grid-template-columns: repeat(2, 1fr); }
+      .mle-output-item:nth-child(2) { border-right: none; }
+      .mle-output-item:nth-child(3),
+      .mle-output-item:nth-child(4) { border-top: 1px solid var(--mle-divider); }
+      .mle-output-item:nth-child(4) { border-right: none; }
+    }
+
+    @media (max-width: 600px) {
+      .mle-layout { padding: 28px 16px 60px; }
+      .mle-title { font-size: clamp(22px, 6.5vw, 38px); }
+      .mle-fullname { font-size: 14px; }
+      .mle-resolution-block { padding: 22px 18px 26px; }
+      .mle-res-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .mle-res-value { font-size: 16px; }
+      .mle-res-unit { font-size: 14px; }
+      .mle-card-value { font-size: 22px; }
+      .mle-table-header { padding: 14px 18px; }
+      .mle-output-item { padding: 18px 12px; }
+      .mle-incre-bar { padding: 12px 18px; }
+
+      /* ★ 배지 모바일 2열 그리드 — product1·product2 와 동일 표준 */
+      .mle-badges {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      .mle-badge {
+        text-align: center;
+        font-size: 11.5px;
+        letter-spacing: .08em;
+        padding: 7px 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      /* CE CERTIFIED 는 단독 강조 — 풀너비 */
+      .mle-badge.gn {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .mle-res-grid { grid-template-columns: repeat(2, 1fr); }
+      .mle-output-grid { grid-template-columns: 1fr; }
+      .mle-output-item {
+        border-right: none;
+        border-bottom: 1px solid var(--mle-divider);
+      }
+      .mle-output-item:nth-child(2),
+      .mle-output-item:nth-child(3),
+      .mle-output-item:nth-child(4) { border-top: none; }
+      .mle-output-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       ★ 상단 메뉴 — product1·product2·index 와 100% 동일한 구조
+  ════════════════════════════════════════ -->
+  <header>
+    <h1>
+      <a href="index.html">
+        <img src="logo.png" alt="아이닉스 로고" height="70">
+      </a>
+    </h1>
+
+    <!-- 햄버거 버튼 (모바일 전용) -->
+    <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="main-nav">
+      <ul>
+        <li class="has-submenu">
+          <a href="product0.html">Product <span class="arrow">▾</span></a>
+          <ul class="submenu">
+            <li><a href="product1.html">프로그래머블 고속 카운터 타이머</a></li>
+            <li><a href="product2.html">에어리어센서</a></li>
+            <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="product6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="product8.html">엔코더 전용 카운터</a></li>
+            <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+          </ul>
+        </li>
+
+        <li class="has-submenu">
+          <a href="manu0.html">Manual <span class="arrow">▾</span></a>
+          <ul class="submenu">
+            <li><a href="manu1.html">프로그래머블 고속 카운터 타이머</a></li>
+            <li><a href="manu2.html">에어리어센서</a></li>
+            <li><a href="manu3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="manu4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="manu5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="manu6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="manu7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="manu8.html">엔코더 전용 카운터</a></li>
+          </ul>
+        </li>
+
+        <li class="has-submenu">
+          <a href="cs1.html">Customer Service <span class="arrow">▾</span></a>
+          <ul class="submenu">
+            <li><a href="cs1.html">자료실</a></li>
+            <li><a href="cs2.html">고객문의</a></li>
+          </ul>
+        </li>
+
+        <li><a href="notice.html">Notice</a></li>
+
+        <li class="has-submenu">
+          <a href="about.html">Company <span class="arrow">▾</span></a>
+          <ul class="submenu">
+            <li><a href="about.html">회사소개</a></li>
+            <li><a href="timeline.html">제품 개발 타임라인</a></li>
+            <li><a href="location.html">오시는 길</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="mle-page">
+      <div class="mle-layout">
+
+        <!-- ══ 좌측 사이드바 ══ -->
+        <aside class="mle-sidebar">
+          <div class="mle-sidebar-label">Product Line-up</div>
+          <ul class="mle-nav">
+            <li><a href="product1.html">프로그래머블<br>고속 카운터 타이머</a></li>
+            <li><a href="product2.html">에어리어센서</a></li>
+            <li><a href="product3.html" class="active">마그네틱 리니어 엔코더</a></li>
+            <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="product6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="product8.html">엔코더 전용 카운터</a></li>
+            <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+          </ul>
+        </aside>
+
+        <!-- ══ 우측 콘텐츠 ══ -->
+        <div class="mle-content">
+
+          <!-- ── 제품 헤더 ── -->
+          <div class="mle-header">
+            <div class="mle-series-tag">INICS · Product</div>
+            <h2 class="mle-title">마그네틱 <em>리니어</em> 엔코더</h2>
+            <p class="mle-fullname">Magnetic Linear Encoder &nbsp;|&nbsp; ML Series</p>
+            <div class="mle-badges">
+              <span class="mle-badge hl">Incremental</span>
+              <span class="mle-badge hl">Max 30m Range</span>
+              <span class="mle-badge hl">1μm Resolution</span>
+              <span class="mle-badge gn">CE CERTIFIED</span>
+            </div>
+          </div>
+
+          <!-- ── 유튜브 비디오 ── -->
+          <div class="mle-video-wrap">
+            <iframe
+              src="https://www.youtube.com/embed/bRED-JNE53M?autoplay=1&mute=1&loop=1&playlist=bRED-JNE53M&rel=0"
+              title="마그네틱 리니어 엔코더 ML Series - INICS"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <!-- ── 해상도 선택 블록 ── -->
+          <div class="mle-resolution-block">
+            <div class="mle-block-label">Resolution · 분해능 선택 사양</div>
+
+            <!-- 해상도 카드 6종 (1) -->
+            <div class="mle-res-grid">
+              <div class="mle-res-item"><div class="mle-res-value">1</div><div class="mle-res-unit">㎛</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">2</div><div class="mle-res-unit">㎛</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">5</div><div class="mle-res-unit">㎛</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">10</div><div class="mle-res-unit">㎛</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">20</div><div class="mle-res-unit">㎛</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">25</div><div class="mle-res-unit">㎛</div></div>
+            </div>
+
+            <!-- 해상도 카드 6종 (2) -->
+            <div class="mle-res-grid">
+              <div class="mle-res-item"><div class="mle-res-value">50</div><div class="mle-res-unit">㎛</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">0.1</div><div class="mle-res-unit">㎜</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">0.2</div><div class="mle-res-unit">㎜</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">0.25</div><div class="mle-res-unit">㎜</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">0.5</div><div class="mle-res-unit">㎜</div></div>
+              <div class="mle-res-item"><div class="mle-res-value">1</div><div class="mle-res-unit">㎜</div></div>
+            </div>
+
+            <!-- ── 스펙 카드 2열 ── -->
+            <div class="mle-spec-grid">
+
+              <!-- 최대 측정 길이 -->
+              <div class="mle-spec-card">
+                <div class="mle-card-num">01</div>
+                <div class="mle-card-icon">
+                  <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="4"  y1="19" x2="34" y2="19" stroke="#FF7F00" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="4"  y1="13" x2="4"  y2="25" stroke="#FF7F00" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="34" y1="13" x2="34" y2="25" stroke="#FF7F00" stroke-width="1.8" stroke-linecap="round"/>
+                    <circle cx="4"  cy="19" r="2.5" fill="#FF7F00"/>
+                    <circle cx="34" cy="19" r="2.5" fill="#E06600"/>
+                    <line x1="10" y1="14" x2="10" y2="24" stroke="#FF7F00" stroke-width="1" opacity="0.3"/>
+                    <line x1="16" y1="14" x2="16" y2="24" stroke="#FF7F00" stroke-width="1" opacity="0.3"/>
+                    <line x1="22" y1="14" x2="22" y2="24" stroke="#FF7F00" stroke-width="1" opacity="0.3"/>
+                    <line x1="28" y1="14" x2="28" y2="24" stroke="#FF7F00" stroke-width="1" opacity="0.3"/>
+                  </svg>
+                </div>
+                <div class="mle-card-label">Measuring Length</div>
+                <div class="mle-card-title">Maximum<br>Measuring Length</div>
+                <div class="mle-card-value">30 m</div>
+                <div class="mle-card-sub">최대 측정 길이 30m<br>대형 설비·장거리 위치 측정에 최적화</div>
+              </div>
+
+              <!-- 전원 공급 -->
+              <div class="mle-spec-card">
+                <div class="mle-card-num">02</div>
+                <div class="mle-card-icon">
+                  <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="19" cy="19" r="13" stroke="#FF7F00" stroke-width="1.6"/>
+                    <path d="M19 9 L14 19 H19 L17 29" stroke="#E06600" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="8"  cy="19" r="2" fill="#FF7F00" opacity="0.4"/>
+                    <circle cx="30" cy="19" r="2" fill="#FF7F00" opacity="0.4"/>
+                  </svg>
+                </div>
+                <div class="mle-card-label">Power Supply</div>
+                <div class="mle-card-title">Power Supply<br>전원 공급</div>
+                <div class="mle-card-value">5V <span class="small">/</span> 12~24V</div>
+                <div class="mle-card-sub">DC 전원 지원 · 허용 오차 ±5%<br>다양한 산업 환경에 유연하게 대응</div>
+              </div>
+
+            </div><!-- /mle-spec-grid -->
+
+            <!-- ── 출력 타입 테이블 ── -->
+            <div class="mle-output-table">
+              <div class="mle-table-header">
+                <div class="mle-table-header-label">Control Output Type · 출력 타입</div>
+                <div class="mle-table-line"></div>
+              </div>
+              <div class="mle-output-grid">
+
+                <!-- NPN -->
+                <div class="mle-output-item">
+                  <div class="mle-output-icon">
+                    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="18" cy="18" r="13" stroke="#FF7F00" stroke-width="1.4"/>
+                      <text x="18" y="23" font-family="monospace" font-size="11" font-weight="bold" fill="#FF7F00" text-anchor="middle">N</text>
+                      <line x1="4"  y1="18" x2="9"  y2="18" stroke="#FF7F00" stroke-width="1.2"/>
+                      <line x1="27" y1="18" x2="32" y2="18" stroke="#FF7F00" stroke-width="1.2"/>
+                    </svg>
+                  </div>
+                  <div class="mle-output-name">NPN</div>
+                  <div class="mle-output-desc">NPN 오픈 컬렉터<br>Open Collector</div>
+                </div>
+
+                <!-- Totem Pole -->
+                <div class="mle-output-item">
+                  <div class="mle-output-icon">
+                    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="12" y="4"  width="12" height="10" rx="1.5" stroke="#FF7F00" stroke-width="1.4"/>
+                      <rect x="12" y="22" width="12" height="10" rx="1.5" stroke="#E06600" stroke-width="1.4"/>
+                      <line x1="18" y1="14" x2="18" y2="22" stroke="#111111" stroke-width="1.4"/>
+                      <line x1="4"  y1="18" x2="12" y2="18" stroke="#111111" stroke-width="1.2"/>
+                      <line x1="24" y1="18" x2="32" y2="18" stroke="#111111" stroke-width="1.2"/>
+                    </svg>
+                  </div>
+                  <div class="mle-output-name">Totem Pole</div>
+                  <div class="mle-output-desc">토템폴 출력<br>Totem Pole</div>
+                </div>
+
+                <!-- Voltage -->
+                <div class="mle-output-item">
+                  <div class="mle-output-icon">
+                    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="18" cy="18" r="13" stroke="#E06600" stroke-width="1.4"/>
+                      <text x="18" y="23" font-family="monospace" font-size="11" font-weight="bold" fill="#E06600" text-anchor="middle">V</text>
+                      <line x1="4"  y1="18" x2="9"  y2="18" stroke="#E06600" stroke-width="1.2"/>
+                      <line x1="27" y1="18" x2="32" y2="18" stroke="#E06600" stroke-width="1.2"/>
+                    </svg>
+                  </div>
+                  <div class="mle-output-name">Voltage</div>
+                  <div class="mle-output-desc">전압 출력<br>Voltage Output</div>
+                </div>
+
+                <!-- Line Driver -->
+                <div class="mle-output-item">
+                  <div class="mle-output-icon">
+                    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <polygon points="8,10 28,18 8,26" stroke="#FF7F00" stroke-width="1.4" fill="rgba(255,127,0,0.08)" stroke-linejoin="round"/>
+                      <line x1="2"  y1="18" x2="8"  y2="18" stroke="#FF7F00" stroke-width="1.4"/>
+                      <line x1="28" y1="18" x2="34" y2="18" stroke="#FF7F00" stroke-width="1.4"/>
+                      <circle cx="28" cy="18" r="2" fill="#FF7F00"/>
+                    </svg>
+                  </div>
+                  <div class="mle-output-name">Line Driver</div>
+                  <div class="mle-output-desc">라인 드라이버<br>Line Driver</div>
+                </div>
+
+              </div><!-- /mle-output-grid -->
+
+              <!-- Incremental 안내 바 -->
+              <div class="mle-incre-bar">
+                <svg viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="7" stroke="#FF7F00" stroke-width="1.2"/>
+                  <line x1="8" y1="5" x2="8" y2="9" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round"/>
+                  <circle cx="8" cy="11.5" r="0.8" fill="#FF7F00"/>
+                </svg>
+                <span class="mle-incre-text">
+                  Control Output Type : <strong>INCREMENTAL</strong>
+                  &nbsp;—&nbsp; 증분형 출력 방식 (상대 위치 계산)
+                </span>
+              </div>
+
+            </div><!-- /mle-output-table -->
+
+          </div><!-- /mle-resolution-block -->
+
+        </div><!-- /mle-content -->
+      </div><!-- /mle-layout -->
+    </div><!-- /mle-page -->
+  </main>
+
+  <!-- ════════════════════════════════════════
+       ★ 햄버거 메뉴 동작 스크립트
+       — product1·product2·index 와 100% 동일한 로직
+  ════════════════════════════════════════ -->
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.getElementById('main-nav');
+
+    hamburger.addEventListener('click', function () {
+      nav.classList.toggle('open');
+      hamburger.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.has-submenu > a').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          const parent = this.parentElement;
+          const isOpen = parent.classList.contains('submenu-open');
+
+          document.querySelectorAll('.has-submenu.submenu-open').forEach(function (el) {
+            el.classList.remove('submenu-open');
+          });
+
+          if (!isOpen) {
+            parent.classList.add('submenu-open');
+          }
+        }
+      });
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) {
+        nav.classList.remove('open');
+        hamburger.classList.remove('active');
+        document.querySelectorAll('.has-submenu.submenu-open').forEach(function (el) {
+          el.classList.remove('submenu-open');
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
