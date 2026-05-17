@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제품 개발 타임라인 - 아이닉스(INICS)</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+@font-face {
+  font-family: 'Oxanium';
+  src: url('oxanium-v21-latin-regular.woff2') format('woff2');
+  font-weight: 400 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+  font-weight: 300 700; font-style: normal; font-display: swap;
+}
+
+/* ════════════════════════════════════════════
+   제품 라인업 페이지 — ip-* 네임스페이스
+   (표본 product 페이지들과 동일한 디자인 시스템)
+════════════════════════════════════════════ */
+main { padding: 0 !important; }
+
+:root {
+  --ip-bg:       #FFFFFF;
+  --ip-accent:   #FF7F00;
+  --ip-accent2:  #E06600;
+  --ip-orange-lt:#FFF3E0;
+  --ip-blue:     #1A5FA8;
+  --ip-blue-lt:  #EBF3FC;
+  --ip-green:    #0D7A52;
+  --ip-green-lt: #E6F5EF;
+  --ip-purple:   #6B3FA0;
+  --ip-purple-lt:#F0EAF9;
+  --ip-text:     #111111;
+  --ip-muted:    #444444;
+  --ip-divider:  rgba(255,127,0,0.22);
+  --ip-card:     #FAFAFA;
+  --ip-border:   #E0E0E0;
+}
+
+.ip-page {
+  background: var(--ip-bg);
+  color: var(--ip-text);
+  font-family: 'Noto Sans KR', sans-serif;
+  min-height: 80vh;
+  position: relative;
+}
+
+/* ══════════════════════════════════════════
+   HERO — 표본 헤더 패턴
+══════════════════════════════════════════ */
+.ip-hero {
+  background: linear-gradient(135deg, #FFF9F3 0%, #FFFFFF 60%, #FFF3E6 100%);
+  border-bottom: 1.5px solid var(--ip-divider);
+  padding: 64px 40px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.ip-hero::before {
+  content: '';
+  position: absolute;
+  right: -60px; top: -60px;
+  width: 420px; height: 420px;
+  background: radial-gradient(ellipse, rgba(255,127,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ip-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ip-accent), var(--ip-accent2), transparent);
+}
+.ip-hero-inner {
+  max-width: 1260px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 시리즈 태그 — 표본 .pct-series-tag 패턴 */
+.ip-series-tag {
+  font-family: 'Oxanium', monospace;
+  font-size: 13px; letter-spacing: .28em;
+  color: var(--ip-accent); text-transform: uppercase;
+  margin-bottom: 14px;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 700;
+}
+.ip-series-tag::after {
+  content: ''; width: 40px; height: 1px; background: var(--ip-accent);
+}
+.ip-series-tag .ip-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ip-accent);
+  animation: ip-pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes ip-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* 타이틀 — 표본 .pct-title 패턴 */
+.ip-title {
+  font-family: 'Oxanium', sans-serif;
+  font-size: clamp(28px, 4vw, 54px);
+  font-weight: 900; line-height: 1.05;
+  color: var(--ip-text); letter-spacing: -0.01em;
+}
+.ip-title em { font-style: normal; color: var(--ip-accent); }
+
+.ip-fullname {
+  margin-top: 10px;
+  font-size: 17px; font-weight: 400;
+  color: var(--ip-text); letter-spacing: 0.04em;
+}
+.ip-fullname-en {
+  margin-top: 4px;
+  font-family: 'Oxanium', monospace;
+  font-size: 13px; color: var(--ip-muted);
+  letter-spacing: 0.06em;
+}
+
+/* 통계 배지 */
+.ip-stats {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.ip-stat {
+  background: #FFFFFF;
+  border: 1.5px solid var(--ip-divider);
+  padding: 14px 24px;
+  text-align: center;
+  min-width: 140px;
+  transition: border-color .25s, transform .25s;
+}
+.ip-stat:hover {
+  border-color: var(--ip-accent);
+  transform: translateY(-2px);
+}
+.ip-stat-num {
+  font-family: 'Oxanium', monospace;
+  font-size: 22px; font-weight: 800;
+  color: var(--ip-accent); line-height: 1;
+}
+.ip-stat-lbl {
+  font-size: 13px; color: var(--ip-text);
+  margin-top: 4px; font-weight: 500;
+}
+
+/* ══════════════════════════════════════════
+   메인 콘텐츠 영역
+══════════════════════════════════════════ */
+.ip-wrap {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+}
+
+/* 섹션 레이블 — 표본 패턴 */
+.ip-section-label {
+  font-family: 'Oxanium', monospace;
+  font-size: 13px; letter-spacing: .28em;
+  color: var(--ip-accent); text-transform: uppercase;
+  margin: 56px 0 24px;
+  display: flex; align-items: center; gap: 12px;
+  font-weight: 700;
+}
+.ip-section-label::after { content: ''; flex: 1; height: 1px; background: var(--ip-divider); }
+
+/* 카테고리 범례 */
+.ip-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin-bottom: 32px;
+  padding: 16px 20px;
+  border: 1.5px solid var(--ip-divider);
+  background: #FFF9F3;
+}
+.ip-leg {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Oxanium', monospace;
+  font-size: 13px;
+  letter-spacing: .04em;
+  color: var(--ip-text);
+  font-weight: 700;
+}
+.ip-leg-pip {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   제품 카드 그리드
+══════════════════════════════════════════ */
+.ip-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px 16px;  /* 세로 32px / 가로 16px — 줄간 간격 확보 */
+}
+
+.ip-card {
+  background: var(--ip-card);
+  border: 1.5px solid var(--ip-border);
+  padding: 22px 20px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.ip-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s ease;
+  z-index: 1;
+}
+.ip-card:hover {
+  transform: translateY(-4px);
+  border-width: 2px;
+  box-shadow: 0 10px 32px rgba(0,0,0,0.10);
+}
+.ip-card:hover::before { transform: scaleX(1); }
+
+.ip-pnum {
+  position: absolute;
+  top: 16px; right: 18px;
+  font-family: 'Oxanium', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  opacity: 0.45;
+  z-index: 2;
+  color: var(--ip-text);
+}
+
+.ip-photo {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  position: relative;
+  background: #F5F5F5;
+  border: 1px solid #EEEEEE;
+}
+.ip-photo img {
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: center;
+  display: block;
+  transition: transform .4s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-user-drag: none;
+}
+.ip-card:hover .ip-photo img { transform: scale(1.05); }
+
+.ip-cat {
+  font-family: 'Oxanium', monospace;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: inline-block;
+  padding: 3px 9px;
+}
+.ip-name-kr {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+.ip-name-en {
+  font-family: 'Oxanium', monospace;
+  font-size: 13px;
+  color: var(--ip-muted);
+  margin-bottom: 14px;
+  letter-spacing: .04em;
+}
+.ip-sep {
+  height: 1px;
+  margin-bottom: 13px;
+  opacity: 0.3;
+}
+.ip-desc {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--ip-text);
+  flex: 1;
+}
+.ip-feats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 14px;
+}
+.ip-feat {
+  font-size: 13px;
+  padding: 3px 9px;
+  border: 1.5px solid;
+  font-family: 'Oxanium', monospace;
+  letter-spacing: .04em;
+  font-weight: 700;
+}
+
+/* ── 카테고리 wrapper — 카드가 직접 grid item처럼 동작하도록 ── */
+.ip-enc, .ip-cnt, .ip-lin, .ip-sen { display: contents; }
+
+/* ── 카테고리별 색상 ── */
+/* ENC (Blue) */
+.ip-enc .ip-card::before { background: linear-gradient(90deg, var(--ip-blue), transparent); }
+.ip-enc .ip-card:hover  { border-color: rgba(26,95,168,0.40); box-shadow: 0 10px 32px rgba(26,95,168,0.12); }
+.ip-enc .ip-cat         { background: var(--ip-blue-lt); color: var(--ip-blue); }
+.ip-enc .ip-name-kr     { color: var(--ip-blue); }
+.ip-enc .ip-sep         { background: var(--ip-blue); }
+.ip-enc .ip-feat        { border-color: rgba(26,95,168,0.35); color: var(--ip-blue); background: var(--ip-blue-lt); }
+.ip-enc .ip-pnum        { color: var(--ip-blue); }
+
+/* CNT (Orange) */
+.ip-cnt .ip-card::before { background: linear-gradient(90deg, var(--ip-accent), transparent); }
+.ip-cnt .ip-card:hover  { border-color: rgba(255,127,0,0.40); box-shadow: 0 10px 32px rgba(255,127,0,0.12); }
+.ip-cnt .ip-cat         { background: var(--ip-orange-lt); color: var(--ip-accent2); }
+.ip-cnt .ip-name-kr     { color: var(--ip-accent2); }
+.ip-cnt .ip-sep         { background: var(--ip-accent); }
+.ip-cnt .ip-feat        { border-color: rgba(255,127,0,0.35); color: var(--ip-accent2); background: var(--ip-orange-lt); }
+.ip-cnt .ip-pnum        { color: var(--ip-accent2); }
+
+/* LIN (Green) */
+.ip-lin .ip-card::before { background: linear-gradient(90deg, var(--ip-green), transparent); }
+.ip-lin .ip-card:hover  { border-color: rgba(13,122,82,0.40); box-shadow: 0 10px 32px rgba(13,122,82,0.12); }
+.ip-lin .ip-cat         { background: var(--ip-green-lt); color: var(--ip-green); }
+.ip-lin .ip-name-kr     { color: var(--ip-green); }
+.ip-lin .ip-sep         { background: var(--ip-green); }
+.ip-lin .ip-feat        { border-color: rgba(13,122,82,0.35); color: var(--ip-green); background: var(--ip-green-lt); }
+.ip-lin .ip-pnum        { color: var(--ip-green); }
+
+/* SEN (Purple) */
+.ip-sen .ip-card::before { background: linear-gradient(90deg, var(--ip-purple), transparent); }
+.ip-sen .ip-card:hover  { border-color: rgba(107,63,160,0.40); box-shadow: 0 10px 32px rgba(107,63,160,0.12); }
+.ip-sen .ip-cat         { background: var(--ip-purple-lt); color: var(--ip-purple); }
+.ip-sen .ip-name-kr     { color: var(--ip-purple); }
+.ip-sen .ip-sep         { background: var(--ip-purple); }
+.ip-sen .ip-feat        { border-color: rgba(107,63,160,0.35); color: var(--ip-purple); background: var(--ip-purple-lt); }
+.ip-sen .ip-pnum        { color: var(--ip-purple); }
+
+/* ══════════════════════════════════════════
+   하단 회사 정보 박스 — 표본 톤
+══════════════════════════════════════════ */
+.ip-footer {
+  margin-top: 56px;
+  background: linear-gradient(135deg, #FFF9F3, #FFFFFF, #FFF3E6);
+  border: 1.5px solid var(--ip-divider);
+  padding: 32px 40px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.ip-footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--ip-accent), var(--ip-accent2), transparent);
+}
+.ip-footer-brand {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--ip-text);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.ip-footer-brand em { font-style: normal; color: var(--ip-accent); }
+.ip-footer-slogan {
+  font-size: 13px; font-weight: 500;
+  color: var(--ip-text); margin-bottom: 3px;
+}
+.ip-footer-slogan-en {
+  font-family: 'Oxanium', monospace;
+  font-size: 13px; color: var(--ip-muted);
+  letter-spacing: .04em;
+}
+.ip-footer-divider {
+  width: 1px; height: 64px;
+  background: linear-gradient(to bottom, transparent, var(--ip-divider), transparent);
+}
+.ip-footer-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: right;
+}
+.ip-footer-info {
+  font-family: 'Oxanium', monospace;
+  font-size: 13px;
+  color: var(--ip-text);
+  letter-spacing: .04em;
+}
+.ip-footer-info strong {
+  color: var(--ip-accent2);
+  font-weight: 700;
+}
+
+/* ══════════════════════════════════════════
+   반응형
+══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .ip-hero { padding: 48px 32px 44px; }
+  .ip-hero-inner { grid-template-columns: 1fr; gap: 24px; }
+  .ip-stats { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+  .ip-stat { min-width: 100px; flex: 1; }
+  .ip-wrap { padding: 0 32px 70px; }
+  .ip-grid { grid-template-columns: repeat(2, 1fr); }
+  .ip-footer { padding: 28px 32px; }
+}
+
+@media (max-width: 700px) {
+  .ip-hero { padding: 36px 20px 32px; }
+  .ip-wrap { padding: 0 20px 60px; }
+  .ip-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
+  .ip-card { padding: 18px 16px 20px; }
+  .ip-section-label { margin: 40px 0 20px; }
+  .ip-legend { padding: 14px 16px; gap: 8px 18px; }
+  .ip-footer {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 24px 20px;
+  }
+  .ip-footer-divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(to right, transparent, var(--ip-divider), transparent);
+  }
+  .ip-footer-right { text-align: left; }
+}
+
+@media (max-width: 540px) {
+  .ip-hero { padding: 28px 16px 28px; }
+  .ip-title { font-size: clamp(22px, 6.5vw, 38px); }
+  .ip-stats { gap: 6px; }
+  .ip-stat { padding: 11px 12px; min-width: 0; }
+  .ip-stat-num { font-size: 18px; }
+  .ip-stat-lbl { font-size: 12px; }
+  .ip-wrap { padding: 0 16px 50px; }
+  .ip-grid { grid-template-columns: 1fr; gap: 20px; }
+  .ip-photo { height: 200px; }
+  .ip-legend { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .ip-footer-brand { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1><a href="index.html"><img src="logo.png" alt="아이닉스 로고" height="52" /></a></h1>
+  <nav>
+    <ul>
+      <li>
+        <a href="product0.html">Product</a>
+        <ul class="submenu">
+          <li><a href="product1.html">프로그래머블 고속 카운터 타이머</a></li>
+          <li><a href="product2.html">에어리어센서</a></li>
+          <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+          <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+          <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+          <li><a href="product6.html">인덕티브 로터리 엔코더</a></li>
+          <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+          <li><a href="product8.html">엔코더 전용 카운터</a></li>
+          <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="manu0.html">Manual</a>
+        <ul class="submenu">
+          <li><a href="manu1.html">프로그래머블<br>고속 카운터 타이머</a></li>
+          <li><a href="manu2.html">에어리어센서</a></li>
+          <li><a href="manu3.html">마그네틱 리니어 엔코더</a></li>
+          <li><a href="manu4.html">광학식 로터리 엔코더</a></li>
+          <li><a href="manu5.html">마그네틱 로터리 엔코더</a></li>
+          <li><a href="manu6.html">인덕티브 로터리 엔코더</a></li>
+          <li><a href="manu7.html">바퀴형 로터리 엔코더</a></li>
+          <li><a href="manu8.html">엔코더 전용 카운터</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="cs1.html">Customer Service</a>
+        <ul class="submenu">
+          <li><a href="cs1.html">자료실</a></li>
+          <li><a href="cs2.html">고객문의</a></li>
+        </ul>
+      </li>
+      <li><a href="notice.html">Notice</a></li>
+      <li>
+        <a href="about.html">Company</a>
+        <ul class="submenu">
+          <li><a href="about.html">회사소개</a></li>
+          <li><a href="timeline.html" class="active">제품 개발 타임라인</a></li>
+          <li><a href="location.html">오시는 길</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="ip-page">
+
+    <!-- ══ HERO — 표본 헤더 패턴 ══ -->
+    <div class="ip-hero">
+      <div class="ip-hero-inner">
+        <div>
+          <div class="ip-series-tag">
+            <span class="ip-dot"></span>INICS · Products
+          </div>
+          <h2 class="ip-title"><em>INICS</em> 제품 라인업</h2>
+          <p class="ip-fullname">세상을 편리하게 하는 센서 전문기업</p>
+          <p class="ip-fullname-en">A Sensor Specialist Company That Makes The World More Convenient</p>
+        </div>
+        <div class="ip-stats">
+          <div class="ip-stat"><div class="ip-stat-num">9종</div><div class="ip-stat-lbl">제품 라인업</div></div>
+          <div class="ip-stat"><div class="ip-stat-num">CE 인증</div><div class="ip-stat-lbl">국제 품질 기준</div></div>
+          <div class="ip-stat"><div class="ip-stat-num">5건</div><div class="ip-stat-lbl">특허 등록</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 메인 콘텐츠 ══ -->
+    <div class="ip-wrap">
+
+      <!-- 섹션 레이블 -->
+      <div class="ip-section-label">Product Lineup · 제품 라인업</div>
+
+      <!-- 카테고리 범례 -->
+      <div class="ip-legend">
+        <div class="ip-leg"><div class="ip-leg-pip" style="background:#1A5FA8"></div>로터리 엔코더 계열</div>
+        <div class="ip-leg"><div class="ip-leg-pip" style="background:#FF7F00"></div>카운터 · 타이머 계열</div>
+        <div class="ip-leg"><div class="ip-leg-pip" style="background:#0D7A52"></div>리니어 엔코더 계열</div>
+        <div class="ip-leg"><div class="ip-leg-pip" style="background:#6B3FA0"></div>에어리어 센서 계열</div>
+      </div>
+
+      <!-- 제품 카드 그리드 -->
+      <div class="ip-grid">
+
+        <!-- No.01 -->
+        <div class="ip-cnt"><div class="ip-card">
+          <div class="ip-pnum">No.01</div>
+          <div class="ip-photo"><img src="p1.jpg" alt="고속 카운터 타이머" loading="lazy"></div>
+          <div class="ip-cat">High-Speed Counter</div>
+          <div class="ip-name-kr">고속 카운터 타이머</div>
+          <div class="ip-name-en">High-speed Counter Timer</div>
+          <div class="ip-sep"></div>
+          <div class="ip-desc">µs 단위 초고속 펄스 정밀 계수. 엔코더 4체배 처리 지원 · 시간 간격 · 타이밍 제어 복합 기능.</div>
+          <div class="ip-feats">
+            <span class="ip-feat">초고속</span>
+            <span class="ip-feat">엔코더 4체배</span>
+            <span class="ip-feat">BATCH</span>
+          </div>
+        </div></div>
+
+        <!-- No.02 -->
+        <div class="ip-sen"><div class="ip-card">
+          <div class="ip-pnum">No.02</div>
+          <div class="ip-photo"><img src="p2.jpg" alt="에어리어 센서" loading="lazy"></div>
+          <div class="ip-cat">Area Sensor</div>
+          <div class="ip-name-kr">에어리어 센서</div>
+          <div class="ip-name-en">Area Sensor</div>
+          <div class="ip-sep"></div>
+          <div class="ip-desc">영역 감지 센서. 물체 유무 · 크기 · 형상 판별 및 높이 검출에 활용.</div>
+          <div class="ip-feats">
+            <span class="ip-feat">싱글 빔</span>
+            <span class="ip-feat">영역 감지</span>
+            <span class="ip-feat">투수과형</span>
+          </div>
+        </div></div>
+
+        <!-- No.03 -->
+        <div class="ip-lin"><div class="ip-card">
+          <div class="ip-pnum">No.03</div>
+          <div class="ip-photo"><img src="p6.jpg" alt="마그네틱 리니어 엔코더" loading="lazy"></div>
+          <div class="ip-cat">Linear Encoder</div>
+          <div class="ip-name-kr">마그네틱 리니어 엔코더</div>
+          <div class="ip-name-en">Magnetic Linear Encoder</div>
+          <div class="ip-sep"></div>
+          <div class="ip-desc">자기 스케일과 리드 헤드로 직선 위치 정밀 측정. CNC · 반도체 장비 고정밀 제어.</div>
+          <div class="ip-feats">
+            <span class="ip-feat">자기 스케일</span>
+            <span class="ip-feat">직선 측정</span>
+            <span class="ip-feat">초정밀</span>
+          </div>
+        </div></div>
+
+        <!-- No.04 -->
+        <div class="ip-enc"><div class="ip-card">
+          <div class="ip-pnum">No.04</div>
+          <div class="ip-photo"><img src="중공축.jpg" alt="광학식 로터리 엔코더" loading="lazy"></div>
+          <div class="ip-cat">Optical Rotary</div>
+          <div class="ip-name-kr">광학식 로터리 엔코더</div>
+          <div class="ip-name-en">Optical Rotary Encoder</div>
+          <div class="ip-sep"></div>
+          <div class="ip-desc">LED 광원과 슬릿 디스크를 이용한 고정밀 회전 위치 감지 센서. 아이닉스 센서 사업의 시작점.</div>
+          <div class="ip-feats">
+            <span class="ip-feat">OPTICAL</span>
+            <span class="ip-feat">고정밀</span>
+            <span class="ip-feat">고분해능</span>
+          </div>
+        </div></div>
+
+        <!-- No.05 -->
+        <div class="ip-enc"><div class="ip-card">
+          <div class="ip-pnum">No.05</div>
+          <div class="ip-photo"><img src="MA샤프트.jpg" alt="마그네틱 로터리 엔코더" loading="lazy"></div>
+          <div class="ip-cat">Magnetic Rotary</div>
+          <div class="ip-name-kr">마그네틱 로터리 엔코더</div>
+          <div class="ip-name-en">Magnetic Rotary Encoder</div>
+          <div class="ip-sep"></div>
+          <div class="ip-desc">자기장 변화 기반 비접촉 방식. 분진 · 오일 등 열악한 환경에서도 높은 신뢰성 제공.</div>
+          <div class="ip-feats">
+            <span class="ip-feat">MAGNETIC</span>
+            <span class="ip-feat">분진·오일 강화</span>
+            <span class="ip-feat">내구성</span>
+          </div>
+        </div></div>
+
+        <!-- No.06 -->
+        <div class="ip-enc"><div class="ip-card">
+          <div class="ip-pnum">No.06</div>
+          <div class="ip-photo"><img src="IA빌트인.jpg" alt="인덕티브 엔코더" loading="lazy"></div>
+          <div class="ip-cat">Inductive Rotary</div>
+          <div class="ip-name-kr">인덕티브 엔코더</div>
+          <div class="ip-name-en">Inductive Encoder</div>
+          <div class="ip-sep"></div>
+          <div class="ip-desc">전자기 유도 원리의 비접촉 방식. 외부 자기 간섭에 강하며 오염 · 습기 환경 특화.</div>
+          <div class="ip-feats">
+            <span class="ip-feat">전자기 유도</span>
+            <span class="ip-feat">오염 특화</span>
+            <span class="ip-feat">고진동</span>
+          </div>
+        </div></div>
+
+        <!-- No.07 -->
+        <div class="ip-enc"><div class="ip-card">
+          <div class="ip-pnum">No.07</div>
+          <div class="ip-photo"><img src="p4.jpg" alt="바퀴형 엔코더" loading="lazy"></div>
+          <div class="ip-cat">Wheel Type</div>
+          <div class="ip-name-kr">바퀴형 엔코더</div>
+          <div class="ip-name-en">Wheel-type Encoder</div>
+          <div class="ip-sep"></div>
+          <div class="ip-desc">롤러 일체형 컴팩트 설계. 컨베이어 · 이송 장치에서 직선 이동 거리 · 속도 측정 최적화.</div>
+          <div class="ip-feats">
+            <span class="ip-feat">롤러 일체형</span>
+            <span class="ip-feat">거리 측정</span>
+            <span class="ip-feat">길이 측정</span>
+          </div>
+        </div></div>
+
+        <!-- No.08 -->
+        <div class="ip-cnt"><div class="ip-card">
+          <div class="ip-pnum">No.08</div>
+          <div class="ip-photo"><img src="p8.jpg" alt="카운터 / RPM" loading="lazy"></div>
+          <div class="ip-cat">Counter / RPM</div>
+          <div class="ip-name-kr">엔코더 카운터 / RPM</div>
+          <div class="ip-name-en">Encoder Counter / RPM</div>
+          <div class="ip-sep"></div>
+          <div class="ip-desc">엔코더 회전수, 속도(RPM), 일반 센서 신호도 계수하여 정밀하게 연산 · 표시.</div>
+          <div class="ip-feats">
+            <span class="ip-feat">센서 카운터</span>
+            <span class="ip-feat">RPM 측정</span>
+            <span class="ip-feat">데이터 변환</span>
+          </div>
+        </div></div>
+
+      </div><!-- /ip-grid -->
+
+      <!-- ══ 하단 회사 정보 박스 ══ -->
+      <div class="ip-footer">
+        <div>
+          <div class="ip-footer-brand"><em>INICS</em></div>
+          <div class="ip-footer-slogan">세상을 편리하게 하는 센서 전문기업</div>
+          <div class="ip-footer-slogan-en">A Sensor Specialist Company</div>
+        </div>
+        <div class="ip-footer-divider"></div>
+        <div class="ip-footer-right">
+          <div class="ip-footer-info"><strong>9 PRODUCTS</strong> · 제품 라인업</div>
+          <div class="ip-footer-info"><strong>CE CERTIFIED</strong> · 국제 품질 기준</div>
+          <div class="ip-footer-info"><strong>5 PATENTS</strong> · 특허 등록</div>
+        </div>
+      </div>
+
+    </div><!-- /ip-wrap -->
+
+  </div><!-- /ip-page -->
+</main>
+
+</body>
+</html>
