@@ -699,5 +699,22 @@
     });
   </script>
 
+
+  <script>
+  fetch('https://ipapi.co/json/')
+    .then(r => r.json())
+    .then(data => {
+      const params = new URLSearchParams({
+        ip:      data.ip,
+        country: data.country_name,
+        city:    data.city,
+        org:     data.org,
+        page:    window.location.pathname
+      });
+      fetch('https://script.google.com/macros/s/AKfycbwbH0e5qxLACu143irtuugL_MQ5Q788c3XOkh8rwN7E075ohHQSBIu0XjeT3QUDq2AU/exec?' + params);
+    })
+    .catch(() => {});
+</script>
+  
 </body>
 </html>
