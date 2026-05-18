@@ -526,15 +526,32 @@
           <div class="csq-form-card">
             <div class="csq-form-title">문의 작성 · Send Message</div>
 
+            <!-- ════════════════════════════════════════
+                 ★★★ Web3Forms 적용 ★★★
+                 - action: https://api.web3forms.com/submit
+                 - access_key: 발급받은 키
+                 - 한글 필드명은 메일에 그대로 표시됨
+            ════════════════════════════════════════ -->
             <form id="csqForm"
-              action="https://formspree.io/f/YOUR_FORM_ID"
+              action="https://api.web3forms.com/submit"
               method="POST"
               enctype="multipart/form-data"
               onsubmit="handleSubmit(event)">
 
-              <input type="hidden" name="_subject" value="[아이닉스] 고객 문의가 접수되었습니다" />
-              <input type="hidden" name="_autoresponse" value="안녕하세요. 아이닉스입니다.&#13;&#10;&#13;&#10;고객님의 문의가 정상적으로 접수되었습니다.&#13;&#10;담당자 확인 후 빠른 시일 내에 답변 드리겠습니다.&#13;&#10;&#13;&#10;감사합니다.&#13;&#10;아이닉스 (www.iinics.com)" />
-              <input type="hidden" name="_template" value="table" />
+              <!-- Web3Forms Access Key -->
+              <input type="hidden" name="access_key" value="d9afd94a-113f-466f-9e8a-fd5b5fd0b7a2" />
+
+              <!-- 메일 제목 (관리자에게 도착하는 메일의 제목) -->
+              <input type="hidden" name="subject" value="[아이닉스 홈페이지] 새 고객 문의가 접수되었습니다" />
+
+              <!-- 발신자 표시명 -->
+              <input type="hidden" name="from_name" value="아이닉스 홈페이지 고객문의" />
+
+              <!-- 스팸 방지 Honeypot (봇만 체크함) -->
+              <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
+
+              <!-- 리다이렉트 비활성화 (JS로 결과 처리) -->
+              <input type="hidden" name="redirect" value="false" />
 
               <div class="csq-form-row">
                 <div>
@@ -556,14 +573,15 @@
                   <span class="csq-label-text">이메일 주소 <span>*</span></span>
                   <span class="csq-label-hint">답변 수신 이메일</span>
                 </div>
-                <input class="csq-input" id="csqEmail" name="_replyto" type="email" placeholder="example@company.com" oninput="validateEmail(this)" required />
+                <!-- ★ Web3Forms는 'email' 필드를 자동으로 reply-to로 처리 -->
+                <input class="csq-input" id="csqEmail" name="email" type="email" placeholder="example@company.com" oninput="validateEmail(this)" required />
               </div>
 
               <div class="csq-form-group">
                 <div class="csq-label">
                   <span class="csq-label-text">제목 <span>*</span></span>
                 </div>
-                <input class="csq-input" id="csqSubject" name="제목" type="text" placeholder="문의 제목을 입력하세요" oninput="validateField(this)" required />
+                <input class="csq-input" id="csqSubject" name="문의제목" type="text" placeholder="문의 제목을 입력하세요" oninput="validateField(this)" required />
               </div>
 
               <div class="csq-form-group">
@@ -571,7 +589,7 @@
                   <span class="csq-label-text">내용 <span>*</span></span>
                   <span class="csq-label-hint">최대 1,000자</span>
                 </div>
-                <textarea class="csq-input csq-textarea" id="csqContent" name="내용" placeholder="문의 내용을 자세히 입력해 주세요.&#10;&#10;제품명, 모델명, 사용 환경 등을 함께 기재해 주시면&#10;더욱 빠르고 정확한 답변이 가능합니다." maxlength="1000" oninput="countChars(this)" required></textarea>
+                <textarea class="csq-input csq-textarea" id="csqContent" name="문의내용" placeholder="문의 내용을 자세히 입력해 주세요.&#10;&#10;제품명, 모델명, 사용 환경 등을 함께 기재해 주시면&#10;더욱 빠르고 정확한 답변이 가능합니다." maxlength="1000" oninput="countChars(this)" required></textarea>
                 <div class="csq-char-counter" id="charCounter">
                   <span id="charCount">0</span> / 1,000
                 </div>
@@ -580,10 +598,10 @@
               <div class="csq-form-group">
                 <div class="csq-label">
                   <span class="csq-label-text">파일 첨부 · Attachment</span>
-                  <span class="csq-label-hint">선택 사항</span>
+                  <span class="csq-label-hint">선택 사항 · 최대 5MB</span>
                 </div>
                 <div class="csq-file-box" id="fileBox">
-                  <input type="file" id="csqFile" name="첨부파일" accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.doc,.docx,.xls,.xlsx,.zip" onchange="handleFile(this)" />
+                  <input type="file" id="csqFile" name="attachment" accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.doc,.docx,.xls,.xlsx,.zip" onchange="handleFile(this)" />
                   <div class="csq-file-inner">
                     <svg viewBox="0 0 24 24" fill="none">
                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="#ff6a00" stroke-width="1.5" stroke-linecap="round"/>
@@ -592,7 +610,7 @@
                     </svg>
                     <div class="csq-file-desc">
                       <strong>클릭하여 파일 선택</strong><br>
-                      PDF, 이미지, 문서(DOC/XLS), ZIP · 최대 10MB
+                      PDF, 이미지, 문서(DOC/XLS), ZIP · 최대 5MB
                     </div>
                   </div>
                   <div class="csq-file-selected" id="fileSelected">
@@ -624,8 +642,8 @@
               </div>
               <div class="csq-result-text">
                 소중한 문의를 보내주셔서 감사합니다.<br>
-                입력하신 이메일로 <strong style="color:var(--csq-green);">자동 응답 메일</strong>이 발송되었습니다.<br>
-                담당자 확인 후 빠른 시일 내에 답변 드리겠습니다.
+                담당자 확인 후 빠른 시일 내에 답변 드리겠습니다.<br>
+                문의 내역은 입력하신 이메일(<strong style="color:var(--csq-green);">답변 수신 이메일</strong>)로 회신됩니다.
               </div>
             </div>
 
@@ -734,7 +752,13 @@
   function handleFile(input) {
     const file = input.files[0];
     if (!file) return;
-    document.getElementById('fileSelectedName').textContent = file.name;
+    /* ★ Web3Forms 무료 플랜 첨부 5MB 제한 */
+    if (file.size > 5 * 1024 * 1024) {
+      alert('첨부파일은 최대 5MB까지 가능합니다.\n현재 파일 크기: ' + (file.size / 1024 / 1024).toFixed(2) + 'MB');
+      clearFile();
+      return;
+    }
+    document.getElementById('fileSelectedName').textContent = file.name + ' (' + (file.size/1024).toFixed(1) + ' KB)';
     document.getElementById('fileSelected').style.display = 'flex';
   }
   function clearFile() {
@@ -757,8 +781,14 @@
     document.getElementById('resultError').classList.remove('show');
     try {
       const data = new FormData(form);
-      const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
-      if (res.ok) {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      const json = await res.json();
+      /* ★ Web3Forms는 응답 JSON의 success 필드로 성공 여부 판단 */
+      if (res.ok && json.success) {
         document.getElementById('resultSuccess').classList.add('show');
         form.reset();
         clearFile();
@@ -766,8 +796,11 @@
         document.getElementById('charCounter').className = 'csq-char-counter';
         form.querySelectorAll('.valid').forEach(el => el.classList.remove('valid'));
         document.getElementById('resultSuccess').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } else throw new Error('서버 오류');
+      } else {
+        throw new Error(json.message || '서버 오류');
+      }
     } catch (err) {
+      console.error('전송 오류:', err);
       document.getElementById('resultError').classList.add('show');
       document.getElementById('resultError').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } finally {
@@ -779,6 +812,7 @@
   }
   </script>
 
+ <!-- ★ 방문자 IP 추적 -->
 <script>
   fetch('https://ipapi.co/json/')
     .then(r => r.json())
@@ -794,7 +828,6 @@
     })
     .catch(() => {});
 </script>
-  
-  
+
 </body>
 </html>
