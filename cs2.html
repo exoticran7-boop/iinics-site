@@ -558,13 +558,13 @@
                   <div class="csq-label">
                     <span class="csq-label-text">회사 / 이름 <span>*</span></span>
                   </div>
-                  <input class="csq-input" id="csqName" name="회사_이름" type="text" placeholder="회사명 또는 성함" oninput="validateField(this)" required />
+                  <input class="csq-input" id="csqName" name="Company_Name" type="text" placeholder="회사명 또는 성함" oninput="validateField(this)" required />
                 </div>
                 <div>
                   <div class="csq-label">
                     <span class="csq-label-text">연락처 <span>*</span></span>
                   </div>
-                  <input class="csq-input" id="csqPhone" name="연락처" type="tel" placeholder="010-0000-0000" oninput="validatePhone(this)" required />
+                  <input class="csq-input" id="csqPhone" name="Phone" type="tel" placeholder="010-0000-0000" oninput="validatePhone(this)" required />
                 </div>
               </div>
 
@@ -581,7 +581,7 @@
                 <div class="csq-label">
                   <span class="csq-label-text">제목 <span>*</span></span>
                 </div>
-                <input class="csq-input" id="csqSubject" name="문의제목" type="text" placeholder="문의 제목을 입력하세요" oninput="validateField(this)" required />
+                <input class="csq-input" id="csqSubject" name="Inquiry_Title" type="text" placeholder="문의 제목을 입력하세요" oninput="validateField(this)" required />
               </div>
 
               <div class="csq-form-group">
@@ -589,7 +589,7 @@
                   <span class="csq-label-text">내용 <span>*</span></span>
                   <span class="csq-label-hint">최대 1,000자</span>
                 </div>
-                <textarea class="csq-input csq-textarea" id="csqContent" name="문의내용" placeholder="문의 내용을 자세히 입력해 주세요.&#10;&#10;제품명, 모델명, 사용 환경 등을 함께 기재해 주시면&#10;더욱 빠르고 정확한 답변이 가능합니다." maxlength="1000" oninput="countChars(this)" required></textarea>
+                <textarea class="csq-input csq-textarea" id="csqContent" name="Message" placeholder="문의 내용을 자세히 입력해 주세요.&#10;&#10;제품명, 모델명, 사용 환경 등을 함께 기재해 주시면&#10;더욱 빠르고 정확한 답변이 가능합니다." maxlength="1000" oninput="countChars(this)" required></textarea>
                 <div class="csq-char-counter" id="charCounter">
                   <span id="charCount">0</span> / 1,000
                 </div>
