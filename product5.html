@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>마그네틱 로터리 엔코더 - 아이닉스(INICS)</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    @font-face {
+      font-family: 'Noto Sans KR';
+      src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Oxanium';
+      src: url('oxanium-v21-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+  </style>
+   
+     <style>
+    /* ════════════════════════════════════════════
+       ★★★ 상단 헤더 서브메뉴 색상 패치 ★★★
+       외부 style.css의 회색 톤을 부드러운 주황 톤으로 덮어쓰기
+       ★ 외곽 진한 테두리 제거 → 부드러운 그림자로 변경
+    ════════════════════════════════════════════ */
+    /* 서브메뉴 박스 자체 — 테두리/강조선 제거 + 부드러운 그림자만 */
+    header .submenu,
+    header nav .submenu,
+    header ul .submenu {
+      border: none !important;
+      border-top: 1px solid rgba(255, 127, 0, 0.15) !important;   /* ★ 진한 강조선 → 옅은 주황 라인 */
+      background: #FFFFFF !important;                              /* 깔끔한 흰 배경 */
+      box-shadow: 0 8px 24px rgba(255, 127, 0, 0.10),
+                  0 2px 6px rgba(0, 0, 0, 0.06) !important;        /* 부드러운 주황 그림자 */
+      border-radius: 0 0 4px 4px !important;                       /* 하단 살짝 둥글게 */
+ 
+      /* ★★★ 박스 하단 빈 공간 제거 — 내부 패딩/마진 강제 0 ★★★ */
+      padding: 0 !important;
+      margin: 0 !important;
+      list-style: none !important;
+      overflow: hidden !important;                                  /* 마지막 항목 hover 배경이 모서리 밖으로 안 나가게 */
+    }
+ 
+    /* ★ 마지막 항목 hover 시 박스 하단 모서리까지 자연스럽게 채움 */
+    header .submenu li:last-child a,
+    header nav .submenu li:last-child a,
+    header ul .submenu li:last-child a {
+      border-radius: 0 0 4px 4px !important;
+    }
+ 
+    /* 서브메뉴 각 항목 구분선 — 거의 보이지 않을 정도로 옅은 따뜻한 톤 */
+    header .submenu li,
+    header nav .submenu li,
+    header ul .submenu li {
+      border-bottom: 1px solid rgba(255, 128, 0, 0.171) !important;   /* ★ 따뜻한 옅은 살구 톤 */
+    }
+    header .submenu li:last-child,
+    header nav .submenu li:last-child,
+    header ul .submenu li:last-child {
+      border-bottom: none !important;
+    }
+ 
+    /* 서브메뉴 항목 기본 글자색 — 검정 */
+    header .submenu li a,
+    header nav .submenu li a,
+    header ul .submenu li a {
+      color: #111111 !important;
+    }
+ 
+    /* 서브메뉴 항목 hover/active 시 — 옅은 주황 배경 + 주황 글자 */
+    header .submenu li a:hover,
+    header .submenu li a:focus,
+    header .submenu li a.active,
+    header nav .submenu li a:hover,
+    header nav .submenu li a:focus,
+    header nav .submenu li a.active,
+    header ul .submenu li a:hover,
+    header ul .submenu li a:focus,
+    header ul .submenu li a.active {
+      background: rgba(255, 102, 0, 0.05) !important;
+      color: #FF7F00 !important;
+    }
+  </style>
+
+
+
+  <style>
+    /* ════════════════════════════════════════════
+       마그네틱 로터리 엔코더 — mre-* 네임스페이스
+       (흰색 배경 / 주황색 대표색 / 검정 텍스트)
+    ════════════════════════════════════════════ */
+    main { padding: 0 !important; }
+
+    :root {
+      --mre-bg:      #FFFFFF;
+      --mre-accent:  #FF7F00;
+      --mre-accent2: #E06600;
+      --mre-gold:    #E06600;
+      --mre-green:   #0D7A52;
+      --mre-text:    #111111;
+      --mre-muted:   #111111;
+      --mre-divider: rgba(255,127,0,0.22);
+      --mre-card:    #FAFAFA;
+    }
+
+    .mre-page {
+      background: var(--mre-bg);
+      color: var(--mre-text);
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 80vh;
+      position: relative; overflow: hidden;
+    }
+
+    .mre-layout {
+      position: relative; z-index: 1;
+      max-width: 1260px; margin: 0 auto;
+      padding: 60px 40px 100px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      align-items: start;
+    }
+
+    /* 사이드바 */
+    .mre-sidebar {
+      border-right: 1px solid var(--mre-divider);
+      padding-right: 32px;
+      position: sticky; top: 80px;
+    }
+    .mre-sidebar-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .3em;
+      color: var(--mre-accent); text-transform: uppercase;
+      margin-bottom: 20px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--mre-divider);
+      font-weight: 700;
+    }
+    .mre-nav { list-style: none; padding: 0; margin: 0; }
+    .mre-nav li { border-bottom: 1px solid rgba(255,127,0,0.09); }
+    .mre-nav li a {
+      display: block; padding: 12px 10px;
+      font-size: 13px; color: var(--mre-muted);
+      text-decoration: none; line-height: 1.5;
+      transition: color .25s, padding-left .25s, background .25s;
+      position: relative;
+    }
+    .mre-nav li a::before {
+      content: ''; position: absolute;
+      left: 0; top: 50%; transform: translateY(-50%);
+      width: 2px; height: 0;
+      background: var(--mre-accent); transition: height .25s;
+    }
+    .mre-nav li a:hover,
+    .mre-nav li a.active {
+      color: var(--mre-accent); padding-left: 18px;
+      background: rgba(255,127,0,0.05);
+    }
+    .mre-nav li a:hover::before,
+    .mre-nav li a.active::before { height: 60%; }
+    .mre-nav li a.active { font-weight: 700; }
+
+    /* 콘텐츠 */
+    .mre-content {
+      padding-left: 52px;
+      min-width: 0;
+    }
+
+    /* 제품 헤더 */
+    .mre-header {
+      border-bottom: 1px solid var(--mre-divider);
+      padding-bottom: 32px; margin-bottom: 40px;
+      animation: mre-up .7s .08s ease both;
+    }
+    .mre-series-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .28em;
+      color: var(--mre-accent); text-transform: uppercase;
+      margin-bottom: 14px;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 700;
+    }
+    .mre-series-tag::after { content: ''; width: 40px; height: 1px; background: var(--mre-accent); }
+    .mre-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: clamp(28px, 4vw, 54px);
+      font-weight: 900; line-height: 1.05;
+      color: #111111; letter-spacing: -0.01em;
+    }
+    .mre-title em { font-style: normal; color: var(--mre-accent); }
+    .mre-fullname { margin-top: 10px; font-size: 17px; font-weight: 400; color: #111111; letter-spacing: .04em; }
+
+    .mre-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .mre-badge {
+      font-family: 'Oxanium', monospace; font-size: 13px;
+      letter-spacing: .14em; padding: 5px 13px;
+      border: 1.5px solid var(--mre-divider);
+      color: #111111; text-transform: uppercase;
+      background: #FFF9F3;
+    }
+    .mre-badge.hl { border-color: var(--mre-accent); color: var(--mre-accent2); background: #FFF3E0; font-weight: 700; }
+    .mre-badge.gn { border-color: var(--mre-green);  color: var(--mre-green); background: #E6F5EF; font-weight: 700; }
+
+    /* 이미지 + 핵심 강점 2분할 */
+    .mre-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px; margin-bottom: 2px;
+      animation: mre-up .7s .16s ease both;
+    }
+    .mre-img-panel {
+      background: #F5F5F5;
+      border: 1.5px solid var(--mre-divider);
+      display: flex; align-items: center; justify-content: center;
+      padding: 36px; min-height: 300px;
+      position: relative; overflow: hidden;
+    }
+    .mre-img-panel::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--mre-accent), var(--mre-accent2));
+    }
+    .mre-img-panel img {
+      max-width: 100%; max-height: 280px;
+      object-fit: contain;
+      transition: transform .4s ease;
+      position: relative; z-index: 1;
+    }
+    .mre-img-panel:hover img { transform: scale(1.04); }
+    .mre-img-ph {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+      position: relative; z-index: 1;
+    }
+    .mre-img-ph svg { width: 120px; height: 120px; opacity: .22; }
+    .mre-img-ph-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .2em;
+      color: #111111; text-transform: uppercase;
+    }
+
+    .mre-strength-panel {
+      background: var(--mre-card);
+      border: 1.5px solid var(--mre-divider);
+      padding: 28px 24px 32px;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .mre-strength-panel::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--mre-accent), var(--mre-accent2));
+    }
+    .mre-strength-heading {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .28em;
+      color: var(--mre-accent); text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700;
+    }
+    .mre-strength-heading::after { content: ''; flex: 1; height: 1px; background: var(--mre-divider); }
+
+    .mre-strength-item {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,127,0,0.10);
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .mre-strength-item:last-child { border-bottom: none; }
+    .mre-strength-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--mre-accent); flex-shrink: 0; margin-top: 7px;
+    }
+    .mre-strength-content { min-width: 0; }
+    .mre-strength-ko {
+      font-size: 14px; font-weight: 700;
+      color: #111111; line-height: 1.5; margin-bottom: 3px;
+      display: block;
+    }
+    .mre-strength-en {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; color: #444444;
+      letter-spacing: .05em; line-height: 1.6; display: block;
+    }
+    .mre-strength-sub {
+      font-size: 13px; font-weight: 400;
+      color: #111111; line-height: 1.7;
+      margin-top: 5px; display: block;
+    }
+    .mre-strength-volt {
+      font-family: 'Oxanium', monospace;
+      color: var(--mre-gold);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* 내환경성 블록 */
+    .mre-env-block {
+      background: #FFF9F3;
+      border: 1.5px solid var(--mre-divider);
+      padding: 26px 26px 30px;
+      margin-bottom: 2px;
+      position: relative; overflow: hidden;
+      animation: mre-up .7s .24s ease both;
+    }
+    .mre-env-block::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--mre-green), var(--mre-accent));
+    }
+    .mre-env-heading {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .26em;
+      color: var(--mre-green); text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700;
+      flex-wrap: wrap;
+    }
+    .mre-env-heading svg { flex-shrink: 0; }
+    .mre-env-heading::after { content: ''; flex: 1; min-width: 30px; height: 1px; background: rgba(13,122,82,0.25); }
+
+    .mre-env-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px; margin-bottom: 18px;
+    }
+    .mre-env-chip {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+      padding: 14px 8px;
+      border: 1.5px solid var(--mre-divider);
+      background: #FFFFFF;
+      transition: border-color .25s, background .25s;
+      text-align: center;
+    }
+    .mre-env-chip:hover { border-color: var(--mre-green); background: #E6F5EF; }
+    .mre-env-chip svg { width: 28px; height: 28px; }
+    .mre-env-chip-name {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .1em;
+      color: var(--mre-green); text-transform: uppercase;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+    .mre-env-desc {
+      font-size: 13px; font-weight: 400;
+      color: #111111; line-height: 1.85;
+    }
+    .mre-env-desc strong { color: var(--mre-accent2); font-weight: 700; }
+    .mre-env-desc-en {
+      display: block;
+      margin-top: 8px;
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; color: #444444;
+      letter-spacing: .06em;
+      line-height: 1.6;
+    }
+
+    /* ════════════════════════════════════════════
+       ★★★ 1) 외경 사양 — 큰 박스로 묶음 ★★★
+       라벨 + Type A/B 카드 그리드를 하나의 박스에 포함
+    ════════════════════════════════════════════ */
+    .mre-dim-wrap {
+      background: #FFFFFF;
+      border: 1.5px solid var(--mre-divider);
+      padding: 26px 26px 30px;
+      margin-bottom: 2px;
+      position: relative; overflow: hidden;
+      animation: mre-up .7s .32s ease both;
+    }
+    .mre-dim-wrap::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--mre-accent), var(--mre-accent2));
+    }
+
+    /* 박스 내부 라벨 (기존 .mre-section-label 대체) */
+    .mre-dim-wrap-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .28em;
+      color: var(--mre-accent); text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+      font-weight: 700;
+    }
+    .mre-dim-wrap-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--mre-divider);
+    }
+
+    .mre-dim-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    .mre-dim-card {
+      background: var(--mre-card);
+      border: 1.5px solid var(--mre-divider);
+      padding: 26px 22px 30px;
+      position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .mre-dim-card:hover {
+      border-color: var(--mre-accent);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 32px rgba(255,127,0,0.10);
+    }
+    .mre-dim-card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--mre-accent), var(--mre-accent2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .mre-dim-card:hover::after { transform: scaleX(1); }
+    .mre-dim-num {
+      font-family: 'Oxanium', monospace;
+      font-size: 60px; font-weight: 900;
+      color: rgba(255,127,0,0.07);
+      position: absolute; top: 8px; right: 14px;
+      line-height: 1; user-select: none;
+    }
+    .mre-dim-icon { width: 36px; height: 36px; margin-bottom: 14px; }
+    .mre-dim-icon svg { width: 100%; height: 100%; }
+    .mre-dim-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .2em;
+      color: var(--mre-accent); text-transform: uppercase;
+      margin-bottom: 7px; font-weight: 700;
+    }
+    .mre-dim-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 16px; font-weight: 700;
+      color: #111111; margin-bottom: 12px; line-height: 1.25;
+    }
+    .mre-dim-value {
+      font-family: 'Oxanium', monospace;
+      font-size: 24px; font-weight: 700;
+      color: var(--mre-gold); margin-bottom: 6px; line-height: 1.1;
+    }
+    .mre-dim-sub {
+      font-size: 13px; font-weight: 400;
+      color: #111111; line-height: 1.8;
+    }
+    .mre-dim-sub-strong {
+      color: var(--mre-gold);
+      font-family: 'Oxanium', monospace;
+      font-weight: 700;
+    }
+
+    /* 분해능 + 출력 타입 */
+    .mre-spec-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px; margin-bottom: 2px;
+      animation: mre-up .7s .44s ease both;
+    }
+    .mre-res-block,
+    .mre-outtype-block {
+      background: var(--mre-card);
+      border: 1.5px solid var(--mre-divider);
+      padding: 24px 22px 28px;
+      position: relative; overflow: hidden;
+    }
+    .mre-res-block::before,
+    .mre-outtype-block::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--mre-accent), var(--mre-accent2));
+    }
+    .mre-mini-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .26em;
+      color: var(--mre-accent); text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700;
+    }
+    .mre-mini-label::after { content: ''; flex: 1; height: 1px; background: var(--mre-divider); }
+
+    .mre-res-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--mre-divider);
+      background: #FFF9F3;
+      margin-bottom: 8px;
+      transition: border-color .25s, background .25s;
+      flex-wrap: wrap;
+    }
+    .mre-res-row:last-child { margin-bottom: 0; }
+    .mre-res-row:hover { border-color: var(--mre-accent); background: #FFF3E0; }
+    .mre-res-badge {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .12em;
+      color: var(--mre-gold); padding: 3px 10px;
+      border: 1.5px solid rgba(224,102,0,0.4);
+      background: #FFFFFF; white-space: nowrap;
+      font-weight: 700;
+    }
+    .mre-res-ko { font-size: 13px; color: #111111; }
+    .mre-res-val {
+      font-family: 'Oxanium', monospace;
+      font-size: 15px; font-weight: 700;
+      color: var(--mre-gold); margin-left: auto; white-space: nowrap;
+    }
+
+    .mre-outtype-grid {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .mre-outtype-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px;
+      border: 1.5px solid var(--mre-divider);
+      background: #FFF9F3;
+      transition: border-color .25s, background .25s;
+    }
+    .mre-outtype-row:hover { border-color: var(--mre-accent); background: #FFF3E0; }
+    .mre-outtype-icon { width: 28px; height: 28px; flex-shrink: 0; }
+    .mre-outtype-icon svg { width: 100%; height: 100%; }
+    .mre-outtype-name {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; font-weight: 700;
+      color: var(--mre-accent); letter-spacing: .08em;
+    }
+    .mre-outtype-desc {
+      font-size: 13px; font-weight: 400;
+      color: #111111; margin-left: auto;
+      text-align: right; line-height: 1.4;
+    }
+
+    /* 출력 코드 / 통신 */
+    .mre-io-block {
+      background: var(--mre-card);
+      border: 1.5px solid var(--mre-divider);
+      margin-bottom: 2px;
+      animation: mre-up .7s .52s ease both;
+    }
+    .mre-io-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--mre-divider);
+      background: #FFF9F3;
+      min-width: 0;
+    }
+    .mre-io-header-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .26em;
+      color: var(--mre-accent); text-transform: uppercase; white-space: nowrap;
+      font-weight: 700;
+      min-width: 0;
+    }
+    .mre-io-line { flex: 1; height: 1px; background: var(--mre-divider); min-width: 0; }
+
+    .mre-code-row {
+      display: grid; grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--mre-divider);
+    }
+    .mre-code-row:last-child { border-bottom: none; }
+    .mre-code-left {
+      padding: 16px 20px;
+      border-right: 1px solid var(--mre-divider);
+      background: #FFF9F3;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .mre-code-left svg { width: 24px; height: 24px; flex-shrink: 0; }
+    .mre-code-title {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; font-weight: 700;
+      color: var(--mre-accent); letter-spacing: .1em;
+      white-space: nowrap;
+    }
+    .mre-code-right {
+      padding: 16px 20px;
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    }
+    .mre-chip {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; font-weight: 700;
+      padding: 5px 14px;
+      border: 1.5px solid var(--mre-divider);
+      color: var(--mre-gold);
+      background: #FFF9F3;
+      transition: border-color .25s, background .25s;
+    }
+    .mre-chip:hover { border-color: var(--mre-gold); background: #FFF3E0; }
+    .mre-chip.bl { color: var(--mre-accent); background: #FFF9F3; }
+    .mre-chip.bl:hover { border-color: var(--mre-accent); background: #FFF3E0; }
+
+    /* 응용 분야 */
+    .mre-app-block {
+      background: var(--mre-card);
+      border: 1.5px solid var(--mre-divider);
+      padding: 24px 26px 28px;
+      margin-bottom: 2px;
+      animation: mre-up .7s .58s ease both;
+    }
+    .mre-app-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .28em;
+      color: var(--mre-accent); text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 12px;
+      font-weight: 700;
+    }
+    .mre-app-label::after { content: ''; flex: 1; height: 1px; background: var(--mre-divider); }
+    .mre-app-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .mre-app-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      border: 1.5px solid rgba(255,127,0,0.12);
+      background: #FFF9F3;
+      transition: border-color .25s, background .25s;
+    }
+    .mre-app-item:hover { border-color: var(--mre-accent); background: #FFF3E0; }
+    .mre-app-icon { width: 32px; height: 32px; flex-shrink: 0; }
+    .mre-app-icon svg { width: 100%; height: 100%; }
+    .mre-app-name { font-size: 13px; font-weight: 500; color: #111111; line-height: 1.4; }
+    .mre-app-en { font-family: 'Oxanium', monospace; font-size: 13px; color: #444444; letter-spacing: .1em; margin-top: 2px; }
+
+    @keyframes mre-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════════════
+       반응형
+    ══════════════════════════════════ */
+    @media (max-width: 960px) {
+      .mre-layout {
+        grid-template-columns: 1fr;
+        padding: 36px 24px 70px;
+      }
+      .mre-sidebar {
+        position: static; border-right: none;
+        border-bottom: 1px solid var(--mre-divider);
+        padding-right: 0; padding-bottom: 24px; margin-bottom: 32px;
+      }
+      .mre-nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+      .mre-nav li { border-bottom: none; }
+      .mre-nav li a {
+        padding: 8px 12px;
+        border: 1px solid var(--mre-divider);
+        font-size: 13px;
+        line-height: 1.4;
+        text-align: left;
+        word-break: keep-all;
+      }
+      .mre-nav li a::before { display: none; }
+      .mre-nav li a:hover,
+      .mre-nav li a.active { padding-left: 12px; }
+
+      .mre-content { padding-left: 0; }
+
+      .mre-hero       { grid-template-columns: 1fr; }
+      .mre-dim-grid   { grid-template-columns: 1fr; }
+      .mre-spec-row   { grid-template-columns: 1fr; }
+      .mre-env-grid   { grid-template-columns: repeat(3, 1fr); }
+      .mre-app-grid   { grid-template-columns: 1fr 1fr; }
+
+      .mre-code-row   { grid-template-columns: 1fr; }
+      .mre-code-left  { border-right: none; border-bottom: 1px solid var(--mre-divider); }
+
+      /* ★★★ 2) 모바일 출력 코드 헤더 잘림 방지 ★★★ */
+      .mre-io-header {
+        padding: 14px 18px;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .mre-io-header-label {
+        white-space: normal;       /* ★ 줄바꿈 허용 */
+        word-break: keep-all;      /* 한글 단어 단위 줄바꿈 */
+        letter-spacing: .18em;     /* 글자 간격 살짝 축소 */
+        line-height: 1.5;
+        font-size: 13px;
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+      .mre-io-line {
+        display: none;             /* ★ 라인 숨김 → 라벨 공간 확보 */
+      }
+
+      /* ★ 외경 박스 모바일 패딩 조정 */
+      .mre-dim-wrap { padding: 22px 20px 26px; }
+    }
+
+    @media (max-width: 600px) {
+      .mre-layout { padding: 28px 16px 60px; }
+      .mre-title  { font-size: clamp(22px, 6.5vw, 38px); }
+      .mre-env-grid { grid-template-columns: repeat(2, 1fr); }
+      .mre-app-grid { grid-template-columns: 1fr; }
+      .mre-env-block { padding: 22px 20px 26px; }
+      .mre-strength-panel { padding: 24px 20px 28px; }
+      .mre-res-row { padding: 11px 12px; }
+      .mre-res-val { margin-left: 0; }
+
+      /* ★ 더 좁은 화면에서 출력 코드 헤더 추가 조정 */
+      .mre-io-header { padding: 12px 16px; }
+      .mre-io-header-label {
+        letter-spacing: .14em;
+        font-size: 13px;
+      }
+
+      /* ★ 외경 박스 더 좁게 */
+      .mre-dim-wrap { padding: 20px 16px 24px; }
+
+      /* ★ 배지 모바일 2열 그리드 — 표준 적용 */
+      .mre-badges {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      .mre-badge {
+        text-align: center;
+        font-size: 13px;
+        letter-spacing: .08em;
+        padding: 7px 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      /* CE CERTIFIED 풀너비 강조 */
+      .mre-badge.gn {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .mre-env-grid { grid-template-columns: 1fr 1fr; }
+
+      /* ★ 초소형 화면 — 출력 코드 헤더 글자 간격 더 축소 */
+      .mre-io-header-label { letter-spacing: .1em; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       ★ 상단 메뉴 — product1~4 / index 와 100% 동일한 구조
+  ════════════════════════════════════════ -->
+  <header>
+    <h1>
+      <a href="index.html">
+        <img src="logo.png" alt="아이닉스 로고" height="70">
+      </a>
+    </h1>
+
+    <!-- 햄버거 버튼 (모바일 전용) -->
+    <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="main-nav">
+      <ul>
+        <li class="has-submenu">
+          <a href="product0.html">Product <span class="arrow">▾</span></a>
+          <ul class="submenu">
+            <li><a href="product0.html">제품 라인업</a></li>
+            <li><a href="product1.html">프로그래머블 고속 카운터 타이머</a></li>
+            <li><a href="product2.html">에어리어센서</a></li>
+            <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="product6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="product8.html">엔코더 전용 카운터</a></li>
+            <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+          </ul>
+        </li>
+
+        <li class="has-submenu">
+          <a href="manu0.html">Manual <span class="arrow">▾</span></a>
+          <ul class="submenu">
+            <li><a href="manu1.html">프로그래머블 고속 카운터 타이머</a></li>
+            <li><a href="manu2.html">에어리어센서</a></li>
+            <li><a href="manu3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="manu4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="manu5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="manu6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="manu7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="manu8.html">엔코더 전용 카운터</a></li>
+          </ul>
+        </li>
+
+        <li class="has-submenu">
+          <a href="cs1.html">Customer Service <span class="arrow">▾</span></a>
+          <ul class="submenu">
+            <li><a href="cs1.html">자료실</a></li>
+            <li><a href="cs2.html">고객문의</a></li>
+          </ul>
+        </li>
+
+        <li><a href="notice.html">Notice</a></li>
+
+        <li class="has-submenu">
+          <a href="about.html">Company <span class="arrow">▾</span></a>
+          <ul class="submenu">
+            <li><a href="about.html">회사소개</a></li>
+            <li><a href="timeline.html">제품 개발 타임라인</a></li>
+            <li><a href="env.html">제품 사용환경</a></li>
+            <li><a href="location.html">오시는 길</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="mre-page">
+      <div class="mre-layout">
+
+        <!-- ══ 사이드바 ══ -->
+        <aside class="mre-sidebar">
+          <div class="mre-sidebar-label">Product Line-up</div>
+          <ul class="mre-nav">
+            <li><a href="product0.html">제품 라인업</a></li>
+            <li><a href="product1.html">프로그래머블<br>고속 카운터 타이머</a></li>
+            <li><a href="product2.html">에어리어센서</a></li>
+            <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="product5.html" class="active">마그네틱 로터리 엔코더</a></li>
+            <li><a href="product6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="product8.html">엔코더 전용 카운터</a></li>
+            <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+          </ul>
+        </aside>
+
+        <!-- ══ 콘텐츠 ══ -->
+        <div class="mre-content">
+
+          <!-- 제품 헤더 -->
+          <div class="mre-header">
+            <div class="mre-series-tag">INICS · Product</div>
+            <h2 class="mre-title"><em>마그네틱</em> 로터리 엔코더</h2>
+            <p class="mre-fullname">Magnetic Rotary Encoder &nbsp;|&nbsp; MA Series</p>
+            <div class="mre-badges">
+              <span class="mre-badge hl">Incremental</span>
+              <span class="mre-badge hl">Absolute</span>
+              <span class="mre-badge hl">SSI / Parallel</span>
+              <span class="mre-badge hl">강한 내구성</span>
+              <span class="mre-badge gn">CE CERTIFIED</span>
+            </div>
+          </div>
+
+          <!-- 이미지 + 핵심 강점 -->
+          <div class="mre-hero">
+
+            <div class="mre-img-panel">
+              <img src="MA샤프트.jpg" alt="마그네틱 로터리 엔코더 샤프트형"
+                onerror="this.style.display='none';document.getElementById('mre-ph').style.display='flex';" />
+              <div id="mre-ph" class="mre-img-ph" style="display:none;">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="60" cy="62" r="44" stroke="#FF7F00" stroke-width="2"/>
+                  <circle cx="60" cy="62" r="28" stroke="#FF7F00" stroke-width="1.4" stroke-dasharray="4 3"/>
+                  <circle cx="60" cy="62" r="12" stroke="#E06600" stroke-width="1.8"/>
+                  <circle cx="60" cy="62" r="4"  fill="#FF7F00" opacity=".4"/>
+                  <line x1="60" y1="8"  x2="60" y2="18" stroke="#E06600" stroke-width="4" stroke-linecap="round"/>
+                  <line x1="60" y1="18" x2="60" y2="34" stroke="#888888" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <div class="mre-img-ph-label">MA샤프트.jpg</div>
+              </div>
+            </div>
+
+            <div class="mre-strength-panel">
+              <div class="mre-strength-heading">핵심 강점 · Key Strengths</div>
+
+              <div class="mre-strength-item">
+                <div class="mre-strength-dot"></div>
+                <div class="mre-strength-content">
+                  <span class="mre-strength-ko">비접촉 자기센싱 기반 구조</span>
+                  <span class="mre-strength-en">Non-contact magnetic sensing structure</span>
+                  <span class="mre-strength-sub">
+                    구조적으로 마모 요소가 거의 없어 장수명 · 고신뢰성 확보<br>
+                    Minimal wear → long lifespan &amp; high reliability
+                  </span>
+                </div>
+              </div>
+
+              <div class="mre-strength-item">
+                <div class="mre-strength-dot"></div>
+                <div class="mre-strength-content">
+                  <span class="mre-strength-ko">유지보수 비용 절감</span>
+                  <span class="mre-strength-en">Reduced maintenance costs</span>
+                  <span class="mre-strength-sub">비접촉 구조로 소모품 교체 최소화</span>
+                </div>
+              </div>
+
+              <div class="mre-strength-item">
+                <div class="mre-strength-dot"></div>
+                <div class="mre-strength-content">
+                  <span class="mre-strength-ko">좁은 공간 설치 · 관성 모멘트 최소화</span>
+                  <span class="mre-strength-en">Minimization of installation in narrow spaces and shaft inertia moment</span>
+                </div>
+              </div>
+
+              <div class="mre-strength-item">
+                <div class="mre-strength-dot"></div>
+                <div class="mre-strength-content">
+                  <span class="mre-strength-ko">폭넓은 전원전압</span>
+                  <span class="mre-strength-en">Wide range of power supply voltage</span>
+                  <span class="mre-strength-sub mre-strength-volt">
+                    5VDC &nbsp;·&nbsp; 12~24VDC
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- /mre-hero -->
+
+          <!-- ══ 내환경성 블록 ══ -->
+          <div class="mre-env-block">
+            <div class="mre-env-heading">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <circle cx="7" cy="7" r="6" stroke="#0D7A52" stroke-width="1.2"/>
+                <path d="M4 7 L6 9 L10 5" stroke="#0D7A52" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              뛰어난 내환경성 · Excellent Environmental Resistance
+            </div>
+
+            <div class="mre-env-grid">
+              <div class="mre-env-chip">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="8"  cy="16" r="3" stroke="#FF7F00" stroke-width="1.2"/>
+                  <circle cx="16" cy="10" r="4" stroke="#FF7F00" stroke-width="1.2"/>
+                  <circle cx="22" cy="16" r="2.5" stroke="#FF7F00" stroke-width="1.2"/>
+                  <circle cx="14" cy="20" r="2" stroke="#FF7F00" stroke-width="1.2" opacity=".6"/>
+                  <circle cx="20" cy="22" r="1.5" stroke="#FF7F00" stroke-width="1" opacity=".5"/>
+                </svg>
+                <div class="mre-env-chip-name">먼지<br>Dust</div>
+              </div>
+              <div class="mre-env-chip">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 4 Q20 12 20 18 A6 6 0 0 1 8 18 Q8 12 14 4Z" stroke="#FF7F00" stroke-width="1.2" fill="rgba(255,127,0,0.08)"/>
+                  <line x1="14" y1="18" x2="14" y2="22" stroke="#FF7F00" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+                </svg>
+                <div class="mre-env-chip-name">오일<br>Oil</div>
+              </div>
+              <div class="mre-env-chip">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 8 L8 20" stroke="#FF7F00" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 2"/>
+                  <path d="M14 6 L14 22" stroke="#FF7F00" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 2"/>
+                  <path d="M20 8 L20 20" stroke="#FF7F00" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 2"/>
+                  <path d="M6 22 L22 22" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                <div class="mre-env-chip-name">습기<br>Moisture</div>
+              </div>
+              <div class="mre-env-chip">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 14 L8 8 L12 20 L16 10 L20 18 L24 14" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+                <div class="mre-env-chip-name">진동<br>Vibration</div>
+              </div>
+              <div class="mre-env-chip">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="14,4 18,12 26,12 20,18 22,26 14,21 6,26 8,18 2,12 10,12" stroke="#FF7F00" stroke-width="1.2" fill="rgba(255,127,0,0.06)" stroke-linejoin="round"/>
+                </svg>
+                <div class="mre-env-chip-name">충격<br>Shock</div>
+              </div>
+            </div>
+
+            <p class="mre-env-desc">
+              먼지, 오일, 습기, 진동, 충격 환경에서도 <strong>안정적인 동작</strong><br>
+              산업현장, 모터, 로봇, 중장비 등 <strong>열악한 환경에 최적화</strong>된 내환경 설계
+              <span class="mre-env-desc-en">
+                Stable operation in harsh conditions · Optimized for industrial sites, motors, robotics, and heavy machinery
+              </span>
+            </p>
+          </div><!-- /mre-env-block -->
+
+          <!-- ══════════════════════════════════════════
+               ★★★ 외경 사양 — 큰 박스 안에 라벨 + Type A/B 카드 ★★★
+          ══════════════════════════════════════════ -->
+          <div class="mre-dim-wrap">
+            <div class="mre-dim-wrap-label">외경 사양 · Dimensional Specifications</div>
+
+            <div class="mre-dim-grid">
+
+              <div class="mre-dim-card">
+                <div class="mre-dim-num">Ø40</div>
+                <div class="mre-dim-icon">
+                  <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="19" cy="19" r="13" stroke="#FF7F00" stroke-width="1.5"/>
+                    <circle cx="19" cy="19" r="5"  stroke="#E06600" stroke-width="1.4"/>
+                    <line x1="6"  y1="19" x2="32" y2="19" stroke="#FF7F00" stroke-width="1" stroke-dasharray="2 1.5" opacity=".5"/>
+                    <line x1="6"  y1="17" x2="6"  y2="21" stroke="#E06600" stroke-width="1.2"/>
+                    <line x1="32" y1="17" x2="32" y2="21" stroke="#E06600" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div class="mre-dim-tag">Type A · 중공축 / 빌트인</div>
+                <div class="mre-dim-title">제품 외경 Ø40mm</div>
+                <div class="mre-dim-value">Ø 40 mm</div>
+                <div class="mre-dim-sub">
+                  축 외경 <span class="mre-dim-sub-strong">Ø 8 mm</span>
+                  또는
+                  <span class="mre-dim-sub-strong">Ø 6 mm</span><br>
+                  Product outer diameter Ø40mm, shaft outer diameter Ø8mm or Ø6mm
+                </div>
+              </div>
+
+              <div class="mre-dim-card">
+                <div class="mre-dim-num">Ø50</div>
+                <div class="mre-dim-icon">
+                  <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="19" cy="19" r="15" stroke="#FF7F00" stroke-width="1.5"/>
+                    <circle cx="19" cy="19" r="5"  stroke="#E06600" stroke-width="1.4"/>
+                    <line x1="4"  y1="19" x2="34" y2="19" stroke="#FF7F00" stroke-width="1" stroke-dasharray="2 1.5" opacity=".5"/>
+                    <line x1="4"  y1="17" x2="4"  y2="21" stroke="#E06600" stroke-width="1.2"/>
+                    <line x1="34" y1="17" x2="34" y2="21" stroke="#E06600" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div class="mre-dim-tag">Type B · 샤프트</div>
+                <div class="mre-dim-title">제품 외경 Ø50mm</div>
+                <div class="mre-dim-value">Ø 50 mm</div>
+                <div class="mre-dim-sub">
+                  축 외경 <span class="mre-dim-sub-strong">Ø 8 mm</span><br>
+                  Product Outer Diameter Ø50mm, Shaft Outer Diameter Ø8mm
+                </div>
+              </div>
+
+            </div><!-- /mre-dim-grid -->
+          </div><!-- /mre-dim-wrap -->
+
+          <!-- ══ 분해능 + 출력 타입 ══ -->
+          <div class="mre-spec-row">
+
+            <div class="mre-res-block">
+              <div class="mre-mini-label">분해능 · Resolution</div>
+              <div class="mre-res-row">
+                <span class="mre-res-badge">Single-turn</span>
+                <span class="mre-res-ko">싱글턴 앱솔루트</span>
+                <span class="mre-res-val">1024 (10 bit)</span>
+              </div>
+              <div class="mre-res-row">
+                <span class="mre-res-badge">Multi-turn</span>
+                <span class="mre-res-ko">멀티턴 앱솔루트</span>
+                <span class="mre-res-val">16384 (14 bit)</span>
+              </div>
+            </div>
+
+            <div class="mre-outtype-block">
+              <div class="mre-mini-label">출력 타입 · Output Type</div>
+              <div class="mre-outtype-grid">
+
+                <div class="mre-outtype-row">
+                  <div class="mre-outtype-icon">
+                    <svg viewBox="0 0 28 28" fill="none">
+                      <path d="M4 14 L8 8 L12 20 L16 8 L20 20 L24 14" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                  </div>
+                  <div class="mre-outtype-name">Incremental</div>
+                  <div class="mre-outtype-desc">인크리멘탈 증분형</div>
+                </div>
+
+                <div class="mre-outtype-row">
+                  <div class="mre-outtype-icon">
+                    <svg viewBox="0 0 28 28" fill="none">
+                      <circle cx="14" cy="14" r="10" stroke="#FF7F00" stroke-width="1.3"/>
+                      <path d="M14 6 A8 8 0 1 1 6 14" stroke="#E06600" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+                      <text x="14" y="18" font-family="monospace" font-size="7" fill="#FF7F00" text-anchor="middle">ABS</text>
+                    </svg>
+                  </div>
+                  <div class="mre-outtype-name">Single Absolute</div>
+                  <div class="mre-outtype-desc">싱글턴 앱솔루트</div>
+                </div>
+
+                <div class="mre-outtype-row">
+                  <div class="mre-outtype-icon">
+                    <svg viewBox="0 0 28 28" fill="none">
+                      <circle cx="14" cy="14" r="10" stroke="#FF7F00" stroke-width="1.3"/>
+                      <path d="M14 4 A10 10 0 1 1 4 14" stroke="#E06600" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+                      <polygon points="2,10 6,16 10,10" fill="#E06600" opacity=".8"/>
+                      <text x="14" y="18" font-family="monospace" font-size="6" fill="#FF7F00" text-anchor="middle">M·ABS</text>
+                    </svg>
+                  </div>
+                  <div class="mre-outtype-name">Multi Absolute</div>
+                  <div class="mre-outtype-desc">멀티턴 앱솔루트</div>
+                </div>
+
+              </div>
+            </div>
+
+          </div><!-- /mre-spec-row -->
+
+          <!-- ══ 출력 코드 / 통신 ══ -->
+          <div class="mre-io-block">
+            <div class="mre-io-header">
+              <div class="mre-io-header-label">출력 코드 &amp; 통신 인터페이스 · Output Code &amp; Communication</div>
+              <div class="mre-io-line"></div>
+            </div>
+
+            <div class="mre-code-row">
+              <div class="mre-code-left">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="6" width="24" height="16" rx="2" stroke="#FF7F00" stroke-width="1.4"/>
+                  <text x="14" y="18" font-family="monospace" font-size="8" fill="#FF7F00" text-anchor="middle">CODE</text>
+                </svg>
+                <div class="mre-code-title">출력 코드</div>
+              </div>
+              <div class="mre-code-right">
+                <span class="mre-chip">Binary</span>
+                <span class="mre-chip">Gray</span>
+                <span class="mre-chip">BCD</span>
+              </div>
+            </div>
+
+            <div class="mre-code-row">
+              <div class="mre-code-left">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="8" width="10" height="12" rx="1.5" stroke="#FF7F00" stroke-width="1.4"/>
+                  <rect x="16" y="8" width="10" height="12" rx="1.5" stroke="#E06600" stroke-width="1.4"/>
+                  <line x1="12" y1="11" x2="16" y2="11" stroke="#FF7F00" stroke-width="1.1" stroke-dasharray="1.5 1"/>
+                  <line x1="12" y1="14" x2="16" y2="14" stroke="#FF7F00" stroke-width="1.1" stroke-dasharray="1.5 1"/>
+                  <line x1="12" y1="17" x2="16" y2="17" stroke="#FF7F00" stroke-width="1.1" stroke-dasharray="1.5 1"/>
+                </svg>
+                <div class="mre-code-title">통신 &amp; 출력</div>
+              </div>
+              <div class="mre-code-right">
+                <span class="mre-chip bl">SSI 통신</span>
+                <span class="mre-chip bl">Parallel 출력</span>
+              </div>
+            </div>
+
+          </div><!-- /mre-io-block -->
+
+          <!-- ══ 응용 분야 ══ -->
+          <div class="mre-app-block">
+            <div class="mre-app-label">응용 분야 · Applications</div>
+            <div class="mre-app-grid">
+
+              <div class="mre-app-item">
+                <div class="mre-app-icon">
+                  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="9" y="12" width="14" height="13" rx="2" stroke="#FF7F00" stroke-width="1.4"/>
+                    <rect x="12" y="7" width="8" height="5" rx="1" stroke="#FF7F00" stroke-width="1.4"/>
+                    <circle cx="13" cy="18" r="1.5" fill="#FF7F00"/>
+                    <circle cx="19" cy="18" r="1.5" fill="#FF7F00"/>
+                    <line x1="9"  y1="21" x2="4"  y2="21" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="23" y1="21" x2="28" y2="21" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="13" y1="25" x2="13" y2="29" stroke="#E06600" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="19" y1="25" x2="19" y2="29" stroke="#E06600" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="mre-app-name">협동로봇</div>
+                  <div class="mre-app-en">Collaborative Robot</div>
+                </div>
+              </div>
+
+              <div class="mre-app-item">
+                <div class="mre-app-icon">
+                  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="10" width="24" height="12" rx="2" stroke="#FF7F00" stroke-width="1.4" fill="rgba(255,127,0,0.04)"/>
+                    <circle cx="9"  cy="24" r="3" stroke="#E06600" stroke-width="1.4"/>
+                    <circle cx="23" cy="24" r="3" stroke="#E06600" stroke-width="1.4"/>
+                    <rect x="10" y="12" width="6" height="4" rx="1" stroke="#FF7F00" stroke-width="1" opacity=".5"/>
+                    <line x1="22" y1="7" x2="28" y2="7" stroke="#FF7F00" stroke-width="1.2" stroke-linecap="round"/>
+                    <polygon points="28,5 32,7 28,9" fill="#FF7F00" opacity=".7"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="mre-app-name">AGV</div>
+                  <div class="mre-app-en">Automated Guided Vehicle</div>
+                </div>
+              </div>
+
+              <div class="mre-app-item">
+                <div class="mre-app-icon">
+                  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="10" stroke="#FF7F00" stroke-width="1.4"/>
+                    <circle cx="16" cy="16" r="5"  stroke="#E06600" stroke-width="1.3"/>
+                    <circle cx="16" cy="16" r="2"  fill="#FF7F00" opacity=".4"/>
+                    <line x1="16" y1="2"  x2="16" y2="6"  stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="16" y1="26" x2="16" y2="30" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="2"  y1="16" x2="6"  y2="16" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="26" y1="16" x2="30" y2="16" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="mre-app-name">서보모터</div>
+                  <div class="mre-app-en">Servo Motor</div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- /mre-app-block -->
+
+        </div><!-- /mre-content -->
+      </div><!-- /mre-layout -->
+    </div><!-- /mre-page -->
+  </main>
+
+  <!-- ════════════════════════════════════════
+       ★ 햄버거 메뉴 동작 스크립트 — 표준 동일
+  ════════════════════════════════════════ -->
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.getElementById('main-nav');
+
+    hamburger.addEventListener('click', function () {
+      nav.classList.toggle('open');
+      hamburger.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.has-submenu > a').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          const parent = this.parentElement;
+          const isOpen = parent.classList.contains('submenu-open');
+
+          document.querySelectorAll('.has-submenu.submenu-open').forEach(function (el) {
+            el.classList.remove('submenu-open');
+          });
+
+          if (!isOpen) {
+            parent.classList.add('submenu-open');
+          }
+        }
+      });
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) {
+        nav.classList.remove('open');
+        hamburger.classList.remove('active');
+        document.querySelectorAll('.has-submenu.submenu-open').forEach(function (el) {
+          el.classList.remove('submenu-open');
+        });
+      }
+    });
+  </script>
+
+  <!-- ★ 방문자 IP 추적 -->
+    <script>
+        fetch('https://ipapi.co/json/')
+            .then(r => r.json())
+            .then(data => {
+                const params = new URLSearchParams({
+                    ip:      data.ip,
+                    country: data.country_name,
+                    city:    data.city,
+                    org:     data.org,
+                    page:    window.location.pathname
+                });
+                fetch('https://script.google.com/macros/s/AKfycbwbH0e5qxLACu143irtuugL_MQ5Q788c3XOkh8rwN7E075ohHQSBIu0XjeT3QUDq2AU/exec?' + params);
+            })
+            .catch(() => {});
+    </script>
+
+
+
+</body>
+</html>
