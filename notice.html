@@ -331,6 +331,130 @@
     }
     .ntc-textarea { min-height: 180px; resize: vertical; line-height: 1.8; }
 
+    /* ════════════════════════════════════════
+       ★★★ 이모지 입력 도구 ★★★
+    ════════════════════════════════════════ */
+    .ntc-emoji-bar {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 8px;
+    }
+    .ntc-emoji-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px;
+      background: #FFF9F3;
+      border: 1.5px solid var(--ntc-divider);
+      color: var(--ntc-text);
+      font-family: 'Oxanium', monospace;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color .25s, color .25s, background .25s;
+    }
+    .ntc-emoji-btn:hover {
+      border-color: var(--ntc-accent);
+      color: var(--ntc-accent);
+      background: #FFF3E0;
+    }
+    .ntc-emoji-btn-icon { font-size: 16px; line-height: 1; }
+    .ntc-emoji-btn.active {
+      border-color: var(--ntc-accent);
+      color: var(--ntc-accent);
+      background: #FFF3E0;
+    }
+    .ntc-emoji-hint {
+      font-size: 12px; color: var(--ntc-text);
+      font-style: italic; opacity: 0.7;
+    }
+
+    /* 이모지 피커 패널 */
+    .ntc-emoji-picker {
+      display: none;
+      margin-bottom: 14px;
+      background: #FFFFFF;
+      border: 1.5px solid var(--ntc-accent);
+      box-shadow: 0 4px 16px rgba(255, 127, 0, 0.12);
+      overflow: hidden;
+      animation: ntc-up .25s ease both;
+    }
+    .ntc-emoji-picker.open { display: block; }
+
+    /* 카테고리 탭 */
+    .ntc-emoji-tabs {
+      display: flex;
+      background: rgba(255, 102, 0, 0.05);
+      border-bottom: 1.5px solid var(--ntc-divider);
+      overflow-x: auto;
+    }
+    .ntc-emoji-tab {
+      flex: 1;
+      min-width: 80px;
+      padding: 10px 8px;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--ntc-divider);
+      cursor: pointer;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 12px; font-weight: 500;
+      color: var(--ntc-text);
+      transition: background .2s, color .2s;
+      display: flex; align-items: center;
+      justify-content: center; gap: 5px;
+      white-space: nowrap;
+    }
+    .ntc-emoji-tab:last-child { border-right: none; }
+    .ntc-emoji-tab:hover { background: rgba(255, 127, 0, 0.08); }
+    .ntc-emoji-tab.active {
+      background: #FFFFFF;
+      color: var(--ntc-accent);
+      font-weight: 700;
+    }
+    .ntc-emoji-tab-icon { font-size: 16px; line-height: 1; }
+
+    /* 이모지 그리드 */
+    .ntc-emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 2px;
+      padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .ntc-emoji-grid::-webkit-scrollbar { width: 6px; }
+    .ntc-emoji-grid::-webkit-scrollbar-track { background: #FFF9F3; }
+    .ntc-emoji-grid::-webkit-scrollbar-thumb {
+      background: rgba(255, 127, 0, 0.3);
+      border-radius: 3px;
+    }
+    .ntc-emoji-item {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; line-height: 1;
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+      /* 이모지 폰트 우선순위 — OS 기본 컬러 이모지 사용 */
+      font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+                   'Noto Color Emoji', 'Android Emoji', sans-serif;
+    }
+    .ntc-emoji-item:hover {
+      background: #FFF3E0;
+      transform: scale(1.2);
+    }
+    .ntc-emoji-item:active {
+      background: rgba(255, 127, 0, 0.2);
+      transform: scale(0.95);
+    }
+
+    /* 반응형: 모바일에서 그리드 좁히기 */
+    @media (max-width: 600px) {
+      .ntc-emoji-grid { grid-template-columns: repeat(7, 1fr); }
+      .ntc-emoji-item { font-size: 20px; }
+      .ntc-emoji-tab { font-size: 11px; min-width: 60px; }
+    }
+
     /* 파일 업로드 */
     .ntc-file-group {
       display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
@@ -941,6 +1065,26 @@
 
             <div class="ntc-form-group">
               <label class="ntc-form-label">내용 · Content <span>*</span></label>
+
+              <!-- ★ 이모지 입력 도구 -->
+              <div class="ntc-emoji-bar">
+                <button type="button" class="ntc-emoji-btn" id="emojiBtn" onclick="toggleEmojiPicker()">
+                  <span class="ntc-emoji-btn-icon">😀</span>
+                  <span>이모지</span>
+                </button>
+                <span class="ntc-emoji-hint">클릭해서 이모지를 본문에 삽입하세요</span>
+              </div>
+
+              <!-- ★ 이모지 피커 패널 -->
+              <div class="ntc-emoji-picker" id="emojiPicker">
+                <div class="ntc-emoji-tabs" id="emojiTabs">
+                  <!-- JS로 동적 생성 -->
+                </div>
+                <div class="ntc-emoji-grid" id="emojiGrid">
+                  <!-- JS로 동적 생성 -->
+                </div>
+              </div>
+
               <textarea class="ntc-textarea" id="postContent" placeholder="공지 내용을 입력하세요&#10;&#10;회사 소식, 제품 업데이트, 이벤트 등을 자유롭게 작성해 주세요."></textarea>
             </div>
 
@@ -1452,6 +1596,120 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeLogin();
     });
+  </script>
+
+  <!-- ════════════════════════════════════════
+       ★ 이모지 피커 로직
+  ════════════════════════════════════════ -->
+  <script>
+    /* ★ 카테고리별 이모지 데이터 — 산업/공지사항에 유용한 것 위주로 큐레이션 */
+    const EMOJI_DATA = {
+      notice: {
+        name: '공지', icon: '📢',
+        list: ['📢','📣','🔔','📌','📍','⭐','✨','💡','📅','📆','🕒','⏰','🗓️','📋','📝','✏️','📄','📑','🆕','🆙','🎯','🚀','💯','🏆','🥇','🎖️','🏅','👑']
+      },
+      check: {
+        name: '체크/주의', icon: '✅',
+        list: ['✅','✔️','☑️','❌','✖️','⚠️','🚫','⛔','‼️','❗','❓','❕','❔','💢','🔴','🟠','🟡','🟢','🔵','🟣','⚫','⚪','🟤','✳️','❇️','💠','🔶','🔷','🔸','🔹']
+      },
+      tech: {
+        name: '기술/제품', icon: '🔧',
+        list: ['🔧','🔨','⚙️','🛠️','⚡','🔌','🔋','💻','🖥️','⌨️','🖱️','💾','💿','📡','📶','📊','📈','📉','🎛️','🎚️','🔬','🔭','⚗️','🧪','🧮','📐','📏','🔩','🪛','🧰','🦾','🤖']
+      },
+      celebrate: {
+        name: '축하/이벤트', icon: '🎉',
+        list: ['🎉','🎊','🎁','🎀','🎈','🎆','🎇','🧨','🪅','🎂','🍰','🥂','🍾','🎓','🏅','🎖️','🏆','🥇','🥈','🥉','💐','🌹','🌸','🌷','🌻','🌼','🎯','🎪','🎭','🎨']
+      },
+      work: {
+        name: '비즈니스', icon: '💼',
+        list: ['💼','📁','📂','🗂️','📊','📈','📉','💰','💵','💴','💶','💷','💳','🧾','🏢','🏭','🏬','🏪','🏦','🤝','👥','👤','🗣️','💬','📞','☎️','📧','✉️','📨','📩','📤','📥','📦','📮']
+      },
+      face: {
+        name: '표정', icon: '😀',
+        list: ['😀','😃','😄','😁','😆','😊','🙂','🙃','😉','😌','😍','🥰','😘','🥳','😎','🤩','🥹','😢','😭','😅','😂','🤣','😇','🤔','😏','😶','🫡','🙏','👍','👏','💪','🙌','🤲','🫶','❤️','🧡','💛','💚','💙','💜','🤎','🖤','🤍','💯']
+      }
+    };
+
+    let currentEmojiTab = 'notice';
+
+    /* 이모지 피커 토글 */
+    function toggleEmojiPicker() {
+      const picker = document.getElementById('emojiPicker');
+      const btn = document.getElementById('emojiBtn');
+      picker.classList.toggle('open');
+      btn.classList.toggle('active');
+
+      /* 처음 열 때 탭과 그리드 생성 */
+      if (picker.classList.contains('open') && !picker.dataset.initialized) {
+        renderEmojiTabs();
+        renderEmojiGrid(currentEmojiTab);
+        picker.dataset.initialized = 'true';
+      }
+    }
+
+    /* 카테고리 탭 생성 */
+    function renderEmojiTabs() {
+      const tabs = document.getElementById('emojiTabs');
+      tabs.innerHTML = '';
+      Object.keys(EMOJI_DATA).forEach(key => {
+        const data = EMOJI_DATA[key];
+        const tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'ntc-emoji-tab' + (key === currentEmojiTab ? ' active' : '');
+        tab.innerHTML = `<span class="ntc-emoji-tab-icon">${data.icon}</span><span>${data.name}</span>`;
+        tab.onclick = () => switchEmojiTab(key);
+        tabs.appendChild(tab);
+      });
+    }
+
+    /* 탭 전환 */
+    function switchEmojiTab(key) {
+      currentEmojiTab = key;
+      document.querySelectorAll('.ntc-emoji-tab').forEach(t => t.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      renderEmojiGrid(key);
+    }
+
+    /* 이모지 그리드 생성 */
+    function renderEmojiGrid(key) {
+      const grid = document.getElementById('emojiGrid');
+      grid.innerHTML = '';
+      EMOJI_DATA[key].list.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ntc-emoji-item';
+        btn.textContent = emoji;
+        btn.title = emoji;
+        btn.onclick = () => insertEmoji(emoji);
+        grid.appendChild(btn);
+      });
+    }
+
+    /* ★ 이모지를 textarea 커서 위치에 삽입 */
+    function insertEmoji(emoji) {
+      const textarea = document.getElementById('postContent');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const before = textarea.value.substring(0, start);
+      const after = textarea.value.substring(end);
+
+      textarea.value = before + emoji + after;
+
+      /* 커서를 이모지 뒤로 이동 */
+      const newPos = start + emoji.length;
+      textarea.focus();
+      textarea.setSelectionRange(newPos, newPos);
+    }
+
+    /* 폼 닫힐 때 피커도 닫기 */
+    const _origCloseForm = closeForm;
+    closeForm = function() {
+      _origCloseForm();
+      const picker = document.getElementById('emojiPicker');
+      const btn = document.getElementById('emojiBtn');
+      if (picker) picker.classList.remove('open');
+      if (btn) btn.classList.remove('active');
+    };
   </script>
 
   <!-- ★ 방문자 IP 추적 -->
