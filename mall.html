@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>제품 개발 타임라인 - 아이닉스(INICS)</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    @font-face {
+      font-family: 'Noto Sans KR';
+      src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Oxanium';
+      src: url('oxanium-v21-latin-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+  </style>
+
+  <style>
+    /* ════════════════════════════════════════════
+       제품 개발 타임라인 — tl-* 네임스페이스
+    ════════════════════════════════════════════ */
+    main { padding: 0 !important; }
+
+    :root {
+      --tl-bg:      #080c14;
+      --tl-grid:    rgba(0,180,255,0.04);
+      --tl-accent:  #00b4ff;
+      --tl-accent2: #0062cc;
+      --tl-gold:    #c8a84b;
+      --tl-green:   #00e5a0;
+      --tl-purple:  #a78bfa;
+      --tl-text:    #e8edf5;
+      --tl-muted:   #6a7a92;
+      --tl-divider: rgba(0,180,255,0.16);
+      --tl-card:    rgba(13,20,32,0.90);
+    }
+
+    .tl-page {
+      background: var(--tl-bg);
+      color: var(--tl-text);
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 80vh;
+      position: relative; overflow: hidden;
+    }
+    .tl-page::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(var(--tl-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--tl-grid) 1px, transparent 1px);
+      background-size: 48px 48px; pointer-events: none;
+    }
+    .tl-page::after {
+      content: '';
+      position: absolute; top: -180px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse, rgba(0,90,200,0.14) 0%, transparent 70%);
+      z-index: 0; pointer-events: none;
+    }
+
+    /* ── 레이아웃 ── */
+    .tl-layout {
+      position: relative; z-index: 1;
+      max-width: 1260px; margin: 0 auto;
+      padding: 60px 40px 100px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      align-items: start;
+    }
+
+    /* ══════════════
+       사이드바
+    ══════════════ */
+    .tl-sidebar {
+      border-right: 1px solid var(--tl-divider);
+      padding-right: 32px;
+      position: sticky; top: 80px;
+    }
+    .tl-sidebar-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .3em;
+      color: var(--tl-accent); text-transform: uppercase;
+      margin-bottom: 20px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--tl-divider);
+    }
+    .tl-nav { list-style: none; padding: 0; margin: 0; }
+    .tl-nav li { border-bottom: 1px solid rgba(0,180,255,.07); }
+    .tl-nav li a {
+      display: block; padding: 12px 10px;
+      font-size: 13px; color: var(--tl-muted);
+      text-decoration: none; line-height: 1.5;
+      transition: color .25s, padding-left .25s, background .25s;
+      position: relative;
+    }
+    .tl-nav li a::before {
+      content: ''; position: absolute;
+      left: 0; top: 50%; transform: translateY(-50%);
+      width: 2px; height: 0;
+      background: var(--tl-accent); transition: height .25s;
+    }
+    .tl-nav li a:hover,
+    .tl-nav li a.active { color: var(--tl-accent); padding-left: 18px; background: rgba(0,180,255,.04); }
+    .tl-nav li a:hover::before,
+    .tl-nav li a.active::before { height: 60%; }
+    .tl-nav li a.active { font-weight: 600; }
+    .tl-nav-divider {
+      font-family: 'Oxanium', monospace;
+      font-size: 8px; letter-spacing: .22em;
+      color: var(--tl-accent); text-transform: uppercase;
+      padding: 14px 10px 6px; opacity: .7;
+    }
+
+    /* ══════════════
+       콘텐츠
+    ══════════════ */
+    .tl-content { padding-left: 52px; }
+
+    .tl-breadcrumb {
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: .18em;
+      color: var(--tl-muted); margin-bottom: 36px;
+      display: flex; align-items: center; gap: 10px;
+      animation: tl-up .7s ease both;
+    }
+    .tl-breadcrumb span { color: var(--tl-accent); }
+    .tl-breadcrumb::before { content: '//'; color: var(--tl-accent); opacity: .5; }
+
+    /* 헤더 */
+    .tl-header {
+      border-bottom: 1px solid var(--tl-divider);
+      padding-bottom: 28px; margin-bottom: 48px;
+      animation: tl-up .7s .08s ease both;
+    }
+    .tl-series-tag {
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: .28em;
+      color: var(--tl-accent); text-transform: uppercase;
+      margin-bottom: 14px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .tl-series-tag::after { content: ''; width: 40px; height: 1px; background: var(--tl-accent); }
+    .tl-title {
+      font-family: 'Oxanium', sans-serif;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 900; line-height: 1.05;
+      color: #fff; letter-spacing: -.01em;
+    }
+    .tl-title em { font-style: normal; color: var(--tl-accent); }
+    .tl-subtitle {
+      margin-top: 10px; font-size: 14px; font-weight: 300;
+      color: rgba(232,237,245,.6); letter-spacing: .04em;
+    }
+
+    /* ══════════════════════════════════════════════
+       TIMELINE 메인 구조
+    ══════════════════════════════════════════════ */
+    .tl-wrap {
+      position: relative;
+      animation: tl-up .7s .18s ease both;
+    }
+
+    /* 중앙 세로선 */
+    .tl-line {
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      transform: translateX(-50%);
+      width: 2px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        var(--tl-accent) 5%,
+        var(--tl-accent) 95%,
+        transparent 100%
+      );
+      opacity: .25;
+    }
+
+    /* 개별 타임라인 아이템 */
+    .tl-item {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      align-items: start;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    /* 좌측·우측 카드 */
+    .tl-card-left  { grid-column: 1; padding-right: 32px; text-align: right; }
+    .tl-card-right { grid-column: 3; padding-left: 32px; text-align: left; }
+    .tl-card-left,
+    .tl-card-right {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .tl-card-left.visible,
+    .tl-card-right.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    /* 짝수는 오른쪽에만, 홀수는 왼쪽에만 카드 */
+    .tl-card-empty { grid-column: 1; } /* placeholder */
+
+    /* 중앙 노드 */
+    .tl-node-col {
+      grid-column: 2;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0;
+      position: relative; z-index: 2;
+    }
+    .tl-node-connector {
+      width: 1px; flex: 1; min-height: 32px;
+      background: var(--tl-divider);
+    }
+    .tl-node {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      transition: transform .3s;
+    }
+    .tl-node:hover { transform: scale(1.12); }
+    .tl-node svg { width: 22px; height: 22px; }
+
+    /* 노드 색상 변형 */
+    .tl-node.blue   { background: rgba(0,180,255,.12); border: 2px solid rgba(0,180,255,.4); }
+    .tl-node.gold   { background: rgba(200,168,75,.12); border: 2px solid rgba(200,168,75,.4); }
+    .tl-node.green  { background: rgba(0,229,160,.10); border: 2px solid rgba(0,229,160,.35); }
+    .tl-node.purple { background: rgba(167,139,250,.10); border: 2px solid rgba(167,139,250,.35); }
+    .tl-node.orange { background: rgba(251,146,60,.10); border: 2px solid rgba(251,146,60,.35); }
+
+    /* 펄스 링 애니메이션 */
+    .tl-node::after {
+      content: '';
+      position: absolute; inset: -6px;
+      border-radius: 50%;
+      border: 1px solid currentColor;
+      opacity: 0;
+      animation: tl-pulse 2.5s ease-in-out infinite;
+    }
+    .tl-node.blue::after   { color: var(--tl-accent); animation-delay: 0s; }
+    .tl-node.gold::after   { color: var(--tl-gold); animation-delay: .4s; }
+    .tl-node.green::after  { color: var(--tl-green); animation-delay: .8s; }
+    .tl-node.purple::after { color: var(--tl-purple); animation-delay: 1.2s; }
+    .tl-node.orange::after { color: #fb923c; animation-delay: 1.6s; }
+
+    @keyframes tl-pulse {
+      0%, 100% { opacity: 0; transform: scale(1); }
+      50%       { opacity: .35; transform: scale(1.25); }
+    }
+
+    /* 스텝 번호 */
+    .tl-step {
+      font-family: 'Oxanium', monospace;
+      font-size: 8px; font-weight: 700; letter-spacing: .2em;
+      margin-top: 6px;
+    }
+    .tl-step.blue   { color: var(--tl-accent); }
+    .tl-step.gold   { color: var(--tl-gold); }
+    .tl-step.green  { color: var(--tl-green); }
+    .tl-step.purple { color: var(--tl-purple); }
+    .tl-step.orange { color: #fb923c; }
+
+    /* 카드 내부 */
+    .tl-card {
+      background: var(--tl-card);
+      border: 1px solid var(--tl-divider);
+      padding: 22px 20px 24px;
+      position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s;
+      display: inline-block; width: 100%;
+    }
+    .tl-card:hover { transform: translateY(-3px); }
+
+    .tl-card.blue   { border-top: 2px solid var(--tl-accent); }
+    .tl-card.blue:hover   { border-color: var(--tl-accent); }
+    .tl-card.gold   { border-top: 2px solid var(--tl-gold); }
+    .tl-card.gold:hover   { border-color: var(--tl-gold); }
+    .tl-card.green  { border-top: 2px solid var(--tl-green); }
+    .tl-card.green:hover  { border-color: var(--tl-green); }
+    .tl-card.purple { border-top: 2px solid var(--tl-purple); }
+    .tl-card.purple:hover { border-color: var(--tl-purple); }
+    .tl-card.orange { border-top: 2px solid #fb923c; }
+    .tl-card.orange:hover { border-color: #fb923c; }
+
+    .tl-card-seq {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .2em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .tl-card-seq.blue   { color: var(--tl-accent); }
+    .tl-card-seq.gold   { color: var(--tl-gold); }
+    .tl-card-seq.green  { color: var(--tl-green); }
+    .tl-card-seq.purple { color: var(--tl-purple); }
+    .tl-card-seq.orange { color: #fb923c; }
+
+    .tl-card-name {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 16px; font-weight: 700;
+      color: #fff; line-height: 1.3; margin-bottom: 5px;
+    }
+    .tl-card-name-en {
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; color: var(--tl-muted);
+      letter-spacing: .06em; line-height: 1.5; margin-bottom: 12px;
+    }
+    .tl-card-desc {
+      font-size: 12px; font-weight: 300;
+      color: rgba(232,237,245,.6); line-height: 1.8;
+    }
+    .tl-card-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px;
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+      text-decoration: none; color: var(--tl-accent);
+      transition: gap .2s;
+    }
+    .tl-card-link:hover { gap: 10px; }
+    .tl-card-link svg { width: 12px; height: 12px; }
+
+    /* 최하단 — LATEST 배지 */
+    .tl-latest-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-bottom: 10px;
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; font-weight: 700; letter-spacing: .18em;
+      padding: 4px 12px;
+      border: 1px solid var(--tl-green);
+      color: var(--tl-green); background: rgba(0,229,160,.06);
+      text-transform: uppercase;
+    }
+    .tl-latest-badge::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--tl-green);
+      animation: tl-blink 1.2s ease-in-out infinite;
+    }
+    @keyframes tl-blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .2; }
+    }
+
+    /* ══════════════════════════════════════════════
+       하단 요약 바
+    ══════════════════════════════════════════════ */
+    .tl-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+      border: 1px solid var(--tl-divider);
+      animation: tl-up .7s .4s ease both;
+    }
+    .tl-sum-item {
+      padding: 26px 20px; text-align: center;
+      border-right: 1px solid var(--tl-divider);
+    }
+    .tl-sum-item:last-child { border-right: none; }
+    .tl-sum-value {
+      font-family: 'Oxanium', sans-serif;
+      font-size: 36px; font-weight: 900;
+      color: var(--tl-accent); line-height: 1; margin-bottom: 8px;
+    }
+    .tl-sum-label {
+      font-family: 'Oxanium', monospace;
+      font-size: 9px; letter-spacing: .18em;
+      color: var(--tl-muted); text-transform: uppercase; line-height: 1.6;
+    }
+
+    /* 한국 기술 태그라인 */
+    .tl-made {
+      margin-top: 2px;
+      padding: 18px 24px;
+      border: 1px solid var(--tl-divider);
+      background: rgba(0,180,255,.02);
+      display: flex; align-items: center; gap: 16px;
+      animation: tl-up .7s .5s ease both;
+    }
+    .tl-made-flag { font-size: 24px; line-height: 1; }
+    .tl-made-text {
+      font-family: 'Oxanium', monospace;
+      font-size: 10px; letter-spacing: .18em;
+      color: var(--tl-muted);
+    }
+    .tl-made-text strong { color: var(--tl-accent); }
+
+    /* ── 애니메이션 ── */
+    @keyframes tl-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════════════════════════
+       모바일 반응형
+    ══════════════════════════════════════════════ */
+    @media (max-width: 960px) {
+      .tl-layout { grid-template-columns: 1fr; padding: 36px 24px 70px; }
+      .tl-sidebar { position: static; border-right: none; border-bottom: 1px solid var(--tl-divider); padding-right: 0; padding-bottom: 24px; margin-bottom: 32px; }
+      .tl-nav { display: flex; flex-wrap: wrap; gap: 4px; }
+      .tl-nav li { border-bottom: none; }
+      .tl-nav li a { padding: 7px 12px; border: 1px solid var(--tl-divider); font-size: 12px; }
+      .tl-nav li a::before { display: none; }
+      .tl-nav li a:hover, .tl-nav li a.active { padding-left: 12px; }
+      .tl-nav-divider { display: none; }
+      .tl-content { padding-left: 0; }
+      .tl-summary { grid-template-columns: 1fr 1fr; }
+      .tl-sum-item:nth-child(2) { border-right: none; }
+      .tl-sum-item:nth-child(3) { border-top: 1px solid var(--tl-divider); grid-column: 1 / -1; }
+    }
+
+    /* 모바일: 타임라인 세로 단일 열 */
+    @media (max-width: 680px) {
+      .tl-line { left: 24px; }
+      .tl-item { grid-template-columns: 48px 1fr; grid-template-rows: auto; }
+      .tl-card-left  { display: none; }
+      .tl-card-right {
+        grid-column: 2; padding-left: 20px; text-align: left;
+        padding-bottom: 32px;
+      }
+      .tl-node-col { grid-column: 1; }
+      .tl-node-connector { min-height: 16px; }
+      .tl-node { width: 40px; height: 40px; }
+      .tl-node svg { width: 18px; height: 18px; }
+      /* 좌측 카드들을 우측으로 이동 */
+      .tl-card-left.visible { display: block; grid-column: 2; padding-left: 20px; padding-right: 0; text-align: left; }
+      .tl-summary { grid-template-columns: 1fr; }
+      .tl-sum-item { border-right: none; border-bottom: 1px solid var(--tl-divider); }
+      .tl-sum-item:last-child { border-bottom: none; }
+    }
+
+    @media (max-width: 400px) {
+      .tl-layout { padding: 24px 14px 60px; }
+      .tl-title { font-size: clamp(22px, 6.5vw, 34px); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="index.html"><img src="logo.png" alt="아이닉스 로고" height="60" /></a></h1>
+    <nav>
+      <ul>
+        <li>
+          <a href="product0.html">Product</a>
+          <ul class="submenu">
+            <li><a href="product1.html" class="active">프로그래머블 고속 카운터 타이머</a></li>
+            <li><a href="product2.html">에어리어센서</a></li>
+            <li><a href="product3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="product4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="product5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="product6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="product7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="product8.html">엔코더 전용 카운터</a></li>
+            <li><a href="product9.html">엘리베이터 비접촉 스위치 센서</a></li>
+          </ul>
+        </li>
+
+        <li><a href="manu0.html">Manual</a>
+            <ul class="submenu">
+            <li><a href="manu1.html">프로그래머블<br>고속 카운터 타이머</a></li>
+            <li><a href="manu2.html">에어리어센서</a></li>
+            <li><a href="manu3.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="manu4.html">광학식 로터리 엔코더</a></li>
+            <li><a href="manu5.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="manu6.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="manu7.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="manu8.html">엔코더 전용 카운터</a></li>
+        </ul>
+        </li>
+
+         <li><a href="cs1.html">Customer Service</a>
+                <ul class="submenu">
+            <li><a href="cs1.html">자료실</a></li>
+            <li><a href="cs2.html">고객문의</a></li>
+            </ul>
+            </li>
+
+        <li><a href="notice.html">Notice</a></li>
+               
+        <li>
+          <a href="about.html">Company</a>
+          <ul class="submenu">
+            <li><a href="about.html">회사소개</a></li>
+            <li><a href="timeline.html">제품 개발 타임라인</a></li>
+            <li><a href="location.html">오시는 길</a></li>
+          </ul>
+        <li>
+            <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+              </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="tl-page">
+      <div class="tl-layout">
+
+        <!-- ══ 사이드바 ══ -->
+        <aside class="tl-sidebar">
+          <div class="tl-sidebar-label">Company</div>
+          <ul class="tl-nav">
+            <li><a href="about.html">회사소개</a></li>
+            <li><a href="timeline.html" class="active">제품 개발 타임라인</a></li>
+            <li><a href="location.html">오시는 길</a></li>
+          </ul>
+
+          <div class="tl-nav-divider" style="margin-top:24px;">Product Line-up</div>
+          <ul class="tl-nav">
+            <li><a href="product-ore.html">광학식 로터리 엔코더</a></li>
+            <li><a href="product-mre.html">마그네틱 로터리 엔코더</a></li>
+            <li><a href="product-ire.html">인덕티브 로터리 엔코더</a></li>
+            <li><a href="product-wre.html">바퀴형 로터리 엔코더</a></li>
+            <li><a href="product-ecr.html">엔코더 전용 카운터</a></li>
+            <li><a href="product-ml.html">마그네틱 리니어 엔코더</a></li>
+            <li><a href="product-ib.html">에어리어센서</a></li>
+            <li><a href="product-cth.html">고속 카운터 타이머</a></li>
+          </ul>
+        </aside>
+
+        <!-- ══ 콘텐츠 ══ -->
+        <div class="tl-content">
+
+          <div class="tl-breadcrumb">
+            Company &nbsp;/&nbsp; <span>제품 개발 타임라인</span>
+          </div>
+
+          <div class="tl-header">
+            <div class="tl-series-tag">INICS · History</div>
+            <h2 class="tl-title">제품 개발<br><em>타임라인</em></h2>
+            <p class="tl-subtitle">Product Development Timeline &nbsp;|&nbsp; 아이닉스 기술 성장의 발자취</p>
+          </div>
+
+          <!-- ══════════════ TIMELINE ══════════════ -->
+          <div class="tl-wrap">
+            <div class="tl-line"></div>
+
+            <!-- ─── STEP 01 | 광학식 로터리 엔코더 (좌측) ─── -->
+            <div class="tl-item">
+              <div class="tl-card-left" id="tl-c1">
+                <div class="tl-card blue">
+                  <div class="tl-card-seq blue">Step 01 · First Product</div>
+                  <div class="tl-card-name">광학식 로터리 엔코더</div>
+                  <div class="tl-card-name-en">Optical Rotary Encoder</div>
+                  <div class="tl-card-desc">
+                    아이닉스의 첫 번째 제품.<br>
+                    광학 방식으로 회전 위치·속도를 정밀 검출.<br>
+                    중공축 · 빌트인 · 샤프트 3가지 타입 제공.
+                  </div>
+                  <a class="tl-card-link" href="product-ore.html">
+                    제품 보기
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M2 6 H10 M7 3 L10 6 L7 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="tl-node-col">
+                <div class="tl-node-connector"></div>
+                <div class="tl-node blue">
+                  <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8" stroke="#00b4ff" stroke-width="1.5"/>
+                    <circle cx="11" cy="11" r="3" stroke="#00b4ff" stroke-width="1.3"/>
+                    <line x1="11" y1="3"  x2="11" y2="5"  stroke="#00b4ff" stroke-width="1.2"/>
+                    <line x1="11" y1="17" x2="11" y2="19" stroke="#00b4ff" stroke-width="1.2"/>
+                    <line x1="3"  y1="11" x2="5"  y2="11" stroke="#00b4ff" stroke-width="1.2"/>
+                    <line x1="17" y1="11" x2="19" y2="11" stroke="#00b4ff" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div class="tl-step blue">01</div>
+                <div class="tl-node-connector"></div>
+              </div>
+              <div class="tl-card-right"></div><!-- 우측 비움 -->
+            </div>
+
+            <!-- ─── STEP 02 | 마그네틱 로터리 엔코더 (우측) ─── -->
+            <div class="tl-item">
+              <div class="tl-card-left"></div><!-- 좌측 비움 -->
+              <div class="tl-node-col">
+                <div class="tl-node-connector"></div>
+                <div class="tl-node gold">
+                  <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8" stroke="#c8a84b" stroke-width="1.5"/>
+                    <circle cx="11" cy="11" r="4" stroke="#c8a84b" stroke-width="1.2"/>
+                    <circle cx="11" cy="11" r="1.5" fill="#c8a84b" opacity=".6"/>
+                    <!-- 자기장 아크 -->
+                    <path d="M6 6 Q11 2 16 6" stroke="#c8a84b" stroke-width="1" fill="none" opacity=".5"/>
+                  </svg>
+                </div>
+                <div class="tl-step gold">02</div>
+                <div class="tl-node-connector"></div>
+              </div>
+              <div class="tl-card-right" id="tl-c2">
+                <div class="tl-card gold">
+                  <div class="tl-card-seq gold">Step 02</div>
+                  <div class="tl-card-name">마그네틱 로터리 엔코더</div>
+                  <div class="tl-card-name-en">Magnetic Rotary Encoder</div>
+                  <div class="tl-card-desc">
+                    비접촉 자기센싱 기반 구조로 장수명 · 고신뢰성.<br>
+                    먼지·오일·습기 등 열악한 환경에서도 안정 동작.<br>
+                    협동로봇 · AGV · 서보모터에 최적화.
+                  </div>
+                  <a class="tl-card-link" href="product-mre.html" style="color:var(--tl-gold);">
+                    제품 보기
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M2 6 H10 M7 3 L10 6 L7 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- ─── STEP 03 | 인덕티브 로터리 엔코더 (좌측) ─── -->
+            <div class="tl-item">
+              <div class="tl-card-left" id="tl-c3">
+                <div class="tl-card purple">
+                  <div class="tl-card-seq purple">Step 03</div>
+                  <div class="tl-card-name">인덕티브 로터리 엔코더</div>
+                  <div class="tl-card-name-en">Inductive Rotary Encoder</div>
+                  <div class="tl-card-desc">
+                    전자기 유도 방식 — 외부 자기장에 영향 없음.<br>
+                    최대 싱글턴 16bit · 멀티턴 23bit 초고정밀.<br>
+                    로봇 · 드론 · 자동차에 최적화.
+                  </div>
+                  <a class="tl-card-link" href="product-ire.html">
+                    제품 보기
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M2 6 H10 M7 3 L10 6 L7 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="tl-node-col">
+                <div class="tl-node-connector"></div>
+                <div class="tl-node purple">
+                  <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8" stroke="#a78bfa" stroke-width="1.5"/>
+                    <path d="M5 11 Q8 6 11 11 Q14 16 17 11" stroke="#a78bfa" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+                    <circle cx="11" cy="11" r="2" stroke="#a78bfa" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div class="tl-step purple">03</div>
+                <div class="tl-node-connector"></div>
+              </div>
+              <div class="tl-card-right"></div>
+            </div>
+
+            <!-- ─── STEP 04 | 바퀴형 엔코더 (우측) ─── -->
+            <div class="tl-item">
+              <div class="tl-card-left"></div>
+              <div class="tl-node-col">
+                <div class="tl-node-connector"></div>
+                <div class="tl-node orange">
+                  <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="13" r="7" stroke="#fb923c" stroke-width="1.5"/>
+                    <circle cx="11" cy="13" r="3" stroke="#fb923c" stroke-width="1.2"/>
+                    <line x1="11" y1="3" x2="11" y2="6" stroke="#fb923c" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="4"  y1="13" x2="18" y2="13" stroke="#fb923c" stroke-width=".8" opacity=".3"/>
+                  </svg>
+                </div>
+                <div class="tl-step orange">04</div>
+                <div class="tl-node-connector"></div>
+              </div>
+              <div class="tl-card-right" id="tl-c4">
+                <div class="tl-card orange">
+                  <div class="tl-card-seq orange">Step 04</div>
+                  <div class="tl-card-name">바퀴형 로터리 엔코더</div>
+                  <div class="tl-card-name-en">Wheel Rotary Encoder</div>
+                  <div class="tl-card-desc">
+                    이송되는 물체의 길이·속도 측정 전용.<br>
+                    알루미늄 폴리우레탄 산업용 휠 탑재.<br>
+                    SSI 통신형 등 다양한 출력 지원.
+                  </div>
+                  <a class="tl-card-link" href="product-wre.html" style="color:#fb923c;">
+                    제품 보기
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M2 6 H10 M7 3 L10 6 L7 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- ─── STEP 05 | 엔코더 전용 카운터 (좌측) ─── -->
+            <div class="tl-item">
+              <div class="tl-card-left" id="tl-c5">
+                <div class="tl-card blue">
+                  <div class="tl-card-seq blue">Step 05</div>
+                  <div class="tl-card-name">엔코더 전용 카운터 / RPM</div>
+                  <div class="tl-card-name-en">Encoder Counter / RPM</div>
+                  <div class="tl-card-desc">
+                    6-digit LED 디스플레이로 카운트·RPM 동시 표시.<br>
+                    DIN Rail 취부형 산업용 설계.<br>
+                    Totem Pole·NPN·Voltage·Line Driver 출력.
+                  </div>
+                  <a class="tl-card-link" href="product-ecr.html">
+                    제품 보기
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M2 6 H10 M7 3 L10 6 L7 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="tl-node-col">
+                <div class="tl-node-connector"></div>
+                <div class="tl-node blue">
+                  <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="5" width="16" height="12" rx="2" stroke="#00b4ff" stroke-width="1.4"/>
+                    <text x="11" y="15" font-family="monospace" font-size="6" fill="#00b4ff" text-anchor="middle">RPM</text>
+                    <line x1="3"  y1="19" x2="19" y2="19" stroke="#00b4ff" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="tl-step blue">05</div>
+                <div class="tl-node-connector"></div>
+              </div>
+              <div class="tl-card-right"></div>
+            </div>
+
+            <!-- ─── STEP 06 | 마그네틱 리니어 엔코더 (우측) ─── -->
+            <div class="tl-item">
+              <div class="tl-card-left"></div>
+              <div class="tl-node-col">
+                <div class="tl-node-connector"></div>
+                <div class="tl-node green">
+                  <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="2"  y1="11" x2="20" y2="11" stroke="#00e5a0" stroke-width="1.6" stroke-linecap="round"/>
+                    <line x1="2"  y1="8"  x2="2"  y2="14" stroke="#00e5a0" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="20" y1="8"  x2="20" y2="14" stroke="#00e5a0" stroke-width="1.4" stroke-linecap="round"/>
+                    <circle cx="11" cy="11" r="3" stroke="#00e5a0" stroke-width="1.3"/>
+                    <circle cx="11" cy="11" r="1" fill="#00e5a0" opacity=".6"/>
+                  </svg>
+                </div>
+                <div class="tl-step green">06</div>
+                <div class="tl-node-connector"></div>
+              </div>
+              <div class="tl-card-right" id="tl-c6">
+                <div class="tl-card green">
+                  <div class="tl-card-seq green">Step 06 · CE Certified</div>
+                  <div class="tl-card-name">마그네틱 리니어 엔코더</div>
+                  <div class="tl-card-name-en">Magnetic Linear Encoder · ML Series</div>
+                  <div class="tl-card-desc">
+                    CE 인증 취득 — 글로벌 품질 기준 충족.<br>
+                    분해능 1μm ~ 100μm, 최대 측정 길이 30m.<br>
+                    NPN · Totem Pole · Line Driver 등 다양한 출력.
+                  </div>
+                  <a class="tl-card-link" href="product-ml.html" style="color:var(--tl-green);">
+                    제품 보기
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M2 6 H10 M7 3 L10 6 L7 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- ─── STEP 07 | 에어리어 센서 (좌측) ─── -->
+            <div class="tl-item">
+              <div class="tl-card-left" id="tl-c7">
+                <div class="tl-card blue">
+                  <div class="tl-card-seq blue">Step 07</div>
+                  <div class="tl-card-name">에어리어센서</div>
+                  <div class="tl-card-name-en">Area Sensor · IB Series</div>
+                  <div class="tl-card-desc">
+                    장거리 감지 · 상호 간섭 방지 기능 내장.<br>
+                    광축 수 4 ~ 20 선택, 피치 20mm / 40mm.<br>
+                    NPN · PNP Open Collector 출력 지원.
+                  </div>
+                  <a class="tl-card-link" href="product-ib.html">
+                    제품 보기
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M2 6 H10 M7 3 L10 6 L7 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="tl-node-col">
+                <div class="tl-node-connector"></div>
+                <div class="tl-node blue">
+                  <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="4" width="4" height="14" rx="1" stroke="#00b4ff" stroke-width="1.3"/>
+                    <rect x="16" y="4" width="4" height="14" rx="1" stroke="#00b4ff" stroke-width="1.3"/>
+                    <line x1="6"  y1="7"  x2="16" y2="7"  stroke="#00b4ff" stroke-width="1" stroke-dasharray="2 2"/>
+                    <line x1="6"  y1="11" x2="16" y2="11" stroke="#00b4ff" stroke-width="1.2" stroke-dasharray="2 2"/>
+                    <line x1="6"  y1="15" x2="16" y2="15" stroke="#00b4ff" stroke-width="1" stroke-dasharray="2 2"/>
+                  </svg>
+                </div>
+                <div class="tl-step blue">07</div>
+                <div class="tl-node-connector"></div>
+              </div>
+              <div class="tl-card-right"></div>
+            </div>
+
+            <!-- ─── STEP 08 | 고속 카운터 타이머 (우측) — LATEST ─── -->
+            <div class="tl-item">
+              <div class="tl-card-left"></div>
+              <div class="tl-node-col">
+                <div class="tl-node-connector"></div>
+                <div class="tl-node green" style="border-color:var(--tl-green);width:56px;height:56px;">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 14 L7 14 L9 8 L12 18 L15 10 L17 14 L21 14" stroke="#00e5a0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  </svg>
+                </div>
+                <div class="tl-step green">08</div>
+                <div class="tl-node-connector" style="min-height:16px;"></div>
+              </div>
+              <div class="tl-card-right" id="tl-c8">
+                <div class="tl-latest-badge">Latest Product</div>
+                <div class="tl-card green" style="border-color:rgba(0,229,160,.3);">
+                  <div class="tl-card-seq green">Step 08 · Latest</div>
+                  <div class="tl-card-name">고속 카운터 타이머</div>
+                  <div class="tl-card-name-en">Programmable High-Speed Counter / Timer · CTH Series</div>
+                  <div class="tl-card-desc">
+                    14가지 입력 · 8가지 출력 모드의 프로그래머블 제어.<br>
+                    kHz급 고속 펄스 대응 · PLC 없이 자동화 구성 가능.<br>
+                    6-digit LED 디스플레이 · RS232 통신 지원.
+                  </div>
+                  <a class="tl-card-link" href="product-cth.html" style="color:var(--tl-green);">
+                    제품 보기
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M2 6 H10 M7 3 L10 6 L7 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /tl-wrap -->
+
+          <!-- 요약 바 -->
+          <div class="tl-summary">
+            <div class="tl-sum-item">
+              <div class="tl-sum-value">8</div>
+              <div class="tl-sum-label">제품 라인업<br>Product Line-up</div>
+            </div>
+            <div class="tl-sum-item">
+              <div class="tl-sum-value">100<span style="font-size:20px;">%</span></div>
+              <div class="tl-sum-label">국내 자체 설계<br>In-House R&amp;D</div>
+            </div>
+            <div class="tl-sum-item">
+              <div class="tl-sum-value">CE</div>
+              <div class="tl-sum-label">국제 인증 취득<br>International Cert.</div>
+            </div>
+          </div>
+
+          <div class="tl-made">
+            <div class="tl-made-flag">🇰🇷</div>
+            <div class="tl-made-text">
+              <strong>DESIGNED · MANUFACTURED · SUPPORTED</strong>
+              &nbsp;|&nbsp; ALL PROCESSES IN KOREA · 전 공정 국내 수행
+            </div>
+          </div>
+
+        </div><!-- /tl-content -->
+      </div><!-- /tl-layout -->
+    </div><!-- /tl-page -->
+  </main>
+
+  
+
+  <!-- 스크롤 애니메이션 -->
+  <script>
+    const cards = document.querySelectorAll('.tl-card-left, .tl-card-right');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 좌측은 왼쪽에서, 우측은 오른쪽에서 들어오는 효과
+          if (entry.target.classList.contains('tl-card-left')) {
+            entry.target.style.transform = 'translateX(0) translateY(0)';
+          }
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    cards.forEach(card => {
+      // 초기 위치 설정
+      if (card.classList.contains('tl-card-left')) {
+        card.style.transform = 'translateX(-20px) translateY(20px)';
+      } else {
+        card.style.transform = 'translateX(20px) translateY(20px)';
+      }
+      observer.observe(card);
+    });
+  </script>
+
+ 
+
+
+
+</body>
+</html>
