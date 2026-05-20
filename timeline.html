@@ -313,7 +313,7 @@
       font-family: 'Oxanium', monospace;
       font-size: 13px;
       letter-spacing: 0.8px;
-      color: 111111;
+      color: #111111;
       white-space: nowrap;
       flex: 0 0 auto;
     }
@@ -456,6 +456,22 @@
       padding-top: 15px;
     }
 
+    /* ──────────────────────────────
+       ★★★ 영어 번역 박스 (tl-desc-en) — 추가된 부분 ★★★
+       각 카드 설명 아래에 카테고리 색상에 맞춘 박스로 표시
+    ────────────────────────────── */
+    .tl-desc-en {
+      display: block;
+      margin-top: 14px;
+      padding: 11px 14px;
+      border-radius: 6px;
+      font-family: 'Oxanium', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      letter-spacing: 0.3px;
+      font-weight: 500;
+    }
+
     /* 카테고리 테마 (라이트) */
     .tl-enc .tl-card::before { background: linear-gradient(90deg, #3B82F6, transparent); }
     .tl-enc .tl-card:hover   { border-color: rgba(59,130,246,0.35); }
@@ -463,6 +479,7 @@
     .tl-enc .tl-icon { background: rgba(59,130,246,0.08); }
     .tl-enc .tl-cat  { background: rgba(59,130,246,0.1); color: #2563EB; }
     .tl-enc .tl-name-kr { color: #1D4ED8; }
+    .tl-enc .tl-desc-en { background: rgba(59,130,246,0.08); color: #2563EB; }
 
     .tl-cnt .tl-card::before { background: linear-gradient(90deg, #F97316, transparent); }
     .tl-cnt .tl-card:hover   { border-color: rgba(249,115,22,0.35); }
@@ -470,6 +487,7 @@
     .tl-cnt .tl-icon { background: rgba(249,115,22,0.09); }
     .tl-cnt .tl-cat  { background: rgba(249,115,22,0.12); color: #EA6A0A; }
     .tl-cnt .tl-name-kr { color: #C2490A; }
+    .tl-cnt .tl-desc-en { background: rgba(249,115,22,0.1); color: #C2490A; }
 
     .tl-lin .tl-card::before { background: linear-gradient(90deg, #10B981, transparent); }
     .tl-lin .tl-card:hover   { border-color: rgba(16,185,129,0.35); }
@@ -477,6 +495,7 @@
     .tl-lin .tl-icon { background: rgba(16,185,129,0.08); }
     .tl-lin .tl-cat  { background: rgba(16,185,129,0.1); color: #059669; }
     .tl-lin .tl-name-kr { color: #065F46; }
+    .tl-lin .tl-desc-en { background: rgba(16,185,129,0.08); color: #059669; }
 
     .tl-sen .tl-card::before { background: linear-gradient(90deg, #8B5CF6, transparent); }
     .tl-sen .tl-card:hover   { border-color: rgba(139,92,246,0.35); }
@@ -484,15 +503,17 @@
     .tl-sen .tl-icon { background: rgba(139,92,246,0.08); }
     .tl-sen .tl-cat  { background: rgba(139,92,246,0.1); color: #7C3AED; }
     .tl-sen .tl-name-kr { color: #5B21B6; }
+    .tl-sen .tl-desc-en { background: rgba(139,92,246,0.08); color: #7C3AED; }
 
     /* FOOTER */
     .tl-footer {
       text-align: center;
       padding: 60px 0 40px;
-      color: 111111;
+      color: #111111;
       font-family: 'Oxanium', monospace;
       font-size: 13px;
       letter-spacing: 1.5px;
+      font-weight: 700;
     }
     .tl-footer-line {
       width: 1px; height: 44px;
@@ -552,6 +573,7 @@
       .tl-node { padding-top: 18px; }
       .tl-name-kr { font-size: 16px; }
       .tl-desc-text { font-size: 12.5px; }
+      .tl-desc-en { font-size: 13px; padding: 9px 12px; }
     }
     @media (max-width: 540px) {
       .tl-layout { padding: 28px 16px 60px; }
@@ -571,6 +593,7 @@
       .tl-name-kr { font-size: 15px; }
       .tl-name-en { font-size: 10.5px; }
       .tl-desc-text { font-size: 12px; line-height: 1.75; }
+      .tl-desc-en { font-size: 13px; padding: 8px 10px; }
       .tl-legend { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -723,6 +746,7 @@
                     </div>
                   </div>
                   <div class="tl-desc-text">광학식 엔코더는 빛의 차단·투과 원리를 이용해 회전 위치와 각도, 속도를 고정밀로 측정이 가능하며, 아이닉스 센서 사업의 시작점이 된 제품입니다.</div>
+                  <div class="tl-desc-en">Optical encoders use the principle of light blocking and transmission to precisely measure rotational position, angle, and speed. This product marked the starting point of INICS's sensor business.</div>
                 </div>
               </div>
 
@@ -750,6 +774,7 @@
                     </div>
                   </div>
                   <div class="tl-desc-text">자기장 변화를 이용한 비접촉 회전 감지 방식. 먼지, 오일, 진동 등 열악한 산업 환경에서도 높은 신뢰성을 제공하며, 광학식 대비 내환경성이 크게 향상된 제품입니다.</div>
+                  <div class="tl-desc-en">A non-contact rotation sensing method using magnetic field changes. It offers high reliability even in harsh industrial environments with dust, oil, and vibration, greatly improving environmental resistance compared to optical types.</div>
                 </div>
                 <div class="tl-node"><div class="tl-circle nc-enc">02</div></div>
                 <div class="tl-space"></div>
@@ -781,6 +806,7 @@
                     </div>
                   </div>
                   <div class="tl-desc-text">전자기 유도 원리를 활용한 비접촉식 위치 감지 센서. 외부 자기 간섭에 강하며 고온·고진동 환경에서도 탁월한 성능을 발휘하는 산업용 고신뢰성 엔코더입니다.</div>
+                  <div class="tl-desc-en">A non-contact position sensor utilizing the principle of electromagnetic induction. It is resistant to external magnetic interference and delivers outstanding performance even in high-temperature, high-vibration environments, making it a highly reliable industrial encoder.</div>
                 </div>
               </div>
 
@@ -813,6 +839,7 @@
                     </div>
                   </div>
                   <div class="tl-desc-text">바퀴(롤러)와 일체형으로 설계된 컴팩트 엔코더. 컨베이어 벨트, 이송 장치, 인쇄 설비 등에서 직선 이동 거리·속도 측정에 적합하며, 설치가 간편하고 현장 적용성이 뛰어납니다.</div>
+                  <div class="tl-desc-en">A compact encoder designed as an integrated unit with a wheel (roller). It is ideal for measuring linear travel distance and speed in conveyor belts, transfer devices, and printing equipment, with easy installation and excellent field applicability.</div>
                 </div>
                 <div class="tl-node"><div class="tl-circle nc-enc">04</div></div>
                 <div class="tl-space"></div>
@@ -846,6 +873,7 @@
                     </div>
                   </div>
                   <div class="tl-desc-text">엔코더 회전수, 속도(RPM), 일반 센서 신호도 계수하여 정밀하게 연산·표시하는 장치. 다양한 출력 기능을 지원해 자동화 설비에서 속도 제어 및 모니터링에 최적화되어 있습니다.</div>
+                  <div class="tl-desc-en">A device that counts encoder rotations, speed (RPM), and general sensor signals to precisely compute and display them. Supporting various output functions, it is optimized for speed control and monitoring in automation equipment.</div>
                 </div>
               </div>
 
@@ -876,6 +904,7 @@
                     </div>
                   </div>
                   <div class="tl-desc-text">자기 스케일과 리드 헤드를 이용한 직선 위치 정밀 측정 시스템. CNC 공작기계, 반도체 장비, 측정 설비 등 고정밀 직선 운동 제어가 필요한 분야에 최적화되어 있습니다.</div>
+                  <div class="tl-desc-en">A high-precision linear position measurement system using a magnetic scale and read head. It is optimized for fields requiring high-precision linear motion control, such as CNC machine tools, semiconductor equipment, and measurement systems.</div>
                 </div>
                 <div class="tl-node"><div class="tl-circle nc-lin">06</div></div>
                 <div class="tl-space"></div>
@@ -904,6 +933,7 @@
                     </div>
                   </div>
                   <div class="tl-desc-text">적외선 빔 배열로 감지 영역을 형성해 사람이나 물체의 침입을 비접촉으로 감지하는 에어리어 센서입니다. 다양한 자동화 라인의 검사·감지 공정 사용에 활용되며, 안정적인 감지 성능을 제공합니다.</div>
+                  <div class="tl-desc-en">An area sensor that forms a detection zone with an infrared beam array to detect the intrusion of people or objects without contact. It is used in inspection and detection processes across various automation lines, providing stable detection performance.</div>
                 </div>
               </div>
 
@@ -932,6 +962,7 @@
                     </div>
                   </div>
                   <div class="tl-desc-text">초고속 펄스 신호를 µs 단위로 정밀 계수·측정하는 복합 제어 장치. 엔코더 4체배 처리를 지원, BATCH 카운터, 시간 간격 측정, 타이밍 제어 등 정밀 계측의 마지막을 완성하는 제품입니다.</div>
+                  <div class="tl-desc-en">A composite control device that precisely counts and measures ultra-high-speed pulse signals in microseconds. Supporting encoder quadrature (x4) processing, batch counting, time interval measurement, and timing control, it completes the final stage of precision measurement.</div>
                 </div>
                 <div class="tl-node"><div class="tl-circle nc-cnt">08</div></div>
                 <div class="tl-space"></div>
@@ -942,7 +973,7 @@
             <!-- FOOTER (페이지 내부 div) -->
             <div class="tl-footer">
               <div class="tl-footer-line"></div>
-              <div>INICS Co., Ltd. &nbsp;·&nbsp; 세상을 편리하게 하는 센서 전문기업</div>
+              <div style="color:#000000; font-weight:700;">INICS Co., Ltd. &nbsp;·&nbsp; 세상을 편리하게 하는 센서 전문기업</div>
               <div style="margin-top:8px; opacity:0.5">www.iinics.com</div>
             </div>
 
