@@ -964,7 +964,8 @@
               <textarea class="ntc-textarea" id="postContent" placeholder="공지 내용을 입력하세요&#10;&#10;회사 소식, 제품 업데이트, 이벤트 등을 자유롭게 작성해 주세요."></textarea>
             </div>
 
-            <div class="ntc-file-group">
+            <!-- 파일 첨부(사진/PDF)는 다음 단계에서 추가 예정 — 현재는 숨김 -->
+            <div class="ntc-file-group" style="display:none;">
               <div class="ntc-file-box" id="imgBox">
                 <input type="file" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
                   id="postImg" onchange="handleImgChange(this)" />
@@ -978,7 +979,6 @@
                 <div class="ntc-file-type">사진 · Image</div>
                 <div class="ntc-file-desc">PNG, JPG, GIF, WEBP<br>클릭하여 파일 선택</div>
                 <div class="ntc-file-name" id="imgName"></div>
-                <!-- ★ 수정 모드: 기존 파일 표시 -->
                 <div class="ntc-file-existing" id="imgExisting"></div>
                 <img class="ntc-img-preview" id="imgPreview" src="" alt="미리보기" />
               </div>
@@ -997,7 +997,6 @@
                 <div class="ntc-file-type">PDF 파일</div>
                 <div class="ntc-file-desc">PDF 문서 첨부<br>클릭하여 파일 선택</div>
                 <div class="ntc-file-name" id="pdfName"></div>
-                <!-- ★ 수정 모드: 기존 파일 표시 -->
                 <div class="ntc-file-existing" id="pdfExisting"></div>
               </div>
             </div>
@@ -1143,22 +1142,50 @@
     });
   </script>
 
+  <!-- ★★★ 공지 시스템 (구글 시트 저장) ★★★ -->
   <script>
-    const ADMIN_PW = 'inics*3';
+    /* ===== 구글 시트 공지 시스템 (글 전용) ===== */
+    const NOTICE_API = 'https://script.google.com/macros/s/AKfycbwcekQusVJVOqLAixAps4e4hu9w33DfexR91eypkT8q4Piob1kMDDNAEsCjM-DAUNY0/exec';
 
     let isAdmin = false;
-    let posts   = JSON.parse(localStorage.getItem('INICS_notices') || '[]');
+    let adminPw = '';          // 로그인 성공 시 메모리에만 보관 (소스코드에 노출 안 됨)
+    let posts = [];
     let currentPost = null;
-
-    /* ★★★ 수정 모드 상태 변수 ★★★
-       null이면 새 글 작성, id값이 있으면 그 id의 글을 수정 중 */
     let editingPostId = null;
 
-    renderList();
+    /* 페이지가 열리면 시트에서 목록을 불러옵니다 */
+    loadPosts();
 
+    /* ---------- 서버 통신 ---------- */
+    async function apiList() {
+      const res = await fetch(NOTICE_API + '?action=list&t=' + Date.now());
+      return res.json();
+    }
+    async function apiPost(payload) {
+      const res = await fetch(NOTICE_API, { method: 'POST', body: JSON.stringify(payload) });
+      return res.json();
+    }
+
+    async function loadPosts() {
+      const list = document.getElementById('postList');
+      const empty = document.getElementById('emptyMsg');
+      list.innerHTML = '<li style="padding:32px;text-align:center;font-family:Oxanium,monospace;letter-spacing:.1em;color:#111;border:1.5px solid var(--ntc-divider);border-top:none;">불러오는 중...</li>';
+      empty.style.display = 'none';
+      try {
+        const r = await apiList();
+        posts = (r && r.ok && Array.isArray(r.posts)) ? r.posts : [];
+      } catch (e) {
+        posts = [];
+        list.innerHTML = '<li style="padding:32px;text-align:center;font-family:Oxanium,monospace;letter-spacing:.08em;color:#D63030;border:1.5px solid var(--ntc-divider);border-top:none;">목록을 불러오지 못했습니다. 잠시 후 새로고침 해주세요.</li>';
+        return;
+      }
+      renderList();
+    }
+
+    /* ---------- 로그인 ---------- */
     function toggleLogin() {
       if (isAdmin) {
-        isAdmin = false;
+        isAdmin = false; adminPw = '';
         updateAdminUI();
       } else {
         document.getElementById('loginModal').classList.add('open');
@@ -1168,34 +1195,32 @@
       }
     }
 
-    function doLogin() {
+    async function doLogin() {
       const pw = document.getElementById('pwInput').value;
-      if (pw === ADMIN_PW) {
-        isAdmin = true;
-        closeLogin();
-        updateAdminUI();
-      } else {
+      try {
+        const r = await apiPost({ action: 'login', pw: pw });
+        if (r && r.ok) {
+          isAdmin = true; adminPw = pw;
+          closeLogin(); updateAdminUI();
+        } else {
+          document.getElementById('loginErr').classList.add('show');
+          document.getElementById('pwInput').value = '';
+          document.getElementById('pwInput').focus();
+        }
+      } catch (e) {
         document.getElementById('loginErr').classList.add('show');
-        document.getElementById('pwInput').value = '';
-        document.getElementById('pwInput').focus();
       }
     }
 
-    function closeLogin() {
-      document.getElementById('loginModal').classList.remove('open');
-    }
-
-    function handleLoginOverlay(e) {
-      if (e.target === document.getElementById('loginModal')) closeLogin();
-    }
+    function closeLogin() { document.getElementById('loginModal').classList.remove('open'); }
+    function handleLoginOverlay(e) { if (e.target === document.getElementById('loginModal')) closeLogin(); }
 
     function updateAdminUI() {
-      const btn     = document.getElementById('adminToggleBtn');
+      const btn = document.getElementById('adminToggleBtn');
       const btnText = document.getElementById('adminBtnText');
       const writeBtn = document.getElementById('writeBtn');
-      const delBtns  = document.querySelectorAll('.ntc-del-btn');
+      const delBtns = document.querySelectorAll('.ntc-del-btn');
       const editBtns = document.querySelectorAll('.ntc-edit-btn');
-
       if (isAdmin) {
         btn.classList.add('logged');
         btnText.textContent = '관리자 로그아웃';
@@ -1212,7 +1237,7 @@
       }
     }
 
-    /* ★★★ 새 글 작성 모드로 폼 열기 ★★★ */
+    /* ---------- 글쓰기 / 수정 폼 ---------- */
     function openWriteForm() {
       editingPostId = null;
       resetFormFields();
@@ -1223,35 +1248,13 @@
       window.scrollTo({ top: document.getElementById('writeForm').offsetTop - 100, behavior: 'smooth' });
     }
 
-    /* ★★★ 수정 모드로 폼 열기 ★★★ */
     function openEditForm(id) {
       const post = posts.find(p => p.id === id);
       if (!post) return;
-
       editingPostId = id;
       resetFormFields();
-
-      /* 기존 내용 채우기 */
       document.getElementById('postTitle').value = post.title;
       document.getElementById('postContent').value = post.content;
-
-      /* 기존 이미지가 있으면 미리보기 표시 + 기존 파일명 표시 */
-      if (post.imgData) {
-        const preview = document.getElementById('imgPreview');
-        preview.src = post.imgData;
-        preview.style.display = 'block';
-        const existing = document.getElementById('imgExisting');
-        existing.textContent = '기존 파일 유지 (새 파일 선택 시 교체)';
-        existing.classList.add('show');
-      }
-
-      /* 기존 PDF가 있으면 파일명 표시 */
-      if (post.pdfData) {
-        const existing = document.getElementById('pdfExisting');
-        existing.textContent = '기존: ' + (post.pdfName || 'document.pdf') + ' (새 파일 선택 시 교체)';
-        existing.classList.add('show');
-      }
-
       document.getElementById('formTitle').textContent = '공지 수정 · Edit Notice';
       document.getElementById('submitBtn').textContent = '수정 완료';
       document.getElementById('writeForm').classList.add('open');
@@ -1259,196 +1262,96 @@
       window.scrollTo({ top: document.getElementById('writeForm').offsetTop - 100, behavior: 'smooth' });
     }
 
-    /* 폼 필드 초기화 */
     function resetFormFields() {
       document.getElementById('postTitle').value = '';
       document.getElementById('postContent').value = '';
-      document.getElementById('imgName').textContent = '';
-      document.getElementById('pdfName').textContent = '';
-      document.getElementById('imgExisting').textContent = '';
-      document.getElementById('imgExisting').classList.remove('show');
-      document.getElementById('pdfExisting').textContent = '';
-      document.getElementById('pdfExisting').classList.remove('show');
-      document.getElementById('imgPreview').style.display = 'none';
-      document.getElementById('imgPreview').src = '';
-      document.getElementById('postImg').value = '';
-      document.getElementById('postPdf').value = '';
     }
 
-    /* 폼 닫기 */
     function closeForm() {
       document.getElementById('writeForm').classList.remove('open');
       editingPostId = null;
       resetFormFields();
     }
 
-    function handleImgChange(input) {
-      const file = input.files[0];
-      if (!file) return;
-      document.getElementById('imgName').textContent = '✓ ' + file.name;
-      /* 새 파일을 선택했으므로 "기존 파일 유지" 표시는 숨김 */
-      document.getElementById('imgExisting').classList.remove('show');
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const preview = document.getElementById('imgPreview');
-        preview.src = e.target.result;
-        preview.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    }
+    /* 파일(사진/PDF) 기능은 이번 단계에서 사용하지 않습니다 (다음 단계 예정) */
+    function handleImgChange() {}
+    function handlePdfChange() {}
 
-    function handlePdfChange(input) {
-      const file = input.files[0];
-      if (!file) return;
-      document.getElementById('pdfName').textContent = '✓ ' + file.name;
-      /* 새 파일을 선택했으므로 "기존 파일 유지" 표시는 숨김 */
-      document.getElementById('pdfExisting').classList.remove('show');
-    }
-
-    /* ★★★ 글 저장 (새 글 등록 또는 기존 글 수정) ★★★ */
-    function submitPost() {
-      const title   = document.getElementById('postTitle').value.trim();
+    /* ---------- 저장 (등록 / 수정) ---------- */
+    async function submitPost() {
+      const title = document.getElementById('postTitle').value.trim();
       const content = document.getElementById('postContent').value.trim();
-      const imgFile = document.getElementById('postImg').files[0];
-      const pdfFile = document.getElementById('postPdf').files[0];
-
       if (!title) { alert('제목을 입력해주세요.'); return; }
       if (!content) { alert('내용을 입력해주세요.'); return; }
 
-      /* 수정 모드인 경우: 기존 글 찾기 */
-      const existingPost = editingPostId ? posts.find(p => p.id === editingPostId) : null;
+      const submitBtn = document.getElementById('submitBtn');
+      const prev = submitBtn.textContent;
+      submitBtn.textContent = '저장 중...';
+      submitBtn.disabled = true;
 
-      const now  = new Date();
-      const date = now.getFullYear() + '.' +
-                   String(now.getMonth()+1).padStart(2,'0') + '.' +
-                   String(now.getDate()).padStart(2,'0');
-
-      const post = {
-        id: existingPost ? existingPost.id : Date.now(),
-        title, content,
-        /* 수정 시에는 원본 날짜 유지 (필요하면 아래 주석 해제로 수정일 사용) */
-        date: existingPost ? existingPost.date : date,
-        /* 새 파일이 선택되면 그것을, 아니면 기존 데이터 유지 */
-        imgName: imgFile ? imgFile.name : (existingPost ? existingPost.imgName : null),
-        imgData: imgFile ? null : (existingPost ? existingPost.imgData : null),
-        pdfName: pdfFile ? pdfFile.name : (existingPost ? existingPost.pdfName : null),
-        pdfData: pdfFile ? null : (existingPost ? existingPost.pdfData : null),
-      };
-
-      let pending = 2;
-      const done = () => { pending--; if (pending <= 0) savePost(post, !!existingPost); };
-
-      if (imgFile) {
-        const r = new FileReader();
-        r.onload = e => { post.imgData = e.target.result; done(); };
-        r.readAsDataURL(imgFile);
-      } else { done(); }
-
-      if (pdfFile) {
-        const r = new FileReader();
-        r.onload = e => { post.pdfData = e.target.result; done(); };
-        r.readAsDataURL(pdfFile);
-      } else { done(); }
-    }
-
-    /* ★★★ 새 글 등록 또는 기존 글 교체 후 저장 ★★★ */
-    function savePost(post, isEdit) {
-      if (isEdit) {
-        /* 수정: 동일 id 찾아서 교체 (순서 유지) */
-        const idx = posts.findIndex(p => p.id === post.id);
-        if (idx >= 0) posts[idx] = post;
-      } else {
-        /* 새 글: 맨 앞에 추가 */
-        posts.unshift(post);
-      }
       try {
-        localStorage.setItem('INICS_notices', JSON.stringify(posts));
-      } catch(e) {
-        alert('저장 공간 부족으로 일부 파일이 저장되지 않을 수 있습니다.');
+        let r;
+        if (editingPostId) {
+          r = await apiPost({ action: 'edit', pw: adminPw, id: editingPostId, title: title, content: content });
+        } else {
+          r = await apiPost({ action: 'add', pw: adminPw, title: title, content: content });
+        }
+        if (r && r.ok) {
+          closeForm();
+          await loadPosts();
+        } else {
+          alert('저장에 실패했습니다. ' + ((r && r.error) ? '(' + r.error + ')' : '관리자 권한을 확인해주세요.'));
+        }
+      } catch (e) {
+        alert('저장 중 오류가 발생했습니다. 인터넷 연결을 확인해주세요.');
+      } finally {
+        submitBtn.textContent = prev;
+        submitBtn.disabled = false;
       }
-      closeForm();
-      renderList();
     }
 
+    /* ---------- 목록 표시 ---------- */
     function renderList() {
-      const list  = document.getElementById('postList');
+      const list = document.getElementById('postList');
       const empty = document.getElementById('emptyMsg');
       list.innerHTML = '';
-
-      if (posts.length === 0) {
-        empty.style.display = 'block';
-        return;
-      }
+      if (posts.length === 0) { empty.style.display = 'block'; return; }
       empty.style.display = 'none';
 
       posts.forEach((post, idx) => {
         const li = document.createElement('li');
         li.className = 'ntc-list-item';
-
-        const tags = [
-          post.imgData ? '<span class="ntc-tag img">사진</span>' : '',
-          post.pdfData ? '<span class="ntc-tag pdf">PDF</span>' : ''
-        ].join('');
-
         li.innerHTML = `
           <div class="ntc-item-num">${posts.length - idx}</div>
-          <div class="ntc-item-title-wrap" onclick="openDetail(${post.id})">
+          <div class="ntc-item-title-wrap" onclick="openDetail('${post.id}')">
             <div class="ntc-item-title">${escHtml(post.title)}</div>
-            <div class="ntc-item-tags">${tags}</div>
+            <div class="ntc-item-tags"></div>
           </div>
-          <div class="ntc-item-date">${post.date}</div>
+          <div class="ntc-item-date">${escHtml(post.date || '')}</div>
           <div class="ntc-item-actions">
-            <button class="ntc-edit-btn ${isAdmin ? 'visible' : ''}"
-              onclick="event.stopPropagation(); openEditForm(${post.id})"
-              title="수정">
-              <svg viewBox="0 0 14 14" fill="none">
-                <path d="M2 11 L2 12 L3 12 L11 4 L10 3 L2 11 Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
-                <path d="M9 2 L12 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-              </svg>
+            <button class="ntc-edit-btn ${isAdmin ? 'visible' : ''}" onclick="event.stopPropagation(); openEditForm('${post.id}')" title="수정">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M2 11 L2 12 L3 12 L11 4 L10 3 L2 11 Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/><path d="M9 2 L12 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
             </button>
-            <button class="ntc-del-btn ${isAdmin ? 'visible' : ''}"
-              onclick="event.stopPropagation(); deletePost(${post.id})"
-              title="삭제">
-              <svg viewBox="0 0 14 14" fill="none">
-                <path d="M2 4 H12 M5 4 V2 H9 V4 M5 6 V11 M9 6 V11 M3 4 L4 12 H10 L11 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <button class="ntc-del-btn ${isAdmin ? 'visible' : ''}" onclick="event.stopPropagation(); deletePost('${post.id}')" title="삭제">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M2 4 H12 M5 4 V2 H9 V4 M5 6 V11 M9 6 V11 M3 4 L4 12 H10 L11 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-          </div>
-        `;
+          </div>`;
         list.appendChild(li);
       });
     }
 
+    /* ---------- 상세 보기 ---------- */
     function openDetail(id) {
       const post = posts.find(p => p.id === id);
       if (!post) return;
       currentPost = post;
-
-      document.getElementById('detailMeta').textContent = 'INICS Notice · ' + post.date;
+      document.getElementById('detailMeta').textContent = 'INICS Notice · ' + (post.date || '');
       document.getElementById('detailTitle').textContent = post.title;
       document.getElementById('detailContent').textContent = post.content;
-
-      const tags = [
-        post.imgData ? '<span class="ntc-tag img">사진 첨부</span>' : '',
-        post.pdfData ? '<span class="ntc-tag pdf">PDF 첨부</span>' : ''
-      ].join('');
-      document.getElementById('detailTags').innerHTML = tags;
-
-      const img = document.getElementById('detailImg');
-      if (post.imgData) { img.src = post.imgData; img.style.display = 'block'; }
-      else               { img.src = '';           img.style.display = 'none'; }
-
-      const pdfWrap = document.getElementById('detailPdf');
-      if (post.pdfData) {
-        document.getElementById('detailPdfName').textContent = post.pdfName || 'document.pdf';
-        document.getElementById('detailPdfDl').href     = post.pdfData;
-        document.getElementById('detailPdfDl').download = post.pdfName || 'document.pdf';
-        pdfWrap.style.display = 'flex';
-      } else {
-        pdfWrap.style.display = 'none';
-      }
-
-      document.getElementById('listView').style.display  = 'none';
+      document.getElementById('detailTags').innerHTML = '';
+      document.getElementById('detailImg').style.display = 'none';
+      document.getElementById('detailPdf').style.display = 'none';
+      document.getElementById('listView').style.display = 'none';
       document.getElementById('detailView').classList.add('open');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -1458,20 +1361,23 @@
       document.getElementById('listView').style.display = 'block';
     }
 
-    function deletePost(id) {
+    /* ---------- 삭제 ---------- */
+    async function deletePost(id) {
       if (!confirm('이 공지를 삭제하시겠습니까?')) return;
-      posts = posts.filter(p => p.id !== id);
-      localStorage.setItem('INICS_notices', JSON.stringify(posts));
-      renderList();
+      try {
+        const r = await apiPost({ action: 'delete', pw: adminPw, id: id });
+        if (r && r.ok) { await loadPosts(); }
+        else { alert('삭제에 실패했습니다.'); }
+      } catch (e) {
+        alert('삭제 중 오류가 발생했습니다.');
+      }
     }
 
     function escHtml(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeLogin();
-    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLogin(); });
   </script>
 
   <!-- ★ 방문자 IP 추적 -->
