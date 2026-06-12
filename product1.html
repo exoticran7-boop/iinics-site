@@ -374,6 +374,19 @@
     .pct-ct-sub { font-size: 13px; font-weight: 400; color: #111111; line-height: 1.85; }
     .pct-ct-sub strong { color: var(--pct-accent2); font-weight: 700; }
 
+    /* ★★★ 카운터/타이머 영어 번역 — 다른 영어 번역(.en, .pct-io-en 등)과 동일한 스타일 ★★★ */
+    .pct-ct-sub .en {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px;
+      color: #444444;
+      letter-spacing: .05em;
+      display: block;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+    /* 영어 안의 strong은 주황색 강조 해제 → 동일한 회색 유지 */
+    .pct-ct-sub .en strong { color: #444444; font-weight: 400; }
+
     /* ── 입출력 ── */
     .pct-io-section { animation: pct-up .7s .4s ease both; }
     .pct-io-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 2px; }
@@ -765,6 +778,9 @@
                   <strong>14가지 입력 모드 / 8가지 출력 모드</strong> 지원.<br>
                   프리스케일 설정 범위 <strong>0.001 ~ 999.999</strong>로 고정밀 펄스 분주 및 체배 가능.<br>
                   BATCH 카운터로 배치 단위 공정 계수 지원.
+                  <span class="en">Supports 14 input modes / 8 output modes. 
+                    <br>Prescale setting range of 0.001 to 999.999 enables high-precision pulse division and multiplication. 
+                    <br>BATCH counter supports batch-unit process counting.</span>
                 </p>
               </div>
 
@@ -784,6 +800,9 @@
                   <strong>10가지 출력 모드</strong> 지원으로 다양한 타이밍 제어 구현.<br>
                   시간 설정 범위 <strong>0.01초 ~ 999,999분</strong> — ms 단위부터 장시간까지.<br>
                   '0' 시간 설정 기능으로 즉시 동작 제어 가능.
+                  <span class="en">Supports 10 output modes for versatile timing control.
+                    <br> Time setting range of 0.01 sec to 999,999 min — from milliseconds to long durations. 
+                    <br>The '0' time setting enables immediate operation control.</span>
                 </p>
               </div>
 
