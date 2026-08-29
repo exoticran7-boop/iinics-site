@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ═══ 방문자 분석 · Google Analytics 4 ═══
+     ★ 사용법: https://analytics.google.com 에서 계정 생성 후
+       발급받은 측정 ID(G-로 시작)로 아래 2곳의 G-XXXXXXXXXX 를 교체하세요. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<title>오시는 길 | Location - 아이닉스(INICS)</title>
+<meta name="description" content="아이닉스(INICS) 본사(부산 영도구 태종로 727 산학허브관 703호) 및 연구소(경남 창원시 의창구 차룡로 48번길 54) 위치 안내. INICS headquarters and R&D center location.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.iinics.com/location.html">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+  @font-face {
+    font-family: 'Oxanium';
+    src: url('oxanium-v21-latin-regular.woff2') format('woff2');
+    font-weight: 400 800; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Noto Sans KR';
+    src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+    font-weight: 300 700; font-style: normal; font-display: swap;
+  }
+</style>
+
+<style>
+  /* ════════════════════════════════════════════
+     ★★★ 상단 헤더 서브메뉴 색상 패치 ★★★
+     외부 style.css의 회색 톤을 부드러운 주황 톤으로 덮어쓰기
+     ★ 외곽 진한 테두리 제거 → 부드러운 그림자로 변경
+  ════════════════════════════════════════════ */
+  header .submenu,
+  header nav .submenu,
+  header ul .submenu {
+    border: none !important;
+    border-top: 1px solid rgba(255, 127, 0, 0.15) !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 8px 24px rgba(255, 127, 0, 0.10),
+                0 2px 6px rgba(0, 0, 0, 0.06) !important;
+    border-radius: 0 0 4px 4px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    overflow: hidden !important;
+  }
+  header .submenu li:last-child a,
+  header nav .submenu li:last-child a,
+  header ul .submenu li:last-child a {
+    border-radius: 0 0 4px 4px !important;
+  }
+  header .submenu li,
+  header nav .submenu li,
+  header ul .submenu li {
+    border-bottom: 1px solid rgba(255, 128, 0, 0.171) !important;
+  }
+  header .submenu li:last-child,
+  header nav .submenu li:last-child,
+  header ul .submenu li:last-child {
+    border-bottom: none !important;
+  }
+  header .submenu li a,
+  header nav .submenu li a,
+  header ul .submenu li a {
+    color: #111111 !important;
+  }
+  header .submenu li a:hover,
+  header .submenu li a:focus,
+  header .submenu li a.active,
+  header nav .submenu li a:hover,
+  header nav .submenu li a:focus,
+  header nav .submenu li a.active,
+  header ul .submenu li a:hover,
+  header ul .submenu li a:focus,
+  header ul .submenu li a.active {
+    background: rgba(255, 102, 0, 0.05) !important;
+    color: #FF7F00 !important;
+  }
+</style>
+
+<style>
+  /* ★ 로고 비율 고정 — width="200" 속성 때문에 모바일(480px↓)에서 style.css가
+     높이만 54px로 줄이면 가로로 늘어나 보이므로, 폭은 항상 비율에 맞게 자동 계산 */
+  header h1 img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
+  @media (max-width: 480px) { header h1 img { height: 54px; width: auto; } }
+</style>
+
+<style>
+  /* ════════════════════════════════════════
+     ★★★ 외부 style.css의 빈 박스 강제 제거 패치 ★★★
+  ════════════════════════════════════════ */
+  header::before, header::after,
+  header h1::before, header h1::after,
+  header nav::before, header nav::after,
+  header ul::before, header ul::after {
+    content: none !important;
+    display: none !important;
+  }
+  @media (min-width: 769px) {
+    .hamburger, #hamburger, .nav-toggle,
+    header .hamburger, header #hamburger, header .nav-toggle,
+    header button[aria-label="메뉴 열기"] {
+      display: none !important;
+      visibility: hidden !important;
+      width: 0 !important; height: 0 !important;
+      margin: 0 !important; padding: 0 !important; border: 0 !important;
+      position: absolute !important;
+      left: -9999px !important;
+      opacity: 0 !important;
+    }
+  }
+</style>
+
+<style>
+  /* ════════════════════════════════════════
+     ★ 제품 상세 공통 사이드바 (pct-* 네임스페이스)
+     — inductive-bearingless-encoder.html 표준과 100% 동일
+  ════════════════════════════════════════ */
+  :root {
+    --pct-bg: #ffffff;
+    --pct-accent: #FF7F00;
+    --pct-text: #111111;
+    --pct-muted: #444444;
+    --pct-divider: rgba(255,127,0,0.22);
+  }
+
+  .pct-page {
+    background: var(--pct-bg);
+    color: var(--pct-text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 80vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ★★★ [표준] 상단 옅은 주황 글로우 효과 ★★★ */
+  .pct-page::after {
+    content: '';
+    position: absolute; top: -200px; right: -120px;
+    width: 760px; height: 660px;
+    background: radial-gradient(ellipse, rgba(255,102,0,0.07) 0%, transparent 70%);
+    z-index: 0; pointer-events: none;
+  }
+
+  .pct-layout {
+    position: relative; z-index: 1;
+    max-width: 1260px; margin: 0 auto;
+    padding: 60px 40px 100px;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    align-items: start;
+  }
+
+  /* ── 사이드바 ── */
+  .pct-sidebar {
+    border-right: 1px solid var(--pct-divider);
+    padding-right: 32px;
+    position: sticky; top: 80px;
+  }
+  .pct-sidebar-label {
+    font-family: 'Oxanium', monospace;
+    font-size: 13px; letter-spacing: .3em;
+    color: var(--pct-accent); text-transform: uppercase;
+    margin-bottom: 20px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--pct-divider);
+    font-weight: 700;
+  }
+  .pct-nav { list-style: none; padding: 0; margin: 0; }
+  .pct-nav li { border-bottom: 1px solid rgba(255,127,0,0.09); }
+  .pct-nav li a {
+    display: block; padding: 12px 10px;
+    font-size: 13px; color: var(--pct-muted);
+    text-decoration: none; line-height: 1.5;
+    transition: color .25s, padding-left .25s, background .25s;
+    position: relative;
+  }
+  .pct-nav li a::before {
+    content: ''; position: absolute;
+    left: 0; top: 50%; transform: translateY(-50%);
+    width: 2px; height: 0;
+    background: var(--pct-accent); transition: height .25s;
+  }
+  .pct-nav li a:hover,
+  .pct-nav li a.active {
+    color: var(--pct-accent); padding-left: 18px;
+    background: rgba(255,127,0,0.05);
+  }
+  .pct-nav li a:hover::before,
+  .pct-nav li a.active::before { height: 60%; }
+  .pct-nav li a.active { font-weight: 700; }
+
+  /* ── 콘텐츠 ── */
+  .pct-content {
+    padding-left: 52px;
+    min-width: 0;
+  }
+
+  /* 반응형 — 표준 동일 */
+  @media (max-width: 960px) {
+    .pct-layout {
+      grid-template-columns: 1fr;
+      padding: 36px 24px 70px;
+    }
+    .pct-sidebar {
+      position: static; border-right: none;
+      border-bottom: 1px solid var(--pct-divider);
+      padding-right: 0; padding-bottom: 24px; margin-bottom: 32px;
+    }
+    .pct-nav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    /* ★★★ [표준] 모든 메뉴 박스 동일 높이 ★★★ */
+    .pct-nav li { border-bottom: none; display: flex; }
+    .pct-nav li a {
+      padding: 10px 12px;
+      border: 1px solid var(--pct-divider);
+      font-size: 12.5px;
+      line-height: 1.4;
+      text-align: left;
+      word-break: keep-all;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+    }
+    .pct-nav li a::before { display: none; }
+    .pct-nav li a:hover,
+    .pct-nav li a.active { padding-left: 12px; }
+
+    .pct-content { padding-left: 0; }
+  }
+  @media (max-width: 600px) {
+    .pct-layout { padding: 28px 16px 60px; }
+  }
+</style>
+
+<style>
+  /* ════════════════════════════════════════
+     오시는 길 콘텐츠 전용 — loc-* 네임스페이스
+     (사이드바·레이아웃은 표준 pct-* 블록 사용)
+  ════════════════════════════════════════ */
+  main { padding: 0 !important; }
+
+  :root {
+    --loc-accent:  #ff6a00;
+    --loc-accent2: #cc4400;
+    --loc-gold:    #cc7700;
+    --loc-green:   #00a870;
+    --loc-green2:  #007a50;
+    --loc-text:    #111111;
+    --loc-divider: rgba(255,106,0,0.22);
+    --loc-card:    rgba(255,255,255,0.97);
+  }
+
+  .loc-inner {
+    color: var(--loc-text);
+    font-family: 'Noto Sans KR', sans-serif;
+    max-width: 1160px; margin: 0 auto;
+  }
+
+  @keyframes loc-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ════════════════
+     HERO
+  ════════════════ */
+  .loc-hero {
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--loc-divider);
+    margin-bottom: 60px;
+    animation: loc-up .9s ease both;
+  }
+  .loc-badge {
+    font-family: 'Oxanium', monospace;
+    font-size: 13px; letter-spacing: .25em;
+    color: var(--loc-accent); text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 22px;
+  }
+  .loc-badge::after {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--loc-accent);
+  }
+  .loc-title {
+    font-family: 'Oxanium', sans-serif;
+    font-size: clamp(32px, 4.5vw, 56px);
+    font-weight: 900; line-height: 1; letter-spacing: -.01em; color: #111111;
+    margin: 0;
+  }
+  .loc-title em { font-style: normal; color: var(--loc-accent); }
+  .loc-subtitle {
+    margin-top: 18px; font-size: 15px; font-weight: 400;
+    color: #222222; line-height: 1.85; max-width: 560px;
+  }
+
+  /* 주소 요약 2개 */
+  .loc-addr-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px; margin-top: 36px;
+  }
+  .loc-addr-box {
+    padding: 20px 22px;
+    border: 1px solid var(--loc-divider);
+    background: var(--loc-card);
+    box-shadow: 0 2px 10px rgba(255,106,0,0.07);
+    position: relative; overflow: hidden;
+  }
+  .loc-addr-box::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+  }
+  .loc-addr-box.hq::before  { background: linear-gradient(90deg, var(--loc-accent), var(--loc-accent2)); }
+  .loc-addr-box.rnd::before { background: linear-gradient(90deg, var(--loc-green), var(--loc-green2)); }
+
+  .loc-addr-box-tag {
+    font-family: 'Oxanium', monospace;
+    font-size: 13px; letter-spacing: .22em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .loc-addr-box-tag.hq  { color: var(--loc-accent); }
+  .loc-addr-box-tag.rnd { color: var(--loc-green); }
+
+  .loc-addr-box-name {
+    font-family: 'Oxanium', sans-serif;
+    font-size: 17px; font-weight: 700; color: #111111; margin-bottom: 6px;
+  }
+  .loc-addr-box-addr {
+    font-size: 13px; font-weight: 400; color: #111111; line-height: 1.7;
+  }
+
+  /* 섹션 구분 레이블 */
+  .loc-section-label {
+    font-family: 'Oxanium', monospace;
+    font-size: 13px; letter-spacing: .28em; text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .loc-section-label.blue  { color: var(--loc-accent); }
+  .loc-section-label.green { color: var(--loc-green); }
+  .loc-section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--loc-divider);
+  }
+
+  /* 정보 + 지도 2열 */
+  .loc-grid {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 2px; margin-bottom: 56px;
+  }
+
+  .loc-info-panel {
+    background: var(--loc-card);
+    border: 1px solid var(--loc-divider);
+    box-shadow: 0 2px 12px rgba(255,106,0,0.07);
+    padding: 30px 28px 32px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .loc-info-panel::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+  }
+  .loc-info-panel.hq::before  { background: linear-gradient(90deg, var(--loc-accent), var(--loc-accent2)); }
+  .loc-info-panel.rnd::before { background: linear-gradient(90deg, var(--loc-green), var(--loc-green2)); }
+
+  .loc-info-label {
+    font-family: 'Oxanium', monospace;
+    font-size: 13px; letter-spacing: .26em; text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .loc-info-label.hq  { color: var(--loc-accent); }
+  .loc-info-label.rnd { color: var(--loc-green); }
+  .loc-info-label::after { content: ''; flex: 1; height: 1px; background: var(--loc-divider); }
+
+  .loc-info-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,106,0,0.10);
+  }
+  .loc-info-row:last-of-type { border-bottom: none; margin-bottom: 20px; }
+
+  .loc-info-icon { width: 34px; height: 34px; flex-shrink: 0; margin-top: 2px; }
+  .loc-info-icon svg { width: 100%; height: 100%; }
+
+  .loc-info-key {
+    font-family: 'Oxanium', monospace;
+    font-size: 13px; letter-spacing: .18em; text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .loc-info-key.hq  { color: var(--loc-accent); }
+  .loc-info-key.rnd { color: var(--loc-green); }
+
+  .loc-info-val {
+    font-size: 14px; font-weight: 600; color: #111111; line-height: 1.6;
+  }
+  .loc-info-val span {
+    display: block; font-size: 13px; font-weight: 400;
+    color: #000000; margin-top: 2px;
+  }
+  .loc-info-val .en {
+    font-family: 'Oxanium', monospace;
+    font-size: 13px; letter-spacing: .06em; color: #000000; margin-top: 4px;
+  }
+
+  /* 지도 열기 버튼 */
+  .loc-gmap-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 12px 18px; margin-top: auto;
+    font-family: 'Oxanium', monospace;
+    font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: #ffffff; text-decoration: none;
+    transition: opacity .25s, transform .2s;
+  }
+  .loc-gmap-btn:hover { opacity: .85; transform: translateY(-2px); }
+  .loc-gmap-btn.hq  { background: var(--loc-accent); }
+  .loc-gmap-btn.rnd { background: var(--loc-green); }
+  .loc-gmap-btn svg { width: 15px; height: 15px; }
+
+  .loc-gmap-link {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    margin-top: 10px;
+    font-family: 'Oxanium', monospace;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    color: #000000; text-decoration: none;
+    transition: color .25s;
+  }
+  .loc-gmap-link:hover { color: var(--loc-accent); }
+  .loc-gmap-link svg { width: 11px; height: 11px; }
+
+  /* 지도 패널 */
+  .loc-map-panel {
+    background: var(--loc-card);
+    border: 1px solid var(--loc-divider);
+    overflow: hidden; position: relative;
+  }
+  .loc-map-panel::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px; z-index: 1;
+  }
+  .loc-map-panel.hq::before  { background: linear-gradient(90deg, var(--loc-accent), var(--loc-accent2)); }
+  .loc-map-panel.rnd::before { background: linear-gradient(90deg, var(--loc-green), var(--loc-green2)); }
+
+  .loc-map-panel iframe {
+    width: 100%; height: 100%; min-height: 440px;
+    border: none; display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loc-gmap-btn:hover { transform: none; }
+  }
+
+  /* ════════════════
+     반응형 (콘텐츠 전용)
+  ════════════════ */
+  @media (max-width: 960px) {
+    .loc-addr-row { grid-template-columns: 1fr; }
+    .loc-grid { grid-template-columns: 1fr; }
+    .loc-map-panel iframe { min-height: 320px; }
+  }
+  @media (max-width: 600px) {
+    .loc-title { font-size: clamp(26px, 7vw, 40px); }
+    .loc-map-panel iframe { min-height: 260px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>
+    <a href="index.html">
+      <img src="logo.png" alt="아이닉스 INICS 로고 - 홈으로" width="200" height="70">
+    </a>
+  </h1>
+
+  <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav id="main-nav" aria-label="주요 메뉴">
+    <ul>
+      <li class="has-submenu">
+        <a href="product-lineup.html">Product <span class="arrow">▾</span></a>
+        <ul class="submenu">
+          <li><a href="product-lineup.html">제품 라인업</a></li>
+          <li><a href="inductive-bearingless-encoder.html">인덕티브 베어링리스 엔코더</a></li>
+          <li><a href="programmable-high-speed-counter.html">프로그래머블 고속 카운터 타이머</a></li>
+          <li><a href="area-sensor.html">에어리어센서</a></li>
+          <li><a href="magnetic-linear-encoder.html">마그네틱 리니어 엔코더</a></li>
+          <li><a href="optical-rotary-encoder.html">광학식 로터리 엔코더</a></li>
+          <li><a href="magnetic-rotary-encoder.html">마그네틱 로터리 엔코더</a></li>
+          <li><a href="inductive-rotary-encoder.html">인덕티브 로터리 엔코더</a></li>
+          <li><a href="wheel-rotary-encoder.html">바퀴형 로터리 엔코더</a></li>
+          <li><a href="encoder-counter.html">엔코더 전용 카운터</a></li>
+          <li><a href="elevator-non-contact-switch-sensor.html">엘리베이터 비접촉 스위치 센서</a></li>
+        </ul>
+      </li>
+
+      <li class="has-submenu">
+        <a href="manuals.html">Manual <span class="arrow">▾</span></a>
+        <ul class="submenu">
+          <li><a href="manual-inductive-bearingless-encoder.html">인덕티브 베어링리스 엔코더</a></li>
+          <li><a href="manual-programmable-high-speed-counter.html">프로그래머블 고속 카운터 타이머</a></li>
+          <li><a href="manual-area-sensor.html">에어리어센서</a></li>
+          <li><a href="manual-magnetic-linear-encoder.html">마그네틱 리니어 엔코더</a></li>
+          <li><a href="manual-optical-rotary-encoder.html">광학식 로터리 엔코더</a></li>
+          <li><a href="manual-magnetic-rotary-encoder.html">마그네틱 로터리 엔코더</a></li>
+          <li><a href="manual-inductive-rotary-encoder.html">인덕티브 로터리 엔코더</a></li>
+          <li><a href="manual-wheel-rotary-encoder.html">바퀴형 로터리 엔코더</a></li>
+          <li><a href="manual-encoder-counter.html">엔코더 전용 카운터</a></li>
+        </ul>
+      </li>
+
+      <li class="has-submenu">
+        <a href="cs1.html">Customer Service <span class="arrow">▾</span></a>
+        <ul class="submenu">
+          <li><a href="cs1.html">자료실</a></li>
+          <li><a href="cs2.html">고객문의</a></li>
+        </ul>
+      </li>
+
+      <li><a href="notice.html">Notice</a></li>
+
+      <li class="has-submenu">
+        <a href="about.html" class="active">Company <span class="arrow">▾</span></a>
+        <ul class="submenu">
+          <li><a href="about.html">회사소개</a></li>
+          <li><a href="timeline.html">제품 개발 타임라인</a></li>
+          <li><a href="env.html">제품 사용환경</a></li>
+          <li><a href="location.html" class="active">오시는 길</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="pct-page">
+    <div class="pct-layout">
+
+      <!-- ══ 사이드바 (Company 그룹 · 표준 pct-* 사이드바) ══ -->
+      <aside class="pct-sidebar">
+        <nav aria-label="회사 정보 메뉴">
+        <div class="pct-sidebar-label">Company</div>
+        <ul class="pct-nav">
+          <li><a href="about.html">회사소개</a></li>
+          <li><a href="timeline.html">제품 개발 타임라인</a></li>
+          <li><a href="env.html">제품 사용환경</a></li>
+          <li><a href="location.html" class="active" aria-current="page">오시는 길</a></li>
+        </ul>
+        </nav>
+      </aside>
+
+      <!-- ══ 콘텐츠 ══ -->
+      <div class="pct-content">
+        <div class="loc-inner">
+
+          <!-- ── HERO ── -->
+          <div class="loc-hero">
+            <div class="loc-badge">INICS &nbsp;·&nbsp; Location</div>
+            <h2 class="loc-title">오시는 <em>길</em></h2>
+            <p class="loc-subtitle">
+              아이닉스를 방문해 주시는 모든 분들을 환영합니다.<br>
+              본사 및 연구소 위치 안내입니다.
+            </p>
+
+            <!-- 주소 요약 2개 -->
+            <div class="loc-addr-row">
+              <div class="loc-addr-box hq">
+                <div class="loc-addr-box-tag hq">🏢 &nbsp;본사 · Headquarters</div>
+                <div class="loc-addr-box-name">아이닉스 본사</div>
+                <div class="loc-addr-box-addr">
+                  부산광역시 영도구 태종로 727<br>산학허브관 703호
+                </div>
+              </div>
+              <div class="loc-addr-box rnd">
+                <div class="loc-addr-box-tag rnd">🔬 &nbsp;연구소 · R&amp;D Center</div>
+                <div class="loc-addr-box-name">아이닉스 연구소</div>
+                <div class="loc-addr-box-addr">
+                  경상남도 창원시 의창구<br>차룡로 48번길 54, 2층 8호
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════════════════════════════
+               본사 — 부산 영도구
+          ════════════════════════════════ -->
+          <div class="loc-section-label blue" style="animation: loc-up .9s .12s ease both;">
+            본사 위치 · Headquarters
+          </div>
+
+          <div class="loc-grid" style="animation: loc-up .9s .16s ease both;">
+
+            <!-- 본사 정보 -->
+            <div class="loc-info-panel hq">
+              <div class="loc-info-label hq">본사 정보 · HQ Info</div>
+
+              <div class="loc-info-row">
+                <div class="loc-info-icon">
+                  <svg viewBox="0 0 36 36" fill="none">
+                    <path d="M18 4 C12 4 8 9 8 14 C8 22 18 32 18 32 C18 32 28 22 28 14 C28 9 24 4 18 4Z"
+                      stroke="#ff6a00" stroke-width="1.6" fill="rgba(255,106,0,0.09)"/>
+                    <circle cx="18" cy="14" r="4" stroke="#cc7700" stroke-width="1.4"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="loc-info-key hq">주소 · Address</div>
+                  <div class="loc-info-val">
+                    부산광역시 영도구 태종로 727
+                    <span>산학허브관 703호</span>
+                    <span class="en">703, Sanhak Hub, 727 Taejong-ro,<br>Yeongdo-gu, Busan</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="loc-info-row">
+                <div class="loc-info-icon">
+                  <svg viewBox="0 0 36 36" fill="none">
+                    <rect x="4" y="8" width="28" height="20" rx="3" stroke="#ff6a00" stroke-width="1.5"/>
+                    <path d="M4 12 L18 21 L32 12" stroke="#ff6a00" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="loc-info-key hq">우편번호 · ZIP</div>
+                  <div class="loc-info-val">49112</div>
+                </div>
+              </div>
+
+              <div class="loc-info-row">
+                <div class="loc-info-icon">
+                  <svg viewBox="0 0 36 36" fill="none">
+                    <rect x="6" y="8" width="24" height="20" rx="2" stroke="#ff6a00" stroke-width="1.5"/>
+                    <line x1="6" y1="15" x2="30" y2="15" stroke="#ff6a00" stroke-width="1.2" opacity=".5"/>
+                    <line x1="15" y1="8" x2="15" y2="28" stroke="#ff6a00" stroke-width="1.2" opacity=".5"/>
+                    <circle cx="22" cy="22" r="3" stroke="#cc7700" stroke-width="1.3"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="loc-info-key hq">위치 안내</div>
+                  <div class="loc-info-val">
+                    산학허브관 7층 703호
+                    <span>부산 영도구 소재 산학협력 시설 내</span>
+                  </div>
+                </div>
+              </div>
+
+              <a class="loc-gmap-btn hq"
+                href="https://maps.google.com/?q=부산광역시+영도구+태종로+727+산학허브관"
+                target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path d="M9 2 C6 2 4 4.5 4 7 C4 11 9 16 9 16 C9 16 14 11 14 7 C14 4.5 12 2 9 2Z"
+                    fill="rgba(255,255,255,0.2)" stroke="#fff" stroke-width="1.2"/>
+                  <circle cx="9" cy="7" r="2" fill="#fff"/>
+                </svg>
+                Google Maps 에서 열기
+              </a>
+              <a class="loc-gmap-link"
+                href="https://maps.google.com/maps/dir//부산광역시+영도구+태종로+727+산학허브관"
+                target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 14 14" fill="none">
+                  <path d="M2 7 H12 M8 3 L12 7 L8 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                구글 지도에서 길찾기
+              </a>
+            </div>
+
+            <!-- 본사 지도 -->
+            <div class="loc-map-panel hq">
+              <iframe
+                title="아이닉스 본사 지도"
+                src="https://maps.google.com/maps?q=부산광역시+영도구+태종로+727+산학허브관&output=embed&hl=ko"
+                allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+
+          </div><!-- /본사 loc-grid -->
+
+
+          <!-- ════════════════════════════════
+               연구소 — 창원 의창구
+          ════════════════════════════════ -->
+          <div class="loc-section-label green" style="animation: loc-up .9s .28s ease both;">
+            연구소 위치 · R&amp;D Center
+          </div>
+
+          <div class="loc-grid" style="animation: loc-up .9s .32s ease both;">
+
+            <!-- 연구소 정보 -->
+            <div class="loc-info-panel rnd">
+              <div class="loc-info-label rnd">연구소 정보 · R&amp;D Info</div>
+
+              <div class="loc-info-row">
+                <div class="loc-info-icon">
+                  <svg viewBox="0 0 36 36" fill="none">
+                    <path d="M18 4 C12 4 8 9 8 14 C8 22 18 32 18 32 C18 32 28 22 28 14 C28 9 24 4 18 4Z"
+                      stroke="#00a870" stroke-width="1.6" fill="rgba(0,168,112,0.09)"/>
+                    <circle cx="18" cy="14" r="4" stroke="#cc7700" stroke-width="1.4"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="loc-info-key rnd">주소 · Address</div>
+                  <div class="loc-info-val">
+                    경상남도 창원시 의창구<br>차룡로 48번길 54
+                    <span>2층 8호</span>
+                    <span class="en">8ho, 2F, 54 Charyong-ro 48beon-gil,<br>Uichang-gu, Changwon, Gyeongnam</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="loc-info-row">
+                <div class="loc-info-icon">
+                  <svg viewBox="0 0 36 36" fill="none">
+                    <rect x="4" y="8" width="28" height="20" rx="3" stroke="#00a870" stroke-width="1.5"/>
+                    <path d="M4 12 L18 21 L32 12" stroke="#00a870" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="loc-info-key rnd">시설 안내</div>
+                  <div class="loc-info-val">
+                    아이닉스 연구소
+                    <span>R&amp;D Center · 기술 연구 및 개발</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="loc-info-row">
+                <div class="loc-info-icon">
+                  <svg viewBox="0 0 36 36" fill="none">
+                    <circle cx="18" cy="12" r="6" stroke="#00a870" stroke-width="1.5"/>
+                    <path d="M10 28 C10 22 26 22 26 28" stroke="#00a870" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                    <line x1="14" y1="10" x2="22" y2="10" stroke="#cc7700" stroke-width="1.2"/>
+                    <line x1="18" y1="6"  x2="18" y2="18" stroke="#cc7700" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="loc-info-key rnd">담당 업무</div>
+                  <div class="loc-info-val">
+                    제품 설계 및 기술 개발
+                    <span>Hardware · Software · Firmware R&amp;D</span>
+                  </div>
+                </div>
+              </div>
+
+              <a class="loc-gmap-btn rnd"
+                href="https://maps.google.com/?q=경상남도+창원시+의창구+차룡로+48번길+54"
+                target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path d="M9 2 C6 2 4 4.5 4 7 C4 11 9 16 9 16 C9 16 14 11 14 7 C14 4.5 12 2 9 2Z"
+                    fill="rgba(255,255,255,0.2)" stroke="#fff" stroke-width="1.2"/>
+                  <circle cx="9" cy="7" r="2" fill="#fff"/>
+                </svg>
+                Google Maps 에서 열기
+              </a>
+              <a class="loc-gmap-link"
+                href="https://maps.google.com/maps/dir//경상남도+창원시+의창구+차룡로+48번길+54"
+                target="_blank" rel="noopener noreferrer"
+                style="color:var(--loc-green);">
+                <svg viewBox="0 0 14 14" fill="none">
+                  <path d="M2 7 H12 M8 3 L12 7 L8 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                구글 지도에서 길찾기
+              </a>
+            </div>
+
+            <!-- 연구소 지도 -->
+            <div class="loc-map-panel rnd">
+              <iframe
+                title="아이닉스 연구소 지도"
+                src="https://maps.google.com/maps?q=경상남도+창원시+의창구+차룡로+48번길+54&output=embed&hl=ko"
+                allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+
+          </div><!-- /연구소 loc-grid -->
+
+
+        </div><!-- /loc-inner -->
+      </div><!-- /pct-content -->
+    </div><!-- /pct-layout -->
+  </div><!-- /pct-page -->
+</main>
+
+<!-- ════════════════════════════════════════
+     ★ 햄버거 메뉴 동작 스크립트 — 표준 동일
+════════════════════════════════════════ -->
+<script>
+  (function() {
+    function removeHamburgerOnPC() {
+      if (window.innerWidth > 768) {
+        var hb = document.getElementById('hamburger');
+        if (hb) {
+          hb.style.cssText = 'display:none!important;visibility:hidden!important;width:0!important;height:0!important;position:absolute!important;left:-9999px!important;';
+        }
+        document.querySelectorAll('.nav-toggle, header > button:not(#hamburger)').forEach(function(el) {
+          el.style.cssText = 'display:none!important;visibility:hidden!important;';
+        });
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', removeHamburgerOnPC);
+    } else {
+      removeHamburgerOnPC();
+    }
+    window.addEventListener('resize', removeHamburgerOnPC);
+  })();
+</script>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('main-nav');
+
+  hamburger.addEventListener('click', function () {
+    nav.classList.toggle('open');
+    hamburger.classList.toggle('active');
+  });
+
+  document.querySelectorAll('.has-submenu > a').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        const parent = this.parentElement;
+        const isOpen = parent.classList.contains('submenu-open');
+        document.querySelectorAll('.has-submenu.submenu-open').forEach(function (el) {
+          el.classList.remove('submenu-open');
+        });
+        if (!isOpen) parent.classList.add('submenu-open');
+      }
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768) {
+      nav.classList.remove('open');
+      hamburger.classList.remove('active');
+      document.querySelectorAll('.has-submenu.submenu-open').forEach(function (el) {
+        el.classList.remove('submenu-open');
+      });
+    }
+  });
+</script>
+
+
+<!-- ★ 방문자 IP 추적 -->
+<script>
+(async () => {
+  let geo = {};
+  try { geo = await (await fetch('https://ipapi.co/json/')).json(); } catch (e) {}
+
+  const ref = document.referrer;
+  let source = '직접 접속';
+  if (ref) {
+    try { source = new URL(ref).hostname.replace('www.', ''); } catch (e) { source = ref; }
+  }
+  const ua = navigator.userAgent;
+
+  const params = new URLSearchParams({
+    ip:       geo.ip           || '',
+    country:  geo.country_name || '',
+    city:     geo.city         || '',
+    org:      geo.org          || '',
+    page:     location.pathname,
+    referrer: source,
+    utm:      new URLSearchParams(location.search).get('utm_source') || '',
+    device:   /Mobi|Android|iPhone/i.test(ua) ? '모바일' : 'PC',
+    bot:      /bot|crawl|spider|slurp/i.test(ua) ? 'Y' : 'N'
+  });
+  fetch('https://script.google.com/macros/s/AKfycbwbH0e5qxLACu143irtuugL_MQ5Q788c3XOkh8rwN7E075ohHQSBIu0XjeT3QUDq2AU/exec?' + params)
+    .catch(() => {});
+})();
+</script>
+</body>
+</html>
