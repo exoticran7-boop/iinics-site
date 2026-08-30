@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ═══ 방문자 분석 · Google Analytics 4 ═══
      ★ 사용법: https://analytics.google.com 에서 계정 생성 후
-       발급받은 측정 ID(G-로 시작)로 아래 2곳의 G-XXXXXXXXXX 를 교체하세요. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+       발급받은 측정 ID(G-로 시작)로 아래 2곳의 G-8NR5DQJS5L 를 교체하세요. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8NR5DQJS5L"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-8NR5DQJS5L');
 </script>
 <!-- ═══ SEO · A2A 메타 정보 ═══ -->
 <title>프로그래머블 고속 카운터 타이머 | Programmable High-Speed Counter Timer (CTH Series) - 아이닉스(INICS)</title>
@@ -499,6 +499,10 @@
     border: 1.5px solid var(--cth-orange); border-radius: 50%;
   }
   .cth-x4-list li strong { color: #FFC48A; font-weight: 700; }
+  /* ★ Technology 섹션 영문 병기 */
+  .cth-x4-tt-en { font-family:'Oxanium',monospace; font-size:clamp(13px,1.4vw,15px); color:#F0A860; letter-spacing:0.8px; font-weight:700; margin:-6px 0 14px; }
+  .cth-x4-desc-en { font-family:'Oxanium',monospace; font-size:12px; line-height:1.7; color:#8E959D; letter-spacing:0.2px; margin:-8px 0 18px; }
+  .cth-x4-list li .cth-x4-li-en { display:block; font-family:'Oxanium',monospace; font-size:11.5px; line-height:1.6; color:#8E959D; letter-spacing:0.2px; margin-top:3px; word-break:break-word; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1100px) { .cth-statgrid { grid-template-columns: repeat(2, 1fr); } }
@@ -515,6 +519,64 @@
     .cth-featgrid { grid-template-columns: 1fr; }
     .cth-statgrid { gap: 10px; }
     .cth-stat { padding: 14px 10px 12px; }
+  }
+</style>
+
+<style>
+  /* ════════════════════════════════════════
+     ★ 메뉴 · 사이드바 한/영 병기 (menu-kr / menu-en) — 전 페이지 공통
+  ════════════════════════════════════════ */
+  header .submenu li a,
+  .pct-nav li a, .mnl-nav li a, .tl-side-nav li a {
+    white-space: normal !important;
+    height: auto !important;
+    line-height: 1.35 !important;
+  }
+  header .submenu li a { padding-top: 9px !important; padding-bottom: 9px !important; }
+  header .submenu { min-width: 250px !important; }
+
+  .menu-kr, .menu-en { display: block; }
+  .menu-kr { word-break: keep-all; }
+  .menu-en {
+    font-family: 'Oxanium', monospace;
+    font-size: 0.8em;
+    color: #8A8A8A;
+    letter-spacing: 0.2px;
+    margin-top: 2px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    font-weight: 500;
+  }
+  header .submenu li a:hover .menu-en,
+  header .submenu li a:focus .menu-en,
+  header .submenu li a.active .menu-en,
+  .pct-nav li a:hover .menu-en,  .pct-nav li a.active .menu-en,
+  .mnl-nav li a:hover .menu-en,  .mnl-nav li a.active .menu-en,
+  .tl-side-nav li a:hover .menu-en, .tl-side-nav li a.active .menu-en { color: #E09A50; }
+
+  .pct-nav li a, .mnl-nav li a, .tl-side-nav li a { padding-top: 10px; padding-bottom: 10px; }
+
+  /* 모바일: 2열 그리드 박스 안에서 한글 윗줄 / 영문 아랫줄 세로 배치 */
+  @media (max-width: 960px) {
+    .pct-nav li a, .mnl-nav li a, .tl-side-nav li a {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 72px; font-size: 12.5px;
+    }
+    .pct-nav .menu-kr, .pct-nav .menu-en,
+    .mnl-nav .menu-kr, .mnl-nav .menu-en,
+    .tl-side-nav .menu-kr, .tl-side-nav .menu-en { width: 100%; }
+    .pct-nav .menu-en, .mnl-nav .menu-en, .tl-side-nav .menu-en { font-size: 10px; line-height: 1.3; }
+  }
+  @media (max-width: 480px) {
+    .pct-nav, .mnl-nav, .tl-side-nav { gap: 5px; }
+    .pct-nav li a, .mnl-nav li a, .tl-side-nav li a { padding: 8px 9px; min-height: 76px; font-size: 12px; }
+    .pct-nav .menu-en, .mnl-nav .menu-en, .tl-side-nav .menu-en { font-size: 9.5px; }
+  }
+  @media (max-width: 768px) {
+    header .submenu li a { padding-top: 10px !important; padding-bottom: 10px !important; }
+    header .submenu .menu-en { font-size: 0.78em; }
   }
 </style>
 </head>
@@ -538,40 +600,40 @@
       <li class="has-submenu">
         <a href="product-lineup.html" class="active">Product <span class="arrow">▾</span></a>
         <ul class="submenu">
-          <li><a href="product-lineup.html">제품 라인업</a></li>
-          <li><a href="inductive-bearingless-encoder.html">인덕티브 베어링리스 엔코더</a></li>
-          <li><a href="programmable-high-speed-counter.html" class="active">프로그래머블 고속 카운터 타이머</a></li>
-          <li><a href="area-sensor.html">에어리어센서</a></li>
-          <li><a href="magnetic-linear-encoder.html">마그네틱 리니어 엔코더</a></li>
-          <li><a href="optical-rotary-encoder.html">광학식 로터리 엔코더</a></li>
-          <li><a href="magnetic-rotary-encoder.html">마그네틱 로터리 엔코더</a></li>
-          <li><a href="inductive-rotary-encoder.html">인덕티브 로터리 엔코더</a></li>
-          <li><a href="wheel-rotary-encoder.html">바퀴형 로터리 엔코더</a></li>
-          <li><a href="encoder-counter.html">엔코더 전용 카운터</a></li>
-          <li><a href="elevator-non-contact-switch-sensor.html">엘리베이터 비접촉 스위치 센서</a></li>
+          <li><a href="product-lineup.html"><span class="menu-kr">제품 라인업</span><span class="menu-en" lang="en">Product Line-up</span></a></li>
+          <li><a href="inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+          <li><a href="programmable-high-speed-counter.html" class="active"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
+          <li><a href="area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
+          <li><a href="magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
+          <li><a href="optical-rotary-encoder.html"><span class="menu-kr">광학식 로터리 엔코더</span><span class="menu-en" lang="en">Optical Rotary Encoder</span></a></li>
+          <li><a href="magnetic-rotary-encoder.html"><span class="menu-kr">마그네틱 로터리 엔코더</span><span class="menu-en" lang="en">Magnetic Rotary Encoder</span></a></li>
+          <li><a href="inductive-rotary-encoder.html"><span class="menu-kr">인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">Inductive Rotary Encoder</span></a></li>
+          <li><a href="wheel-rotary-encoder.html"><span class="menu-kr">바퀴형 로터리 엔코더</span><span class="menu-en" lang="en">Wheel-Type Rotary Encoder</span></a></li>
+          <li><a href="encoder-counter.html"><span class="menu-kr">엔코더 전용 카운터</span><span class="menu-en" lang="en">Encoder Counter</span></a></li>
+          <li><a href="elevator-non-contact-switch-sensor.html"><span class="menu-kr">엘리베이터 비접촉 스위치 센서</span><span class="menu-en" lang="en">Elevator Non-Contact Switch Sensor</span></a></li>
         </ul>
       </li>
 
       <li class="has-submenu">
         <a href="manuals.html">Manual <span class="arrow">▾</span></a>
         <ul class="submenu">
-          <li><a href="manual-inductive-bearingless-encoder.html">인덕티브 베어링리스 엔코더</a></li>
-          <li><a href="manual-programmable-high-speed-counter.html">프로그래머블 고속 카운터 타이머</a></li>
-          <li><a href="manual-area-sensor.html">에어리어센서</a></li>
-          <li><a href="manual-magnetic-linear-encoder.html">마그네틱 리니어 엔코더</a></li>
-          <li><a href="manual-optical-rotary-encoder.html">광학식 로터리 엔코더</a></li>
-          <li><a href="manual-magnetic-rotary-encoder.html">마그네틱 로터리 엔코더</a></li>
-          <li><a href="manual-inductive-rotary-encoder.html">인덕티브 로터리 엔코더</a></li>
-          <li><a href="manual-wheel-rotary-encoder.html">바퀴형 로터리 엔코더</a></li>
-          <li><a href="manual-encoder-counter.html">엔코더 전용 카운터</a></li>
+          <li><a href="manual-inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+          <li><a href="manual-programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
+          <li><a href="manual-area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
+          <li><a href="manual-magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
+          <li><a href="manual-optical-rotary-encoder.html"><span class="menu-kr">광학식 로터리 엔코더</span><span class="menu-en" lang="en">Optical Rotary Encoder</span></a></li>
+          <li><a href="manual-magnetic-rotary-encoder.html"><span class="menu-kr">마그네틱 로터리 엔코더</span><span class="menu-en" lang="en">Magnetic Rotary Encoder</span></a></li>
+          <li><a href="manual-inductive-rotary-encoder.html"><span class="menu-kr">인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">Inductive Rotary Encoder</span></a></li>
+          <li><a href="manual-wheel-rotary-encoder.html"><span class="menu-kr">바퀴형 로터리 엔코더</span><span class="menu-en" lang="en">Wheel-Type Rotary Encoder</span></a></li>
+          <li><a href="manual-encoder-counter.html"><span class="menu-kr">엔코더 전용 카운터</span><span class="menu-en" lang="en">Encoder Counter</span></a></li>
         </ul>
       </li>
 
       <li class="has-submenu">
         <a href="cs1.html">Customer Service <span class="arrow">▾</span></a>
         <ul class="submenu">
-          <li><a href="cs1.html">자료실</a></li>
-          <li><a href="cs2.html">고객문의</a></li>
+          <li><a href="cs1.html"><span class="menu-kr">자료실</span><span class="menu-en" lang="en">Downloads</span></a></li>
+          <li><a href="cs2.html"><span class="menu-kr">고객문의</span><span class="menu-en" lang="en">Contact Us</span></a></li>
         </ul>
       </li>
 
@@ -580,10 +642,10 @@
       <li class="has-submenu">
         <a href="about.html">Company <span class="arrow">▾</span></a>
         <ul class="submenu">
-          <li><a href="about.html">회사소개</a></li>
-          <li><a href="timeline.html">제품 개발 타임라인</a></li>
-          <li><a href="env.html">제품 사용환경</a></li>
-          <li><a href="location.html">오시는 길</a></li>
+          <li><a href="about.html"><span class="menu-kr">회사소개</span><span class="menu-en" lang="en">About Us</span></a></li>
+          <li><a href="timeline.html"><span class="menu-kr">제품 개발 타임라인</span><span class="menu-en" lang="en">Product Development Timeline</span></a></li>
+          <li><a href="env.html"><span class="menu-kr">제품 사용환경</span><span class="menu-en" lang="en">Application Environments</span></a></li>
+          <li><a href="location.html"><span class="menu-kr">오시는 길</span><span class="menu-en" lang="en">Directions</span></a></li>
         </ul>
       </li>
 
@@ -603,17 +665,17 @@
         <nav aria-label="제품 목록">
         <div class="pct-sidebar-label">Product Line-up</div>
         <ul class="pct-nav">
-          <li><a href="product-lineup.html">제품 라인업</a></li>
-          <li><a href="inductive-bearingless-encoder.html">인덕티브<br>베어링리스 엔코더</a></li>
-          <li><a href="programmable-high-speed-counter.html" class="active" aria-current="page">프로그래머블<br>고속 카운터 타이머</a></li>
-          <li><a href="area-sensor.html">에어리어센서</a></li>
-          <li><a href="magnetic-linear-encoder.html">마그네틱 리니어 엔코더</a></li>
-          <li><a href="optical-rotary-encoder.html">광학식 로터리 엔코더</a></li>
-          <li><a href="magnetic-rotary-encoder.html">마그네틱 로터리 엔코더</a></li>
-          <li><a href="inductive-rotary-encoder.html">인덕티브 로터리 엔코더</a></li>
-          <li><a href="wheel-rotary-encoder.html">바퀴형 로터리 엔코더</a></li>
-          <li><a href="encoder-counter.html">엔코더 전용 카운터</a></li>
-          <li><a href="elevator-non-contact-switch-sensor.html">엘리베이터 비접촉 스위치 센서</a></li>
+          <li><a href="product-lineup.html"><span class="menu-kr">제품 라인업</span><span class="menu-en" lang="en">Product Line-up</span></a></li>
+          <li><a href="inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+          <li><a href="programmable-high-speed-counter.html" class="active" aria-current="page"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
+          <li><a href="area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
+          <li><a href="magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
+          <li><a href="optical-rotary-encoder.html"><span class="menu-kr">광학식 로터리 엔코더</span><span class="menu-en" lang="en">Optical Rotary Encoder</span></a></li>
+          <li><a href="magnetic-rotary-encoder.html"><span class="menu-kr">마그네틱 로터리 엔코더</span><span class="menu-en" lang="en">Magnetic Rotary Encoder</span></a></li>
+          <li><a href="inductive-rotary-encoder.html"><span class="menu-kr">인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">Inductive Rotary Encoder</span></a></li>
+          <li><a href="wheel-rotary-encoder.html"><span class="menu-kr">바퀴형 로터리 엔코더</span><span class="menu-en" lang="en">Wheel-Type Rotary Encoder</span></a></li>
+          <li><a href="encoder-counter.html"><span class="menu-kr">엔코더 전용 카운터</span><span class="menu-en" lang="en">Encoder Counter</span></a></li>
+          <li><a href="elevator-non-contact-switch-sensor.html"><span class="menu-kr">엘리베이터 비접촉 스위치 센서</span><span class="menu-en" lang="en">Elevator Non-Contact Switch Sensor</span></a></li>
         </ul>
         </nav>
       </aside>
@@ -828,16 +890,24 @@
             <div class="cth-x4-txt">
               <div class="cth-x4-eyebrow" lang="en">ENC Mode · x4 Multiplication</div>
               <h4 class="cth-x4-tt">엔코더 1펄스를, <em>4배 정밀하게</em></h4>
+              <div class="cth-x4-tt-en" lang="en">One Encoder Pulse, 4× the Precision</div>
               <p class="cth-x4-desc">
                 엔코더 A · B상 신호의 상승 · 하강 에지 4곳을 모두 계수하는
                 ×4 체배 방식입니다. 같은 엔코더로 4배의 분해능을 얻고,
                 두 신호의 위상차로 회전 방향까지 자동 판별합니다.
               </p>
+              <p class="cth-x4-desc-en" lang="en">
+                x4 multiplication counts all four rising and falling edges of the encoder A and B signals. The same encoder delivers four times the resolution, and the phase difference between the two signals automatically determines the direction of rotation.
+              </p>
               <ul class="cth-x4-list">
-                <li><strong>분해능 4배</strong> — 2000펄스 엔코더가 8000카운트/회전으로 동작합니다.</li>
-                <li><strong>방향 자동 판별</strong> — CW 회전은 가산(+1), CCW 회전은 감산(−1)으로 계수합니다.</li>
-                <li><strong>100kcps 고속 응답</strong> — ENC 모드에서 최소 신호폭 0.005ms까지 대응합니다.</li>
-                <li><strong>ENC-1 / ENC-2 모드</strong> — 회전 방향에 따른 가산 · 감산 방향을 선택할 수 있습니다.</li>
+                <li><strong>분해능 4배</strong> — 2000펄스 엔코더가 8000카운트/회전으로 동작합니다.
+                  <span class="cth-x4-li-en" lang="en">4× resolution — a 2,000-pulse encoder runs at 8,000 counts per revolution.</span></li>
+                <li><strong>방향 자동 판별</strong> — CW 회전은 가산(+1), CCW 회전은 감산(−1)으로 계수합니다.
+                  <span class="cth-x4-li-en" lang="en">Automatic direction detection — CW rotation adds (+1), CCW rotation subtracts (−1).</span></li>
+                <li><strong>100kcps 고속 응답</strong> — ENC 모드에서 최소 신호폭 0.005ms까지 대응합니다.
+                  <span class="cth-x4-li-en" lang="en">100 kcps high-speed response — handles signal widths down to 0.005 ms in ENC mode.</span></li>
+                <li><strong>ENC-1 / ENC-2 모드</strong> — 회전 방향에 따른 가산 · 감산 방향을 선택할 수 있습니다.
+                  <span class="cth-x4-li-en" lang="en">ENC-1 / ENC-2 modes — select which rotation direction counts up or down.</span></li>
               </ul>
             </div>
           </section>
