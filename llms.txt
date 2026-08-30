@@ -1,0 +1,56 @@
+# 아이닉스 (INICS)
+
+> 대한민국 센서 전문기업. 로터리 엔코더, 리니어 엔코더, 카운터 타이머, 에어리어 센서, 엘리베이터 비접촉 스위치 센서를 개발·제조합니다. Korean manufacturer of rotary/linear encoders, counters, area sensors and touchless elevator switch sensors. Made in Korea.
+
+슬로건: 세상을 편리하게 하는 센서 전문기업 (A sensor specialist company that makes the world more convenient)
+
+- 웹사이트: https://www.iinics.com/
+- 문의: master@iinics.com
+- 온라인 구매: https://smartstore.naver.com/iinics
+- 사용 언어: 한국어(ko), 영어(en)
+
+## 제품 (Products)
+
+- [인덕티브 베어링리스 엔코더 / Inductive Bearingless Encoder](https://www.iinics.com/inductive-bearingless-encoder.html): 베어링이 없는 구조의 인덕티브 방식 엔코더
+- [프로그래머블 고속 카운터 타이머 / Programmable High-speed Counter Timer](https://www.iinics.com/programmable-high-speed-counter.html): 고속 계수 및 타이머 기능 제공
+- [에어리어 센서 / Area Sensor](https://www.iinics.com/area-sensor.html): 영역 감지용 센서
+- [마그네틱 리니어 엔코더 / Magnetic Linear Encoder](https://www.iinics.com/magnetic-linear-encoder.html): 자기식 직선 위치 측정 엔코더
+- [광학식 로터리 엔코더 / Optical Rotary Encoder](https://www.iinics.com/optical-rotary-encoder.html): 축형·중공축형·빌트인 타입 광학식 회전 엔코더
+- [마그네틱 로터리 엔코더 / Magnetic Rotary Encoder](https://www.iinics.com/magnetic-rotary-encoder.html): 자기식 회전 엔코더, 싱글턴·멀티턴 앱솔루트
+- [인덕티브 로터리 엔코더 / Inductive Rotary Encoder](https://www.iinics.com/inductive-rotary-encoder.html): 인덕티브 방식 회전 엔코더, 싱글턴·멀티턴 앱솔루트
+- [바퀴형 로터리 엔코더 / Wheel Type Rotary Encoder](https://www.iinics.com/wheel-rotary-encoder.html): 측정 휠이 결합된 회전 엔코더
+- [엔코더 전용 카운터 / Encoder Counter](https://www.iinics.com/encoder-counter.html): 엔코더 신호 전용 카운터
+- [엘리베이터 비접촉 스위치 센서 / Elevator Non-Contact Switch Sensor](https://www.iinics.com/elevator-non-contact-switch-sensor.html): 접촉 없이 동작하는 엘리베이터용 스위치 센서
+- [전체 제품 라인업 / Product Line-up](https://www.iinics.com/product-lineup.html): 전 제품 목록
+
+## 매뉴얼 (Manuals)
+
+- [매뉴얼 전체 목록](https://www.iinics.com/manuals.html)
+- [인덕티브 베어링리스 엔코더 매뉴얼](https://www.iinics.com/manual-inductive-bearingless-encoder.html)
+- [프로그래머블 고속 카운터 타이머 매뉴얼](https://www.iinics.com/manual-programmable-high-speed-counter.html)
+- [에어리어 센서 매뉴얼](https://www.iinics.com/manual-area-sensor.html)
+- [마그네틱 리니어 엔코더 매뉴얼](https://www.iinics.com/manual-magnetic-linear-encoder.html)
+- [광학식 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-optical-rotary-encoder.html)
+- [마그네틱 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-magnetic-rotary-encoder.html)
+- [인덕티브 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-inductive-rotary-encoder.html)
+- [바퀴형 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-wheel-rotary-encoder.html)
+- [엔코더 전용 카운터 매뉴얼](https://www.iinics.com/manual-encoder-counter.html)
+
+## 회사 정보 (Company)
+
+- [회사소개 / About](https://www.iinics.com/about.html)
+- [연혁 / Timeline](https://www.iinics.com/timeline.html)
+- [오시는 길 / Location](https://www.iinics.com/location.html)
+- [환경·인증 / Environment](https://www.iinics.com/env.html)
+
+## 고객지원 (Customer Service)
+
+- [문의하기 / Contact](https://www.iinics.com/cs2.html)
+- [게시판 / Board](https://www.iinics.com/cs1.html)
+- [공지사항 / Notice](https://www.iinics.com/notice.html)
+
+## 참고 (Notes)
+
+- 각 제품 페이지에는 schema.org Product 구조화 데이터가 포함되어 있으며, 상세 사양은 additionalProperty(PropertyValue) 항목으로 제공됩니다.
+- 매뉴얼 페이지에는 schema.org DigitalDocument 구조화 데이터로 한국어·영어 PDF 링크가 제공됩니다.
+- 전체 페이지 목록: https://www.iinics.com/sitemap.xml
