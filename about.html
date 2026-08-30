@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ═══ 방문자 분석 · Google Analytics 4 ═══
      ★ 사용법: https://analytics.google.com 에서 계정 생성 후
-       발급받은 측정 ID(G-로 시작)로 아래 2곳의 G-XXXXXXXXXX 를 교체하세요. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+       발급받은 측정 ID(G-로 시작)로 아래 2곳의 G-8NR5DQJS5L 를 교체하세요. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8NR5DQJS5L"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-8NR5DQJS5L');
 </script>
 <!-- ═══ SEO · A2A 메타 정보 ═══ -->
 <title>회사소개 | About INICS - 아이닉스(INICS) 산업용 센서 전문기업</title>
@@ -405,6 +405,33 @@
     font-style: normal;
     color: var(--ab-accent);
   }
+  .ab-title-en {
+    font-family: 'Oxanium', monospace;
+    font-size: clamp(13px, 1.5vw, 17px);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8A8A8A;
+    margin-top: 14px;
+  }
+  .ab-quote p.ab-quote-en {
+    margin-top: 10px;
+    font-family: 'Oxanium', monospace;
+    font-size: clamp(12.5px, 1.3vw, 14.5px);
+    font-weight: 500;
+    line-height: 1.8;
+    color: #6F6F6F;
+    letter-spacing: 0.2px;
+    word-break: break-word;
+  }
+  .ab-quote p.ab-quote-en span { color: var(--ab-accent2); font-weight: 700; }
+  .ab-cert-title-en {
+    display: block;
+    font-family: 'Oxanium', monospace;
+    font-size: 11.5px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: #8A8A8A; margin-top: 3px;
+  }
 
   /* ════════ STATEMENT ════════ */
   .ab-statement {
@@ -654,6 +681,64 @@
     .ab-chip { min-height: 50px; }
   }
 </style>
+
+<style>
+  /* ════════════════════════════════════════
+     ★ 메뉴 · 사이드바 한/영 병기 (menu-kr / menu-en) — 전 페이지 공통
+  ════════════════════════════════════════ */
+  header .submenu li a,
+  .pct-nav li a, .mnl-nav li a, .tl-side-nav li a {
+    white-space: normal !important;
+    height: auto !important;
+    line-height: 1.35 !important;
+  }
+  header .submenu li a { padding-top: 9px !important; padding-bottom: 9px !important; }
+  header .submenu { min-width: 250px !important; }
+
+  .menu-kr, .menu-en { display: block; }
+  .menu-kr { word-break: keep-all; }
+  .menu-en {
+    font-family: 'Oxanium', monospace;
+    font-size: 0.8em;
+    color: #8A8A8A;
+    letter-spacing: 0.2px;
+    margin-top: 2px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    font-weight: 500;
+  }
+  header .submenu li a:hover .menu-en,
+  header .submenu li a:focus .menu-en,
+  header .submenu li a.active .menu-en,
+  .pct-nav li a:hover .menu-en,  .pct-nav li a.active .menu-en,
+  .mnl-nav li a:hover .menu-en,  .mnl-nav li a.active .menu-en,
+  .tl-side-nav li a:hover .menu-en, .tl-side-nav li a.active .menu-en { color: #E09A50; }
+
+  .pct-nav li a, .mnl-nav li a, .tl-side-nav li a { padding-top: 10px; padding-bottom: 10px; }
+
+  /* 모바일: 2열 그리드 박스 안에서 한글 윗줄 / 영문 아랫줄 세로 배치 */
+  @media (max-width: 960px) {
+    .pct-nav li a, .mnl-nav li a, .tl-side-nav li a {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 72px; font-size: 12.5px;
+    }
+    .pct-nav .menu-kr, .pct-nav .menu-en,
+    .mnl-nav .menu-kr, .mnl-nav .menu-en,
+    .tl-side-nav .menu-kr, .tl-side-nav .menu-en { width: 100%; }
+    .pct-nav .menu-en, .mnl-nav .menu-en, .tl-side-nav .menu-en { font-size: 10px; line-height: 1.3; }
+  }
+  @media (max-width: 480px) {
+    .pct-nav, .mnl-nav, .tl-side-nav { gap: 5px; }
+    .pct-nav li a, .mnl-nav li a, .tl-side-nav li a { padding: 8px 9px; min-height: 76px; font-size: 12px; }
+    .pct-nav .menu-en, .mnl-nav .menu-en, .tl-side-nav .menu-en { font-size: 9.5px; }
+  }
+  @media (max-width: 768px) {
+    header .submenu li a { padding-top: 10px !important; padding-bottom: 10px !important; }
+    header .submenu .menu-en { font-size: 0.78em; }
+  }
+</style>
 </head>
 <body>
 
@@ -678,40 +763,40 @@
       <li class="has-submenu">
         <a href="product-lineup.html">Product <span class="arrow">▾</span></a>
         <ul class="submenu">
-          <li><a href="product-lineup.html">제품 라인업</a></li>
-          <li><a href="inductive-bearingless-encoder.html">인덕티브 베어링리스 엔코더</a></li>
-          <li><a href="programmable-high-speed-counter.html">프로그래머블 고속 카운터 타이머</a></li>
-          <li><a href="area-sensor.html">에어리어센서</a></li>
-          <li><a href="magnetic-linear-encoder.html">마그네틱 리니어 엔코더</a></li>
-          <li><a href="optical-rotary-encoder.html">광학식 로터리 엔코더</a></li>
-          <li><a href="magnetic-rotary-encoder.html">마그네틱 로터리 엔코더</a></li>
-          <li><a href="inductive-rotary-encoder.html">인덕티브 로터리 엔코더</a></li>
-          <li><a href="wheel-rotary-encoder.html">바퀴형 로터리 엔코더</a></li>
-          <li><a href="encoder-counter.html">엔코더 전용 카운터</a></li>
-          <li><a href="elevator-non-contact-switch-sensor.html">엘리베이터 비접촉 스위치 센서</a></li>
+          <li><a href="product-lineup.html"><span class="menu-kr">제품 라인업</span><span class="menu-en" lang="en">Product Line-up</span></a></li>
+          <li><a href="inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+          <li><a href="programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
+          <li><a href="area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
+          <li><a href="magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
+          <li><a href="optical-rotary-encoder.html"><span class="menu-kr">광학식 로터리 엔코더</span><span class="menu-en" lang="en">Optical Rotary Encoder</span></a></li>
+          <li><a href="magnetic-rotary-encoder.html"><span class="menu-kr">마그네틱 로터리 엔코더</span><span class="menu-en" lang="en">Magnetic Rotary Encoder</span></a></li>
+          <li><a href="inductive-rotary-encoder.html"><span class="menu-kr">인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">Inductive Rotary Encoder</span></a></li>
+          <li><a href="wheel-rotary-encoder.html"><span class="menu-kr">바퀴형 로터리 엔코더</span><span class="menu-en" lang="en">Wheel-Type Rotary Encoder</span></a></li>
+          <li><a href="encoder-counter.html"><span class="menu-kr">엔코더 전용 카운터</span><span class="menu-en" lang="en">Encoder Counter</span></a></li>
+          <li><a href="elevator-non-contact-switch-sensor.html"><span class="menu-kr">엘리베이터 비접촉 스위치 센서</span><span class="menu-en" lang="en">Elevator Non-Contact Switch Sensor</span></a></li>
         </ul>
       </li>
 
       <li class="has-submenu">
         <a href="manuals.html">Manual <span class="arrow">▾</span></a>
         <ul class="submenu">
-          <li><a href="manual-inductive-bearingless-encoder.html">인덕티브 베어링리스 엔코더</a></li>
-          <li><a href="manual-programmable-high-speed-counter.html">프로그래머블 고속 카운터 타이머</a></li>
-          <li><a href="manual-area-sensor.html">에어리어센서</a></li>
-          <li><a href="manual-magnetic-linear-encoder.html">마그네틱 리니어 엔코더</a></li>
-          <li><a href="manual-optical-rotary-encoder.html">광학식 로터리 엔코더</a></li>
-          <li><a href="manual-magnetic-rotary-encoder.html">마그네틱 로터리 엔코더</a></li>
-          <li><a href="manual-inductive-rotary-encoder.html">인덕티브 로터리 엔코더</a></li>
-          <li><a href="manual-wheel-rotary-encoder.html">바퀴형 로터리 엔코더</a></li>
-          <li><a href="manual-encoder-counter.html">엔코더 전용 카운터</a></li>
+          <li><a href="manual-inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+          <li><a href="manual-programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
+          <li><a href="manual-area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
+          <li><a href="manual-magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
+          <li><a href="manual-optical-rotary-encoder.html"><span class="menu-kr">광학식 로터리 엔코더</span><span class="menu-en" lang="en">Optical Rotary Encoder</span></a></li>
+          <li><a href="manual-magnetic-rotary-encoder.html"><span class="menu-kr">마그네틱 로터리 엔코더</span><span class="menu-en" lang="en">Magnetic Rotary Encoder</span></a></li>
+          <li><a href="manual-inductive-rotary-encoder.html"><span class="menu-kr">인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">Inductive Rotary Encoder</span></a></li>
+          <li><a href="manual-wheel-rotary-encoder.html"><span class="menu-kr">바퀴형 로터리 엔코더</span><span class="menu-en" lang="en">Wheel-Type Rotary Encoder</span></a></li>
+          <li><a href="manual-encoder-counter.html"><span class="menu-kr">엔코더 전용 카운터</span><span class="menu-en" lang="en">Encoder Counter</span></a></li>
         </ul>
       </li>
 
       <li class="has-submenu">
         <a href="cs1.html">Customer Service <span class="arrow">▾</span></a>
         <ul class="submenu">
-          <li><a href="cs1.html">자료실</a></li>
-          <li><a href="cs2.html">고객문의</a></li>
+          <li><a href="cs1.html"><span class="menu-kr">자료실</span><span class="menu-en" lang="en">Downloads</span></a></li>
+          <li><a href="cs2.html"><span class="menu-kr">고객문의</span><span class="menu-en" lang="en">Contact Us</span></a></li>
         </ul>
       </li>
 
@@ -720,10 +805,10 @@
       <li class="has-submenu">
         <a href="about.html" class="active">Company <span class="arrow">▾</span></a>
         <ul class="submenu">
-          <li><a href="about.html" class="active">회사소개</a></li>
-          <li><a href="timeline.html">제품 개발 타임라인</a></li>
-          <li><a href="env.html">제품 사용환경</a></li>
-          <li><a href="location.html">오시는 길</a></li>
+          <li><a href="about.html" class="active"><span class="menu-kr">회사소개</span><span class="menu-en" lang="en">About Us</span></a></li>
+          <li><a href="timeline.html"><span class="menu-kr">제품 개발 타임라인</span><span class="menu-en" lang="en">Product Development Timeline</span></a></li>
+          <li><a href="env.html"><span class="menu-kr">제품 사용환경</span><span class="menu-en" lang="en">Application Environments</span></a></li>
+          <li><a href="location.html"><span class="menu-kr">오시는 길</span><span class="menu-en" lang="en">Directions</span></a></li>
         </ul>
       </li>
 
@@ -743,10 +828,10 @@
         <nav aria-label="회사 정보 메뉴">
         <div class="pct-sidebar-label">Company</div>
         <ul class="pct-nav">
-          <li><a href="about.html" class="active" aria-current="page">회사소개</a></li>
-          <li><a href="timeline.html">제품 개발 타임라인</a></li>
-          <li><a href="env.html">제품 사용환경</a></li>
-          <li><a href="location.html">오시는 길</a></li>
+          <li><a href="about.html" class="active" aria-current="page"><span class="menu-kr">회사소개</span><span class="menu-en" lang="en">About Us</span></a></li>
+          <li><a href="timeline.html"><span class="menu-kr">제품 개발 타임라인</span><span class="menu-en" lang="en">Product Development Timeline</span></a></li>
+          <li><a href="env.html"><span class="menu-kr">제품 사용환경</span><span class="menu-en" lang="en">Application Environments</span></a></li>
+          <li><a href="location.html"><span class="menu-kr">오시는 길</span><span class="menu-en" lang="en">Directions</span></a></li>
         </ul>
         </nav>
       </aside>
@@ -762,6 +847,7 @@
               <h2 class="ab-title">
                 산업용 센서의 새로운<em> 기준</em>
               </h2>
+              <div class="ab-title-en" lang="en">A New Standard in Industrial Sensing</div>
             </div>
           </div>
 
@@ -771,6 +857,10 @@
               <p>
                 아이닉스는 <span>연구·개발·생산·판매·지원</span>의 모든 과정을 국내에서 직접 수행합니다.<br>
                 핵심 원천 기술로 산업용 센서의 새로운 기준을 만듭니다.
+              </p>
+              <p class="ab-quote-en" lang="en">
+                INICS carries out every stage — <span>R&amp;D, production, sales and support</span> — in-house in Korea.
+                With our own core technology, we set a new standard for industrial sensors.
               </p>
             </div>
           </div>
@@ -926,7 +1016,7 @@
                 </div>
                 <div class="ab-cert-body">
                   <div class="ab-cert-value" lang="en">CE</div>
-                  <h4 class="ab-cert-title">전 제품 CE 인증</h4>
+                  <h4 class="ab-cert-title">전 제품 CE 인증<span class="ab-cert-title-en" lang="en">CE Certified — All Products</span></h4>
                   <p class="ab-cert-text">아이닉스의 모든 제품은 유럽 안전·보건·환경 기준을 충족하는 CE 인증을 취득했습니다.
                     <span class="en" lang="en">Every INICS product carries CE marking, meeting European health, safety and environmental requirements.</span>
                   </p>
@@ -944,8 +1034,8 @@
                   </svg>
                 </div>
                 <div class="ab-cert-body">
-                  <div class="ab-cert-value">6<span class="unit">건</span></div>
-                  <h4 class="ab-cert-title">특허 등록</h4>
+                  <div class="ab-cert-value">6<span class="unit">건 · Patents</span></div>
+                  <h4 class="ab-cert-title">특허 등록<span class="ab-cert-title-en" lang="en">Registered Patents</span></h4>
                   <p class="ab-cert-text">센싱 방식과 신호 처리 기술을 중심으로 6건의 특허를 등록해 독자적인 원천 기술을 확보하고 있습니다.
                     <span class="en" lang="en">Six registered patents covering sensing methods and signal processing secure our own core technology.</span>
                   </p>
