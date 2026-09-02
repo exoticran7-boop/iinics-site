@@ -18,6 +18,7 @@ User-agent: Daum
 Allow: /
 
 # AI 에이전트 / LLM 크롤러
+# OpenAI
 User-agent: GPTBot
 Allow: /
 
@@ -27,18 +28,24 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
+# Anthropic
 User-agent: ClaudeBot
 Allow: /
 
-User-agent: Claude-Web
+User-agent: Claude-SearchBot
 Allow: /
 
 User-agent: Claude-User
 Allow: /
 
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Perplexity-User
+Allow: /
+
+# Google / Apple / 기타
 User-agent: Google-Extended
 Allow: /
 
