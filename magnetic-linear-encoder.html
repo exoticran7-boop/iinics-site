@@ -926,8 +926,14 @@
 <!-- ★ 방문자 IP 추적 -->
 <script>
 (async () => {
+  // IP 조회: 광고차단기/방화벽에 막히거나 2.5초 넘게 걸리면 건너뛰고 기록은 계속 진행
   let geo = {};
-  try { geo = await (await fetch('https://ipapi.co/json/')).json(); } catch (e) {}
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 2500);
+    geo = await (await fetch('https://ipapi.co/json/', { signal: ctrl.signal })).json();
+    clearTimeout(t);
+  } catch (e) {}
 
   const ref = document.referrer;
   let source = '직접 접속';
@@ -944,10 +950,12 @@
     page:     location.pathname,
     referrer: source,
     utm:      new URLSearchParams(location.search).get('utm_source') || '',
-    device:   /Mobi|Android|iPhone/i.test(ua) ? '모바일' : 'PC',
-    bot:      /bot|crawl|spider|slurp/i.test(ua) ? 'Y' : 'N'
+    device:   /Mobi|Android|iPhone|iPad/i.test(ua) ? '모바일' : 'PC',
+    bot:      /bot|crawl|spider|slurp|yeti|daum|gptbot|claude|perplexity|headless|lighthouse|inspectiontool/i.test(ua) ? 'Y' : 'N'
   });
-  fetch('https://script.google.com/macros/s/AKfycbwbH0e5qxLACu143irtuugL_MQ5Q788c3XOkh8rwN7E075ohHQSBIu0XjeT3QUDq2AU/exec?' + params)
+  // keepalive: 페이지를 바로 떠나도 전송이 취소되지 않음 / no-cors: Apps Script 리다이렉트·CORS 응답과 무관하게 전달
+  fetch('https://script.google.com/macros/s/AKfycbwbH0e5qxLACu143irtuugL_MQ5Q788c3XOkh8rwN7E075ohHQSBIu0XjeT3QUDq2AU/exec?' + params,
+        { mode: 'no-cors', keepalive: true })
     .catch(() => {});
 })();
 </script>
