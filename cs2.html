@@ -427,34 +427,6 @@
   .csq-char-counter.warn { color: var(--csq-gold); }
   .csq-char-counter.over { color: var(--csq-red); }
 
-  /* 파일 업로드 */
-  .csq-file-box {
-    border: 1px dashed rgba(255,127,0,0.35); padding: 16px; border-radius: 2px;
-    background: rgba(255,127,0,0.02); cursor: pointer; position: relative;
-    transition: border-color .25s, background .25s;
-  }
-  .csq-file-box:hover { border-color: var(--csq-accent); background: rgba(255,127,0,0.05); }
-  .csq-file-box input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-  .csq-file-inner { display: flex; align-items: center; gap: 10px; }
-  .csq-file-inner svg { width: 22px; height: 22px; flex-shrink: 0; }
-  .csq-file-desc { font-size: 13px; font-weight: 400; color: #111111; line-height: 1.6; }
-  .csq-file-desc strong { color: var(--csq-accent); font-weight: 600; }
-  .csq-file-selected {
-    margin-top: 8px; display: none; align-items: center; gap: 8px;
-    padding: 7px 12px; border-radius: 2px;
-    background: rgba(0,168,112,.06); border: 1px solid rgba(0,168,112,.25);
-  }
-  .csq-file-selected svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--csq-green); }
-  .csq-file-selected span {
-    font-family: 'Oxanium', monospace; font-size: 13px; color: var(--csq-green); letter-spacing: .06em;
-    word-break: break-all; flex: 1;
-  }
-  .csq-file-clear {
-    background: none; border: none; color: #111111;
-    cursor: pointer; font-size: 16px; line-height: 1; flex-shrink: 0; transition: color .2s;
-  }
-  .csq-file-clear:hover { color: var(--csq-red); }
-
   /* 제출 버튼 */
   .csq-submit-btn {
     width: 100%; padding: 15px; margin-top: 12px; border-radius: 2px;
@@ -675,7 +647,6 @@
             <form id="csqForm"
               action="https://api.web3forms.com/submit"
               method="POST"
-              enctype="multipart/form-data"
               onsubmit="handleSubmit(event)">
 
               <input type="hidden" name="access_key" value="d9afd94a-113f-466f-9e8a-fd5b5fd0b7a2" />
@@ -722,34 +693,6 @@
                 <textarea class="csq-input csq-textarea" id="csqContent" name="Message" placeholder="문의 내용을 자세히 입력해 주세요.&#10;&#10;제품명, 모델명, 사용 환경 등을 함께 기재해 주시면&#10;더욱 빠르고 정확한 답변이 가능합니다." maxlength="1000" oninput="countChars(this)" required></textarea>
                 <div class="csq-char-counter" id="charCounter">
                   <span id="charCount">0</span> / 1,000
-                </div>
-              </div>
-
-              <div class="csq-form-group">
-                <div class="csq-label">
-                  <span class="csq-label-text">파일 첨부 · Attachment</span>
-                  <span class="csq-label-hint">선택 사항 · 최대 5MB</span>
-                </div>
-                <div class="csq-file-box" id="fileBox">
-                  <input type="file" id="csqFile" name="attachment" accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.doc,.docx,.xls,.xlsx,.zip" onchange="handleFile(this)" aria-label="파일 첨부" />
-                  <div class="csq-file-inner">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="#FF7F00" stroke-width="1.5" stroke-linecap="round"/>
-                      <polyline points="17 8 12 3 7 8" stroke="#FF7F00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <line x1="12" y1="3" x2="12" y2="15" stroke="#FF7F00" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    <div class="csq-file-desc">
-                      <strong>클릭하여 파일 선택</strong><br>
-                      PDF, 이미지, 문서(DOC/XLS), ZIP · 최대 5MB
-                    </div>
-                  </div>
-                  <div class="csq-file-selected" id="fileSelected">
-                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                      <path d="M3 8 L6 11 L13 4" stroke="#00A870" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span id="fileSelectedName"></span>
-                    <button type="button" class="csq-file-clear" onclick="clearFile()" aria-label="첨부 취소">✕</button>
-                  </div>
                 </div>
               </div>
 
@@ -891,23 +834,6 @@
     el.classList.toggle('valid', ok);
     el.classList.toggle('error', !ok && el.value.trim().length > 0);
   }
-  function handleFile(input) {
-    const file = input.files[0];
-    if (!file) return;
-    /* Web3Forms 무료 플랜 첨부 5MB 제한 */
-    if (file.size > 5 * 1024 * 1024) {
-      alert('첨부파일은 최대 5MB까지 가능합니다.\n현재 파일 크기: ' + (file.size / 1024 / 1024).toFixed(2) + 'MB');
-      clearFile();
-      return;
-    }
-    document.getElementById('fileSelectedName').textContent = file.name + ' (' + (file.size/1024).toFixed(1) + ' KB)';
-    document.getElementById('fileSelected').style.display = 'flex';
-  }
-  function clearFile() {
-    document.getElementById('csqFile').value = '';
-    document.getElementById('fileSelected').style.display = 'none';
-    document.getElementById('fileSelectedName').textContent = '';
-  }
   async function handleSubmit(e) {
     e.preventDefault();
     const form = document.getElementById('csqForm');
@@ -932,7 +858,6 @@
       if (res.ok && json.success) {
         document.getElementById('resultSuccess').classList.add('show');
         form.reset();
-        clearFile();
         document.getElementById('charCount').textContent = '0';
         document.getElementById('charCounter').className = 'csq-char-counter';
         form.querySelectorAll('.valid').forEach(el => el.classList.remove('valid'));
