@@ -492,7 +492,7 @@
   /* 공지 목록 */
   .ntc-list-header {
     display: grid;
-    grid-template-columns: 60px 1fr 120px 130px;
+    grid-template-columns: 60px 1fr 120px;
     gap: 0;
     padding: 12px 16px;
     background: rgba(255, 102, 0, 0.05);
@@ -511,7 +511,7 @@
 
   .ntc-list-item {
     display: grid;
-    grid-template-columns: 60px 1fr 120px 130px;
+    grid-template-columns: 60px 1fr 120px;
     align-items: center; gap: 0;
     padding: 0;
     border: 1.5px solid var(--ntc-divider);
@@ -777,9 +777,7 @@
   @media (max-width: 960px) {
     .ntc-file-group { grid-template-columns: 1fr; }
     .ntc-list-header { grid-template-columns: 50px 1fr 100px; }
-    .ntc-list-header span:nth-child(4) { display: none; }
     .ntc-list-item { grid-template-columns: 50px 1fr 100px; }
-    .ntc-item-actions { display: none; }
   }
   @media (max-width: 600px) {
     .ntc-title { font-size: clamp(22px, 6.5vw, 38px); }
@@ -789,8 +787,7 @@
     .ntc-write-btn.visible { width: 100%; justify-content: center; }
 
     .ntc-list-header { grid-template-columns: 44px 1fr; }
-    .ntc-list-header span:nth-child(3),
-    .ntc-list-header span:nth-child(4) { display: none; }
+    .ntc-list-header span:nth-child(3) { display: none; }
     .ntc-list-item { grid-template-columns: 44px 1fr; }
     .ntc-item-date, .ntc-item-actions { display: none; }
 
@@ -962,81 +959,8 @@
               <p class="ntc-fullname">아이닉스 회사 소식 및 공지</p>
               <p class="ntc-fullname-en">Notice &nbsp;|&nbsp; News &amp; Updates</p>
             </div>
-            <div class="ntc-header-actions">
-              <button class="ntc-admin-btn" id="adminToggleBtn" onclick="toggleLogin()">
-                <svg viewBox="0 0 16 16" fill="none">
-                  <path d="M8 2 A4 4 0 1 0 8 10 A4 4 0 0 0 8 2Z" stroke="currentColor" stroke-width="1.3"/>
-                  <path d="M2 15 Q2 11 8 11 Q14 11 14 15" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-                  <rect x="10" y="8" width="5" height="4" rx="1" stroke="currentColor" stroke-width="1.1"/>
-                  <line x1="12.5" y1="8" x2="12.5" y2="6.5" stroke="currentColor" stroke-width="1.1"/>
-                </svg>
-                <span id="adminBtnText">관리자 로그인</span>
-              </button>
-              <button class="ntc-write-btn" id="writeBtn" onclick="openWriteForm()">
-                <svg viewBox="0 0 16 16" fill="none">
-                  <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                  <line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
-                새 글 작성
-              </button>
-            </div>
           </div>
 
-          <!-- 글쓰기/수정 폼 -->
-          <div class="ntc-form-wrap" id="writeForm">
-            <div class="ntc-form-title" id="formTitle">새 공지 작성 · Write New Notice</div>
-
-            <div class="ntc-form-group">
-              <label class="ntc-form-label" for="postTitle">제목 · Title <span>*</span></label>
-              <input class="ntc-input" id="postTitle" type="text" placeholder="공지 제목을 입력하세요" />
-            </div>
-
-            <div class="ntc-form-group">
-              <label class="ntc-form-label" for="postContent">내용 · Content <span>*</span></label>
-              <textarea class="ntc-textarea" id="postContent" placeholder="공지 내용을 입력하세요&#10;&#10;회사 소식, 제품 업데이트, 이벤트 등을 자유롭게 작성해 주세요."></textarea>
-            </div>
-
-            <div class="ntc-file-group">
-              <div class="ntc-file-box" id="imgBox">
-                <input type="file" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
-                  id="postImg" onchange="handleImgChange(this)" />
-                <div class="ntc-file-icon">
-                  <svg viewBox="0 0 28 28" fill="none">
-                    <rect x="3" y="5" width="22" height="18" rx="2" stroke="#0D7A52" stroke-width="1.4"/>
-                    <path d="M3 18 L8 13 L12 17 L17 11 L25 18" stroke="#0D7A52" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="9" cy="10" r="2" stroke="#0D7A52" stroke-width="1.2"/>
-                  </svg>
-                </div>
-                <div class="ntc-file-type">사진 · Image</div>
-                <div class="ntc-file-desc">PNG, JPG, GIF, WEBP<br>클릭하여 파일 선택</div>
-                <div class="ntc-file-name" id="imgName"></div>
-                <div class="ntc-file-existing" id="imgExisting"></div>
-                <img class="ntc-img-preview" id="imgPreview" src="" alt="미리보기" />
-              </div>
-
-              <div class="ntc-file-box" id="pdfBox">
-                <input type="file" accept=".pdf"
-                  id="postPdf" onchange="handlePdfChange(this)" />
-                <div class="ntc-file-icon">
-                  <svg viewBox="0 0 28 28" fill="none">
-                    <rect x="4" y="2" width="16" height="24" rx="2" stroke="#D63030" stroke-width="1.4"/>
-                    <path d="M16 2 L24 10 L20 10 L20 2" stroke="#D63030" stroke-width="1.3" fill="rgba(214,48,48,0.1)" stroke-linejoin="round"/>
-                    <line x1="8" y1="14" x2="18" y2="14" stroke="#D63030" stroke-width="1.2"/>
-                    <line x1="8" y1="18" x2="15" y2="18" stroke="#D63030" stroke-width="1.2"/>
-                  </svg>
-                </div>
-                <div class="ntc-file-type">PDF 파일</div>
-                <div class="ntc-file-desc">PDF 문서 첨부<br>클릭하여 파일 선택</div>
-                <div class="ntc-file-name" id="pdfName"></div>
-                <div class="ntc-file-existing" id="pdfExisting"></div>
-              </div>
-            </div>
-
-            <div class="ntc-form-btns">
-              <button class="ntc-form-cancel" onclick="closeForm()">취소</button>
-              <button class="ntc-form-submit" id="submitBtn" onclick="submitPost()">공지 등록</button>
-            </div>
-          </div>
 
           <!-- 목록 뷰 -->
           <div id="listView">
@@ -1044,9 +968,11 @@
               <span>번호</span>
               <span>제목</span>
               <span>날짜</span>
-              <span>관리</span>
             </div>
             <ul class="ntc-list" id="postList"></ul>
+            <div class="ntc-empty" id="loadingMsg">
+              <div class="ntc-empty-text">공지사항을 불러오는 중입니다…<br>Loading notices…</div>
+            </div>
             <div class="ntc-empty" id="emptyMsg" style="display:none;">
               <svg viewBox="0 0 48 48" fill="none">
                 <rect x="8" y="8" width="32" height="32" rx="4" stroke="#111111" stroke-width="1.5"/>
@@ -1101,21 +1027,6 @@
   </div><!-- /pct-page -->
 </main>
 
-<!-- 로그인 모달 -->
-<div class="ntc-login-overlay" id="loginModal" onclick="handleLoginOverlay(event)">
-  <div class="ntc-login-box">
-    <button class="ntc-login-close" onclick="closeLogin()" aria-label="닫기">✕</button>
-    <div class="ntc-login-tag">Admin · 관리자 전용</div>
-    <div class="ntc-login-title">관리자 로그인</div>
-    <div class="ntc-login-sub">아이닉스 홈페이지 관리자만 접근 가능합니다.<br>비밀번호를 입력해 주세요.</div>
-    <label class="ntc-login-label" for="pwInput">비밀번호 · Password</label>
-    <input class="ntc-login-input" id="pwInput" type="password"
-      placeholder="관리자 비밀번호"
-      onkeydown="if(event.key==='Enter') doLogin()" />
-    <div class="ntc-login-err" id="loginErr">비밀번호가 올바르지 않습니다.</div>
-    <button class="ntc-login-submit" onclick="doLogin()">로그인</button>
-  </div>
-</div>
 
 <!-- ════════════════════════════════════════
      ★ 햄버거 메뉴 동작 스크립트 — 표준 동일
@@ -1182,216 +1093,39 @@
      ★ 공지사항 동작 스크립트
 ════════════════════════════════════════ -->
 <script>
-  const ADMIN_PW = 'inics*3';
+  /* ════════════════════════════════════════════════════════════
+     ★ 공지 데이터는 구글 스프레드시트에서 불러옵니다.
+     ★ 설정법: Google Apps Script를 "웹 앱"으로 배포한 뒤
+       발급된 URL(https://script.google.com/macros/s/.../exec)을
+       아래 NOTICE_API 에 붙여넣으세요. (설정 가이드 참고)
+  ════════════════════════════════════════════════════════════ */
+  const NOTICE_API = 'https://script.google.com/macros/s/여기에_배포_URL을_넣으세요/exec';
 
-  let isAdmin = false;
-  let posts   = JSON.parse(localStorage.getItem('INICS_notices') || '[]');
+  let posts = [];
   let currentPost = null;
 
-  /* 수정 모드 상태: null이면 새 글 작성, id값이 있으면 그 글을 수정 중 */
-  let editingPostId = null;
+  loadNotices();
 
-  renderList();
-
-  function toggleLogin() {
-    if (isAdmin) {
-      isAdmin = false;
-      updateAdminUI();
-    } else {
-      document.getElementById('loginModal').classList.add('open');
-      document.getElementById('pwInput').value = '';
-      document.getElementById('loginErr').classList.remove('show');
-      setTimeout(() => document.getElementById('pwInput').focus(), 100);
-    }
-  }
-
-  function doLogin() {
-    const pw = document.getElementById('pwInput').value;
-    if (pw === ADMIN_PW) {
-      isAdmin = true;
-      closeLogin();
-      updateAdminUI();
-    } else {
-      document.getElementById('loginErr').classList.add('show');
-      document.getElementById('pwInput').value = '';
-      document.getElementById('pwInput').focus();
-    }
-  }
-
-  function closeLogin() {
-    document.getElementById('loginModal').classList.remove('open');
-  }
-
-  function handleLoginOverlay(e) {
-    if (e.target === document.getElementById('loginModal')) closeLogin();
-  }
-
-  function updateAdminUI() {
-    const btn      = document.getElementById('adminToggleBtn');
-    const btnText  = document.getElementById('adminBtnText');
-    const writeBtn = document.getElementById('writeBtn');
-    const delBtns  = document.querySelectorAll('.ntc-del-btn');
-    const editBtns = document.querySelectorAll('.ntc-edit-btn');
-
-    if (isAdmin) {
-      btn.classList.add('logged');
-      btnText.textContent = '관리자 로그아웃';
-      writeBtn.classList.add('visible');
-      delBtns.forEach(b => b.classList.add('visible'));
-      editBtns.forEach(b => b.classList.add('visible'));
-    } else {
-      btn.classList.remove('logged');
-      btnText.textContent = '관리자 로그인';
-      writeBtn.classList.remove('visible');
-      delBtns.forEach(b => b.classList.remove('visible'));
-      editBtns.forEach(b => b.classList.remove('visible'));
-      closeForm();
-    }
-  }
-
-  /* 새 글 작성 모드로 폼 열기 */
-  function openWriteForm() {
-    editingPostId = null;
-    resetFormFields();
-    document.getElementById('formTitle').textContent = '새 공지 작성 · Write New Notice';
-    document.getElementById('submitBtn').textContent = '공지 등록';
-    document.getElementById('writeForm').classList.add('open');
-    document.getElementById('postTitle').focus();
-    window.scrollTo({ top: document.getElementById('writeForm').offsetTop - 100, behavior: 'smooth' });
-  }
-
-  /* 수정 모드로 폼 열기 */
-  function openEditForm(id) {
-    const post = posts.find(p => p.id === id);
-    if (!post) return;
-
-    editingPostId = id;
-    resetFormFields();
-
-    document.getElementById('postTitle').value = post.title;
-    document.getElementById('postContent').value = post.content;
-
-    if (post.imgData) {
-      const preview = document.getElementById('imgPreview');
-      preview.src = post.imgData;
-      preview.style.display = 'block';
-      const existing = document.getElementById('imgExisting');
-      existing.textContent = '기존 파일 유지 (새 파일 선택 시 교체)';
-      existing.classList.add('show');
-    }
-
-    if (post.pdfData) {
-      const existing = document.getElementById('pdfExisting');
-      existing.textContent = '기존: ' + (post.pdfName || 'document.pdf') + ' (새 파일 선택 시 교체)';
-      existing.classList.add('show');
-    }
-
-    document.getElementById('formTitle').textContent = '공지 수정 · Edit Notice';
-    document.getElementById('submitBtn').textContent = '수정 완료';
-    document.getElementById('writeForm').classList.add('open');
-    document.getElementById('postTitle').focus();
-    window.scrollTo({ top: document.getElementById('writeForm').offsetTop - 100, behavior: 'smooth' });
-  }
-
-  function resetFormFields() {
-    document.getElementById('postTitle').value = '';
-    document.getElementById('postContent').value = '';
-    document.getElementById('imgName').textContent = '';
-    document.getElementById('pdfName').textContent = '';
-    document.getElementById('imgExisting').textContent = '';
-    document.getElementById('imgExisting').classList.remove('show');
-    document.getElementById('pdfExisting').textContent = '';
-    document.getElementById('pdfExisting').classList.remove('show');
-    document.getElementById('imgPreview').style.display = 'none';
-    document.getElementById('imgPreview').src = '';
-    document.getElementById('postImg').value = '';
-    document.getElementById('postPdf').value = '';
-  }
-
-  function closeForm() {
-    document.getElementById('writeForm').classList.remove('open');
-    editingPostId = null;
-    resetFormFields();
-  }
-
-  function handleImgChange(input) {
-    const file = input.files[0];
-    if (!file) return;
-    document.getElementById('imgName').textContent = '✓ ' + file.name;
-    document.getElementById('imgExisting').classList.remove('show');
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const preview = document.getElementById('imgPreview');
-      preview.src = e.target.result;
-      preview.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function handlePdfChange(input) {
-    const file = input.files[0];
-    if (!file) return;
-    document.getElementById('pdfName').textContent = '✓ ' + file.name;
-    document.getElementById('pdfExisting').classList.remove('show');
-  }
-
-  /* 글 저장 (새 글 등록 또는 기존 글 수정) */
-  function submitPost() {
-    const title   = document.getElementById('postTitle').value.trim();
-    const content = document.getElementById('postContent').value.trim();
-    const imgFile = document.getElementById('postImg').files[0];
-    const pdfFile = document.getElementById('postPdf').files[0];
-
-    if (!title) { alert('제목을 입력해주세요.'); return; }
-    if (!content) { alert('내용을 입력해주세요.'); return; }
-
-    const existingPost = editingPostId ? posts.find(p => p.id === editingPostId) : null;
-
-    const now  = new Date();
-    const date = now.getFullYear() + '.' +
-                 String(now.getMonth()+1).padStart(2,'0') + '.' +
-                 String(now.getDate()).padStart(2,'0');
-
-    const post = {
-      id: existingPost ? existingPost.id : Date.now(),
-      title, content,
-      date: existingPost ? existingPost.date : date,
-      imgName: imgFile ? imgFile.name : (existingPost ? existingPost.imgName : null),
-      imgData: imgFile ? null : (existingPost ? existingPost.imgData : null),
-      pdfName: pdfFile ? pdfFile.name : (existingPost ? existingPost.pdfName : null),
-      pdfData: pdfFile ? null : (existingPost ? existingPost.pdfData : null),
-    };
-
-    let pending = 2;
-    const done = () => { pending--; if (pending <= 0) savePost(post, !!existingPost); };
-
-    if (imgFile) {
-      const r = new FileReader();
-      r.onload = e => { post.imgData = e.target.result; done(); };
-      r.readAsDataURL(imgFile);
-    } else { done(); }
-
-    if (pdfFile) {
-      const r = new FileReader();
-      r.onload = e => { post.pdfData = e.target.result; done(); };
-      r.readAsDataURL(pdfFile);
-    } else { done(); }
-  }
-
-  function savePost(post, isEdit) {
-    if (isEdit) {
-      const idx = posts.findIndex(p => p.id === post.id);
-      if (idx >= 0) posts[idx] = post;
-    } else {
-      posts.unshift(post);
-    }
+  async function loadNotices() {
+    const loading = document.getElementById('loadingMsg');
+    const empty   = document.getElementById('emptyMsg');
     try {
-      localStorage.setItem('INICS_notices', JSON.stringify(posts));
-    } catch(e) {
-      alert('저장 공간 부족으로 일부 파일이 저장되지 않을 수 있습니다.');
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 15000);
+      const res  = await fetch(NOTICE_API + '?t=' + Date.now(), { signal: ctrl.signal, cache: 'no-store' });
+      clearTimeout(t);
+      const data = await res.json();
+      if (!Array.isArray(data)) throw new Error('bad data');
+      posts = data;
+      loading.style.display = 'none';
+      renderList();
+      openFromHash();
+    } catch (e) {
+      loading.style.display = 'none';
+      empty.style.display = 'block';
+      empty.querySelector('.ntc-empty-text').innerHTML =
+        '공지사항을 불러오지 못했습니다. 잠시 후 새로고침해 주세요.<br>Failed to load notices. Please refresh.';
     }
-    closeForm();
-    renderList();
   }
 
   function renderList() {
@@ -1399,104 +1133,82 @@
     const empty = document.getElementById('emptyMsg');
     list.innerHTML = '';
 
-    if (posts.length === 0) {
-      empty.style.display = 'block';
-      return;
-    }
+    if (posts.length === 0) { empty.style.display = 'block'; return; }
     empty.style.display = 'none';
 
     posts.forEach((post, idx) => {
       const li = document.createElement('li');
       li.className = 'ntc-list-item';
-
       const tags = [
-        post.imgData ? '<span class="ntc-tag img">사진</span>' : '',
-        post.pdfData ? '<span class="ntc-tag pdf">PDF</span>' : ''
+        post.img ? '<span class="ntc-tag img">사진</span>' : '',
+        post.pdf ? '<span class="ntc-tag pdf">PDF</span>' : ''
       ].join('');
-
       li.innerHTML = `
         <div class="ntc-item-num">${posts.length - idx}</div>
-        <div class="ntc-item-title-wrap" onclick="openDetail(${post.id})">
+        <div class="ntc-item-title-wrap">
           <div class="ntc-item-title">${escHtml(post.title)}</div>
           <div class="ntc-item-tags">${tags}</div>
         </div>
-        <div class="ntc-item-date">${post.date}</div>
-        <div class="ntc-item-actions">
-          <button class="ntc-edit-btn ${isAdmin ? 'visible' : ''}"
-            onclick="event.stopPropagation(); openEditForm(${post.id})"
-            title="수정">
-            <svg viewBox="0 0 14 14" fill="none">
-              <path d="M2 11 L2 12 L3 12 L11 4 L10 3 L2 11 Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
-              <path d="M9 2 L12 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-            </svg>
-          </button>
-          <button class="ntc-del-btn ${isAdmin ? 'visible' : ''}"
-            onclick="event.stopPropagation(); deletePost(${post.id})"
-            title="삭제">
-            <svg viewBox="0 0 14 14" fill="none">
-              <path d="M2 4 H12 M5 4 V2 H9 V4 M5 6 V11 M9 6 V11 M3 4 L4 12 H10 L11 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
+        <div class="ntc-item-date">${escHtml(post.date)}</div>
       `;
+      li.addEventListener('click', () => openDetail(post.id));
       list.appendChild(li);
     });
   }
 
   function openDetail(id) {
-    const post = posts.find(p => p.id === id);
+    const post = posts.find(p => String(p.id) === String(id));
     if (!post) return;
     currentPost = post;
 
-    document.getElementById('detailMeta').textContent = 'INICS Notice · ' + post.date;
-    document.getElementById('detailTitle').textContent = post.title;
+    document.getElementById('detailMeta').textContent    = 'INICS Notice · ' + post.date;
+    document.getElementById('detailTitle').textContent   = post.title;
     document.getElementById('detailContent').textContent = post.content;
 
-    const tags = [
-      post.imgData ? '<span class="ntc-tag img">사진 첨부</span>' : '',
-      post.pdfData ? '<span class="ntc-tag pdf">PDF 첨부</span>' : ''
+    document.getElementById('detailTags').innerHTML = [
+      post.img ? '<span class="ntc-tag img">사진 첨부</span>' : '',
+      post.pdf ? '<span class="ntc-tag pdf">PDF 첨부</span>' : ''
     ].join('');
-    document.getElementById('detailTags').innerHTML = tags;
 
     const img = document.getElementById('detailImg');
-    if (post.imgData) { img.src = post.imgData; img.style.display = 'block'; }
-    else               { img.src = '';           img.style.display = 'none'; }
+    if (post.img) { img.src = post.img; img.alt = post.title; img.style.display = 'block'; }
+    else          { img.src = '';       img.alt = '';         img.style.display = 'none'; }
 
     const pdfWrap = document.getElementById('detailPdf');
-    if (post.pdfData) {
+    if (post.pdf) {
       document.getElementById('detailPdfName').textContent = post.pdfName || 'document.pdf';
-      document.getElementById('detailPdfDl').href     = post.pdfData;
-      document.getElementById('detailPdfDl').download = post.pdfName || 'document.pdf';
+      const dl = document.getElementById('detailPdfDl');
+      dl.href = post.pdf;
+      dl.target = '_blank';
+      dl.rel = 'noopener';
       pdfWrap.style.display = 'flex';
     } else {
       pdfWrap.style.display = 'none';
     }
 
-    document.getElementById('listView').style.display  = 'none';
+    document.getElementById('listView').style.display = 'none';
     document.getElementById('detailView').classList.add('open');
+    history.replaceState(null, '', '#' + post.id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function closeDetail() {
     document.getElementById('detailView').classList.remove('open');
     document.getElementById('listView').style.display = 'block';
+    history.replaceState(null, '', location.pathname);
   }
 
-  function deletePost(id) {
-    if (!confirm('이 공지를 삭제하시겠습니까?')) return;
-    posts = posts.filter(p => p.id !== id);
-    localStorage.setItem('INICS_notices', JSON.stringify(posts));
-    renderList();
+  /* notice.html#글번호 로 접속하면 해당 글을 바로 엽니다 (공지 링크 공유용) */
+  function openFromHash() {
+    const h = location.hash.replace('#', '');
+    if (h) openDetail(h);
   }
 
   function escHtml(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLogin();
-  });
 </script>
+
 
 <!-- ★ 방문자 IP 추적 -->
 <script>
