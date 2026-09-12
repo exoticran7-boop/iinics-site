@@ -497,7 +497,6 @@
     padding: 12px 16px;
     background: rgba(255, 102, 0, 0.05);
     border: 1.5px solid var(--ntc-divider);
-    border-bottom: none;
   }
   .ntc-list-header span {
     font-family: 'Oxanium', monospace;
@@ -854,6 +853,19 @@
   @media (max-width: 768px) {
     header .submenu li a { padding-top: 10px !important; padding-bottom: 10px !important; }
     header .submenu .menu-en { font-size: 0.78em; }
+  }
+</style>
+<style>
+  /* ★ 공지사항 페이지 전용: 모바일 사이드바 박스 — 항목이 1개뿐이므로 한 줄 전체 폭, 낮은 높이 */
+  @media (max-width: 960px) {
+    .pct-sidebar { padding-bottom: 18px; margin-bottom: 26px; }
+    .pct-nav { grid-template-columns: 1fr; }
+    .pct-nav li a {
+      flex-direction: row; align-items: baseline; gap: 10px;
+      min-height: 0; padding: 12px 14px;
+    }
+    .pct-nav .menu-kr, .pct-nav .menu-en { width: auto; }
+    .pct-nav .menu-en { margin-top: 0; }
   }
 </style>
 </head>
