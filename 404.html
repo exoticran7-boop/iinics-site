@@ -44,6 +44,37 @@
   .foot { margin-top: 44px; font-size: 13px; color: #999; }
   .foot a { color: #FF7F00; text-decoration: none; }
 </style>
+<script>
+/* 옛 홈페이지(한글 주소) 링크로 들어온 경우 새 페이지로 자동 이동 */
+(function () {
+  var p;
+  try { p = decodeURIComponent(location.pathname); } catch (e) { return; }
+  var rules = [
+    ["베어링리스", "inductive-bearingless-encoder.html"],
+    ["바퀴", "wheel-rotary-encoder.html"],
+    ["리니어", "magnetic-linear-encoder.html"],
+    ["고속", "programmable-high-speed-counter.html"],
+    ["타이머", "programmable-high-speed-counter.html"],
+    ["카운터", "encoder-counter.html"],
+    ["에어리어", "area-sensor.html"],
+    ["엘리베이터", "elevator-non-contact-switch-sensor.html"],
+    ["비접촉", "elevator-non-contact-switch-sensor.html"],
+    ["마그네틱", "magnetic-rotary-encoder.html"],
+    ["인덕티브", "inductive-rotary-encoder.html"],
+    ["광학", "optical-rotary-encoder.html"],
+    ["축형", "optical-rotary-encoder.html"],
+    ["매뉴얼", "manuals.html"],
+    ["자료실", "cs1.html"],
+    ["문의", "cs2.html"],
+    ["공지", "notice.html"],
+    ["회사", "about.html"],
+    ["오시는", "location.html"]
+  ];
+  for (var i = 0; i < rules.length; i++) {
+    if (p.indexOf(rules[i][0]) !== -1) { location.replace("/" + rules[i][1]); return; }
+  }
+})();
+</script>
 </head>
 <body>
   <div class="wrap">
