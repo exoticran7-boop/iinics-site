@@ -16,7 +16,7 @@
 
 <!-- ═══ SEO · A2A 메타 정보 ═══ -->
 <title>고객 문의 — 제품 선택 · 기술 지원 문의 | Contact Us - 아이닉스(INICS)</title>
-<meta name="description" content="아이닉스(INICS) 고객 문의. 엔코더·카운터·센서 제품 선택, 사양 확인, 기술 지원 문의를 남겨 주시면 담당자가 이메일로 답변드립니다. Contact INICS for product selection and technical support.">
+<meta name="description" content="아이닉스(INICS) 고객 문의. 엔코더·카운터·센서 제품 선택, 사양 확인, 기술 지원 문의를 남겨 주시면 담당자가 이메일로 답변드립니다. 전화 070-7548-0034, 이메일 master@iinics.com. Contact INICS for product selection and technical support.">
 <meta name="robots" content="index, follow, max-snippet:-1">
 <link rel="canonical" href="https://www.iinics.com/cs2.html">
 
@@ -48,6 +48,7 @@
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer support",
+        "telephone": "+82-70-7548-0034",
         "email": "master@iinics.com",
         "url": "https://www.iinics.com/cs2.html",
         "availableLanguage": [
@@ -371,6 +372,36 @@
     color: #111111; line-height: 1.9;
   }
 
+  .csq-subtitle .en, .csq-result-text .en {
+    display: block; margin-top: 4px;
+    font-family: 'Oxanium', monospace; font-size: 13px; color: #555555; line-height: 1.7;
+  }
+
+  /* ★ 연락처 (전화 · 이메일) */
+  .csq-contact {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    max-width: 760px; margin-bottom: 24px;
+    animation: csq-up .7s .13s ease both;
+  }
+  .csq-contact-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px; background: var(--csq-card);
+    border: 1.5px solid var(--csq-divider); border-radius: 4px;
+    color: #111111; text-decoration: none;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .csq-contact-item:hover { border-color: var(--csq-accent); box-shadow: 0 4px 16px rgba(255,127,0,0.10); }
+  .csq-contact-item svg { width: 26px; height: 26px; color: var(--csq-accent); flex-shrink: 0; }
+  .csq-contact-key {
+    font-family: 'Oxanium', monospace; font-size: 12px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--csq-accent); font-weight: 700; margin-bottom: 3px;
+  }
+  .csq-contact-val { font-size: 16px; font-weight: 700; word-break: break-all; }
+
+  /* ★ 연락처 칸과 문의 양식의 폭을 똑같이 맞춤 */
+  .csq-contact, .csq-form-card { box-sizing: border-box; width: 100%; max-width: 835px !important; }
+  @media (max-width: 960px) { .csq-contact, .csq-form-card { max-width: none !important; } }
+
   /* 폼 카드 */
   .csq-form-card {
     background: var(--csq-card);
@@ -462,7 +493,7 @@
 
   @keyframes csq-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   @media (prefers-reduced-motion: reduce) {
-    .csq-intro, .csq-form-card { animation: none; }
+    .csq-intro, .csq-form-card, .csq-contact { animation: none; }
     .csq-submit-btn:hover:not(:disabled) { transform: none; }
     .csq-spinner.show { animation: none; }
   }
@@ -470,10 +501,15 @@
   /* 반응형 (콘텐츠 전용) */
   @media (max-width: 960px) {
     .csq-form-card { max-width: none; }
+    .csq-contact { max-width: none; }
   }
   @media (max-width: 600px) {
     .csq-title { font-size: clamp(24px, 7vw, 38px); }
     .csq-form-row { grid-template-columns: 1fr; }
+    .csq-contact { grid-template-columns: 1fr; }
+    .csq-label { flex-wrap: wrap; gap: 2px 10px; }
+    .csq-label-text { letter-spacing: .12em; white-space: nowrap; }
+    .csq-submit-btn { letter-spacing: .12em; }
     .csq-form-card { padding: 24px 18px 28px; }
   }
 </style>
@@ -633,11 +669,30 @@
 
           <div class="csq-intro">
             <div class="csq-series-tag">INICS · Contact Us</div>
-            <h2 class="csq-title"><em>고객 문의</em></h2>
+            <h2 class="csq-title"><em>고객 문의</em> · Contact Us</h2>
             <p class="csq-subtitle">
               제품 선택부터 기술 지원까지,
               아이닉스 전문가가 빠르게 답변 드립니다.
+              <span class="en" lang="en">From product selection to technical support, our specialists will get back to you promptly.</span>
             </p>
+          </div>
+
+          <!-- ★ 연락처 (전화 · 이메일) -->
+          <div class="csq-contact">
+            <a class="csq-contact-item" href="tel:+82-70-7548-0034">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5.2 2.5h2.6l1.3 3.6-1.7 1.3c.8 1.9 2.3 3.4 4.2 4.2l1.3-1.7 3.6 1.3v2.6c0 .9-.8 1.7-1.7 1.7C8.6 15.5 3.5 10.4 3.5 4.2c0-.9.8-1.7 1.7-1.7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              <div>
+                <div class="csq-contact-key">전화 · Phone</div>
+                <div class="csq-contact-val">070-7548-0034</div>
+              </div>
+            </a>
+            <a class="csq-contact-item" href="mailto:master@iinics.com">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 5.5l7 5.5 7-5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <div class="csq-contact-key">이메일 · E-mail</div>
+                <div class="csq-contact-val">master@iinics.com</div>
+              </div>
+            </a>
           </div>
 
           <div class="csq-form-card">
@@ -658,13 +713,13 @@
               <div class="csq-form-row">
                 <div>
                   <div class="csq-label">
-                    <label class="csq-label-text" for="csqName">회사 / 이름 <span>*</span></label>
+                    <label class="csq-label-text" for="csqName">회사 / 이름 · Company / Name <span>*</span></label>
                   </div>
-                  <input class="csq-input" id="csqName" name="Company_Name" type="text" placeholder="회사명 또는 성함" autocomplete="organization" oninput="validateField(this)" required />
+                  <input class="csq-input" id="csqName" name="Company_Name" type="text" placeholder="회사명 또는 성함 · Company or your name" autocomplete="organization" oninput="validateField(this)" required />
                 </div>
                 <div>
                   <div class="csq-label">
-                    <label class="csq-label-text" for="csqPhone">연락처 <span>*</span></label>
+                    <label class="csq-label-text" for="csqPhone">연락처 · Phone <span>*</span></label>
                   </div>
                   <input class="csq-input" id="csqPhone" name="Phone" type="tel" placeholder="010-0000-0000" autocomplete="tel" oninput="validatePhone(this)" required />
                 </div>
@@ -672,25 +727,25 @@
 
               <div class="csq-form-group">
                 <div class="csq-label">
-                  <label class="csq-label-text" for="csqEmail">이메일 주소 <span>*</span></label>
-                  <span class="csq-label-hint">답변 수신 이메일</span>
+                  <label class="csq-label-text" for="csqEmail">이메일 주소 · E-mail <span>*</span></label>
+                  <span class="csq-label-hint">답변 수신 이메일 · For our reply</span>
                 </div>
                 <input class="csq-input" id="csqEmail" name="email" type="email" placeholder="example@company.com" autocomplete="email" oninput="validateEmail(this)" required />
               </div>
 
               <div class="csq-form-group">
                 <div class="csq-label">
-                  <label class="csq-label-text" for="csqSubject">제목 <span>*</span></label>
+                  <label class="csq-label-text" for="csqSubject">제목 · Subject <span>*</span></label>
                 </div>
-                <input class="csq-input" id="csqSubject" name="Inquiry_Title" type="text" placeholder="문의 제목을 입력하세요" oninput="validateField(this)" required />
+                <input class="csq-input" id="csqSubject" name="Inquiry_Title" type="text" placeholder="문의 제목을 입력하세요 · Enter a subject" oninput="validateField(this)" required />
               </div>
 
               <div class="csq-form-group">
                 <div class="csq-label">
-                  <label class="csq-label-text" for="csqContent">내용 <span>*</span></label>
-                  <span class="csq-label-hint">최대 1,000자</span>
+                  <label class="csq-label-text" for="csqContent">내용 · Message <span>*</span></label>
+                  <span class="csq-label-hint">최대 1,000자 · Max 1,000 characters</span>
                 </div>
-                <textarea class="csq-input csq-textarea" id="csqContent" name="Message" placeholder="문의 내용을 자세히 입력해 주세요.&#10;&#10;제품명, 모델명, 사용 환경 등을 함께 기재해 주시면&#10;더욱 빠르고 정확한 답변이 가능합니다." maxlength="1000" oninput="countChars(this)" required></textarea>
+                <textarea class="csq-input csq-textarea" id="csqContent" name="Message" placeholder="문의 내용을 자세히 입력해 주세요.&#10;&#10;제품명, 모델명, 사용 환경 등을 함께 기재해 주시면&#10;더욱 빠르고 정확한 답변이 가능합니다.&#10;&#10;Please describe your inquiry in detail.&#10;Including the product name, model and operating environment&#10;helps us answer faster and more accurately." maxlength="1000" oninput="countChars(this)" required></textarea>
                 <div class="csq-char-counter" id="charCounter">
                   <span id="charCount">0</span> / 1,000
                 </div>
@@ -701,7 +756,7 @@
                   <path d="M2 10 L18 10 M12 4 L18 10 L12 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <div class="csq-spinner" id="submitSpinner"></div>
-                <span id="submitText">메시지 보내기</span>
+                <span id="submitText">메시지 보내기 · Send Message</span>
               </button>
             </form>
 
@@ -711,12 +766,13 @@
                   <circle cx="12" cy="12" r="10" stroke="#00A870" stroke-width="1.5"/>
                   <path d="M7 12 L10 15 L17 8" stroke="#00A870" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div class="csq-result-title">문의가 접수되었습니다!</div>
+                <div class="csq-result-title">문의가 접수되었습니다! · Message Sent</div>
               </div>
               <div class="csq-result-text">
                 소중한 문의를 보내주셔서 감사합니다.<br>
                 담당자 확인 후 빠른 시일 내에 답변 드리겠습니다.<br>
                 문의 내역은 입력하신 이메일(<strong style="color:var(--csq-green);">답변 수신 이메일</strong>)로 회신됩니다.
+                <span class="en" lang="en">Thank you for your inquiry. We will reply to the e-mail address you entered as soon as possible.</span>
               </div>
             </div>
 
@@ -727,12 +783,13 @@
                   <line x1="12" y1="8" x2="12" y2="12" stroke="#E03030" stroke-width="1.6" stroke-linecap="round"/>
                   <circle cx="12" cy="15.5" r="0.8" fill="#E03030"/>
                 </svg>
-                <div class="csq-result-title">전송에 실패했습니다</div>
+                <div class="csq-result-title">전송에 실패했습니다 · Sending Failed</div>
               </div>
               <div class="csq-result-text">
                 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.<br>
                 계속 오류가 발생하면 직접 이메일로 문의해 주세요:<br>
                 <a href="mailto:master@iinics.com" style="color:var(--csq-accent);font-weight:700;text-decoration:none;">master@iinics.com</a>
+                <span class="en" lang="en">A temporary error occurred. Please try again shortly, or contact us directly by e-mail or phone (070-7548-0034).</span>
               </div>
             </div>
 
@@ -844,7 +901,7 @@
     btn.disabled = true;
     icon.style.display = 'none';
     spin.classList.add('show');
-    text.textContent = '전송 중...';
+    text.textContent = '전송 중... · Sending';
     document.getElementById('resultSuccess').classList.remove('show');
     document.getElementById('resultError').classList.remove('show');
     try {
@@ -872,7 +929,7 @@
     } finally {
       icon.style.display = 'block';
       spin.classList.remove('show');
-      text.textContent = '메시지 보내기';
+      text.textContent = '메시지 보내기 · Send Message';
       btn.disabled = false;
     }
   }

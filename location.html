@@ -14,7 +14,7 @@
   gtag('config', 'G-8NR5DQJS5L');
 </script>
 <title>오시는 길 | Location - 아이닉스(INICS)</title>
-<meta name="description" content="아이닉스(INICS) 본사(부산 영도구 태종로 727 산학허브관 703호) 및 연구소(경남 창원시 의창구 차룡로 48번길 54) 위치 안내. INICS headquarters and R&D center location.">
+<meta name="description" content="아이닉스(INICS) 본사(부산 영도구 태종로 727 산학허브관 703호) 및 연구소(경남 창원시 의창구 차룡로 48번길 54) 위치 안내. 전화 070-7548-0034, 이메일 master@iinics.com. INICS headquarters and R&D center location.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.iinics.com/location.html">
 
@@ -343,6 +343,19 @@
     font-size: 13px; font-weight: 400; color: #111111; line-height: 1.7;
   }
 
+  /* ★ 본사 연락처 (전화 · 이메일) — 주소 바로 아래 작은 글씨 */
+  .loc-addr-box-contact {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 2px 14px;
+    margin-top: 6px;
+    font-size: 12px; font-weight: 400; line-height: 1.6;
+  }
+  .loc-addr-box-contact a {
+    display: inline-flex; align-items: center; gap: 4px;
+    color: #444444; text-decoration: none; transition: color .25s;
+  }
+  .loc-addr-box-contact a:hover { color: var(--loc-accent); }
+  .loc-addr-box-contact svg { width: 12px; height: 12px; color: var(--loc-accent); flex-shrink: 0; }
+
   /* 섹션 구분 레이블 */
   .loc-section-label {
     font-family: 'Oxanium', monospace;
@@ -650,6 +663,10 @@
                 <div class="loc-addr-box-name">아이닉스 본사</div>
                 <div class="loc-addr-box-addr">
                   부산광역시 영도구 태종로 727<br>산학허브관 703호
+                </div>
+                <div class="loc-addr-box-contact">
+                  <a href="tel:+82-70-7548-0034" aria-label="전화 070-7548-0034"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5.2 2.5h2.6l1.3 3.6-1.7 1.3c.8 1.9 2.3 3.4 4.2 4.2l1.3-1.7 3.6 1.3v2.6c0 .9-.8 1.7-1.7 1.7C8.6 15.5 3.5 10.4 3.5 4.2c0-.9.8-1.7 1.7-1.7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>070-7548-0034</a>
+                  <a href="mailto:master@iinics.com">E-mail : master@iinics.com</a>
                 </div>
               </div>
               <div class="loc-addr-box rnd">
