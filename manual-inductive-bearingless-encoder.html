@@ -15,15 +15,15 @@
   </script>
 
   <!-- ═══ SEO · A2A 메타 정보 ═══ -->
-  <title>인덕티브 베어링리스 엔코더 사용설명서 (준비 중) | Inductive Bearingless Encoder Manual - 아이닉스(INICS)</title>
-  <meta name="description" content="아이닉스 인덕티브 베어링리스 엔코더 사용설명서 PDF 다운로드. 한국어·영문 매뉴얼을 화면에서 바로 확인하고 내려받을 수 있습니다. INICS Inductive Bearingless Encoder user manual download in Korean and English.">
+  <title>인덕티브 베어링리스 엔코더 사용설명서 다운로드 | Inductive Bearingless Encoder Manual - 아이닉스(INICS)</title>
+  <meta name="description" content="아이닉스 인덕티브 베어링리스 엔코더(IAH 시리즈) 사용설명서 PDF 다운로드. 한국어 매뉴얼을 화면에서 바로 확인하고 내려받을 수 있습니다 (영문 매뉴얼 준비 중). INICS Inductive Bearingless Encoder (IAH Series) user manual download in Korean; English manual coming soon.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <link rel="canonical" href="https://www.iinics.com/manual-inductive-bearingless-encoder.html">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="INICS 아이닉스">
   <meta property="og:title" content="인덕티브 베어링리스 엔코더 사용설명서 | Inductive Bearingless Encoder Manual">
-  <meta property="og:description" content="인덕티브 베어링리스 엔코더 사용설명서 PDF — 한국어 · English.">
+  <meta property="og:description" content="IAH 시리즈 사용설명서 PDF — 한국어 (English coming soon). INICS inductive bearingless encoder manual download.">
   <meta property="og:url" content="https://www.iinics.com/manual-inductive-bearingless-encoder.html">
   <meta property="og:image" content="https://www.iinics.com/ibe-ko.webp">
   <meta property="og:locale" content="ko_KR">
@@ -69,14 +69,6 @@
             "inLanguage": "ko",
             "encodingFormat": "application/pdf",
             "url": "https://www.iinics.com/ibe-ko.pdf"
-          },
-          {
-            "@type": "DigitalDocument",
-            "position": 2,
-            "name": "Inductive Bearingless Encoder — English Manual",
-            "inLanguage": "en",
-            "encodingFormat": "application/pdf",
-            "url": "https://www.iinics.com/ibe-en.pdf"
           }
         ]
       }
@@ -426,6 +418,28 @@
       color: #111111; text-transform: uppercase;
     }
 
+    /* ★ 그룹 구분 라벨 (모델이 여러 개인 제품) */
+    .mnl-group {
+      font-family: 'Oxanium', monospace;
+      font-size: 13px; letter-spacing: .2em;
+      color: var(--mnl-accent2); text-transform: uppercase;
+      font-weight: 700;
+      display: flex; align-items: center; gap: 12px;
+      margin: 8px 0 -8px;
+    }
+    .mnl-group::after { content: ''; flex: 1; height: 1px; background: var(--mnl-divider); }
+
+    /* ★ 앞면/뒷면 구분 태그 */
+    .mnl-sheet { position: relative; }
+    .mnl-sheet + .mnl-sheet { border-top: 1px solid var(--mnl-divider); }
+    .mnl-page-tag {
+      position: absolute; top: 10px; left: 10px; z-index: 2;
+      font-family: 'Oxanium', monospace;
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      color: var(--mnl-accent2); background: rgba(255,255,255,.92);
+      border: 1.5px solid rgba(255,127,0,.35);
+      padding: 3px 10px; border-radius: 2px;
+    }
     /* 안내 문구 */
     .mnl-notice {
       background: #FFF9F3;
@@ -485,19 +499,9 @@
       .mnl-nav li a:hover, .mnl-nav li a.active { padding-left: 12px; }
       .mnl-content { padding-left: 0; }
     }
-    @media (max-width: 600px) {
-      .mnl-layout { padding: 28px 16px 60px; }
-      .mnl-title { font-size: clamp(24px, 7vw, 38px); }
-      .mnl-list { gap: 20px; }
-      /* ★ 모바일 — 제목 위, 다운로드 버튼은 풀너비 */
-      .mnl-item-head { flex-direction: column; align-items: stretch; gap: 14px; padding: 18px 18px; }
-      .mnl-btn-dl { justify-content: center; width: 100%; min-height: 42px; padding: 10px 18px; }
-      .mnl-item-title { font-size: 16px; }
-    }
-  
   /* ── COMING SOON 패널 (사용설명서 준비 중) ── */
   .mnl-soon {
-    background: #FAFAFA; border: 1.5px dashed rgba(255,127,0,0.45); border-radius: 14px;
+    background: #FAFAFA; border: none; border-radius: 0;
     padding: 44px 32px 40px; text-align: center; position: relative; overflow: hidden;
   }
   .mnl-soon::before {
@@ -527,7 +531,17 @@
   .mnl-soon-btn.primary { background: var(--mnl-accent); border-color: var(--mnl-accent); color: #FFFFFF; }
   .mnl-soon-btn.primary:hover { background: #E06600; border-color: #E06600; color: #FFFFFF; }
   @media (max-width: 600px) { .mnl-soon { padding: 32px 18px 30px; } .mnl-soon-btn { width: 100%; justify-content: center; } }
-</style>
+
+    @media (max-width: 600px) {
+      .mnl-layout { padding: 28px 16px 60px; }
+      .mnl-title { font-size: clamp(24px, 7vw, 38px); }
+      .mnl-list { gap: 20px; }
+      /* ★ 모바일 — 제목 위, 다운로드 버튼은 풀너비 */
+      .mnl-item-head { flex-direction: column; align-items: stretch; gap: 14px; padding: 18px 18px; }
+      .mnl-btn-dl { justify-content: center; width: 100%; min-height: 42px; padding: 10px 18px; }
+      .mnl-item-title { font-size: 16px; }
+    }
+  </style>
 
 <style>
   /* ════════════════════════════════════════
@@ -697,16 +711,97 @@
           <div class="mnl-header">
             <div class="mnl-series-tag">INICS · Manual</div>
             <h1 class="mnl-title">인덕티브 <em>베어링리스 엔코더</em></h1>
-            <p class="mnl-subtitle" lang="en">Inductive Bearingless Encoder</p>
+            <p class="mnl-subtitle" lang="en">Inductive Bearingless Encoder &nbsp;|&nbsp; IAH Series</p>
           </div>
 
           <!-- 섹션 레이블 -->
           <h2 class="mnl-section-label">매뉴얼 다운로드 · Manual Downloads</h2>
 
-          <!-- ★ COMING SOON — 사용설명서 준비 중 (PDF 등록 시 이 블록을 다운로드 목록으로 교체) -->
-          <section class="mnl-soon" aria-label="사용설명서 준비 중">
-            <div class="mnl-soon-badge"><span class="mnl-soon-dot"></span>Coming Soon</div>
-          </section>
+          <!-- ★ 매뉴얼 1열 목록 — 한국어 먼저, 그 아래 영문 -->
+          <div class="mnl-list">
+
+            <section class="mnl-item">
+              <div class="mnl-item-head">
+                <div class="mnl-item-info">
+                  <h3 class="mnl-item-title">한국어 매뉴얼</h3>
+                  <span class="mnl-item-file">파일이름 : <b lang="en">ibe-ko.pdf</b></span>
+                </div>
+                <a class="mnl-btn-dl" href="ibe-ko.pdf" download="ibe-ko.pdf">
+                  <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2 L8 10 M5 7 L8 10 L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="2" y1="13" x2="14" y2="13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                  PDF 다운로드
+                </a>
+              </div>
+              <div class="mnl-sheet">
+                <div class="mnl-page-tag">앞면</div>
+                <img src="ibe-ko-1.webp"
+                     alt="아이닉스 인덕티브 베어링리스 엔코더 IAH 시리즈 한국어 사용설명서 앞면 — 모델 구성, 외형도, 설치 조건·에어갭, 장착 순서, 정격·성능, 분해능 및 최대 회전수, 출력회로"
+                     loading="lazy" decoding="async"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                <div class="mnl-sheet-ph" style="display:none;">
+                  <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect x="4" y="4" width="72" height="92" rx="3" stroke="#FF7F00" stroke-width="1.5" fill="rgba(255,127,0,0.03)"/>
+                    <rect x="12" y="14" width="56" height="6" rx="1" fill="rgba(255,127,0,0.18)"/>
+                    <rect x="12" y="26" width="40" height="4" rx="1" fill="rgba(255,127,0,0.10)"/>
+                    <rect x="12" y="36" width="56" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
+                    <rect x="12" y="43" width="50" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
+                    <rect x="12" y="50" width="54" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
+                    <rect x="12" y="60" width="56" height="20" rx="2" fill="rgba(255,127,0,0.05)" stroke="rgba(255,127,0,0.15)" stroke-width="1"/>
+                    <text x="40" y="74" font-family="monospace" font-size="8" fill="#FF7F00" text-anchor="middle" opacity=".5">INICS</text>
+                  </svg>
+                  <div class="mnl-sheet-ph-label">ibe-ko-1.webp</div>
+                </div>
+              </div>
+
+              <div class="mnl-sheet">
+                <div class="mnl-page-tag">뒷면</div>
+                <img src="ibe-ko-2.webp"
+                     alt="아이닉스 인덕티브 베어링리스 엔코더 IAH 시리즈 한국어 사용설명서 뒷면 — BiSS-C·SSI·UART 통신 사양 및 워드 해석, 인크리멘탈 출력 파형, 접속도(배선색상), CRC16 계산, 주의사항"
+                     loading="lazy" decoding="async"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                <div class="mnl-sheet-ph" style="display:none;">
+                  <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect x="4" y="4" width="72" height="92" rx="3" stroke="#FF7F00" stroke-width="1.5" fill="rgba(255,127,0,0.03)"/>
+                    <rect x="12" y="14" width="56" height="6" rx="1" fill="rgba(255,127,0,0.18)"/>
+                    <rect x="12" y="26" width="40" height="4" rx="1" fill="rgba(255,127,0,0.10)"/>
+                    <rect x="12" y="36" width="56" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
+                    <rect x="12" y="43" width="50" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
+                    <rect x="12" y="50" width="54" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
+                    <rect x="12" y="60" width="56" height="20" rx="2" fill="rgba(255,127,0,0.05)" stroke="rgba(255,127,0,0.15)" stroke-width="1"/>
+                    <text x="40" y="74" font-family="monospace" font-size="8" fill="#FF7F00" text-anchor="middle" opacity=".5">INICS</text>
+                  </svg>
+                  <div class="mnl-sheet-ph-label">ibe-ko-2.webp</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ★ English Manual — 준비 중 (ibe-en.pdf / ibe-en-1.webp / ibe-en-2.webp 등록 시 이 블록을 한국어와 동일한 다운로드 블록으로 교체) -->
+            <section class="mnl-item" lang="en">
+              <div class="mnl-item-head">
+                <div class="mnl-item-info">
+                  <h3 class="mnl-item-title">English Manual</h3>
+                  <span class="mnl-item-file">File name : <b>ibe-en.pdf</b></span>
+                </div>
+              </div>
+              <div class="mnl-soon" aria-label="English manual coming soon">
+                <div class="mnl-soon-badge"><span class="mnl-soon-dot"></span>Coming Soon</div>
+              </div>
+            </section>
+
+          </div><!-- /mnl-list -->
+
+          <!-- 안내 문구 -->
+          <div class="mnl-notice">
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="10" cy="10" r="8" stroke="#FF7F00" stroke-width="1.3"/>
+              <line x1="10" y1="9" x2="10" y2="14" stroke="#FF7F00" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="10" cy="6.5" r=".9" fill="#FF7F00"/>
+            </svg>
+            <div class="mnl-notice-text">
+              설명서 전체 내용을 화면에서 바로 확인하실 수 있습니다.
+              인쇄하거나 저장하시려면 <strong>PDF 다운로드</strong> 버튼을 이용해 주세요.
+              <span class="en" lang="en">The full manual is shown on screen. Use the download button to save or print the PDF.</span>
+            </div>
+          </div>
 
         </article><!-- /mnl-content -->
       </div><!-- /mnl-layout -->

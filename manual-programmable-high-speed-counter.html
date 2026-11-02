@@ -16,14 +16,14 @@
 
   <!-- ═══ SEO · A2A 메타 정보 ═══ -->
   <title>프로그래머블 고속 카운터 타이머 사용설명서 다운로드 | Programmable High-Speed Counter / Timer Manual - 아이닉스(INICS)</title>
-  <meta name="description" content="아이닉스 프로그래머블 고속 카운터 타이머(CTH 시리즈) 사용설명서 PDF 다운로드. 한국어·영문 매뉴얼을 화면에서 바로 확인하고 내려받을 수 있습니다. INICS Programmable High-Speed Counter / Timer (CTH Series) user manual download in Korean and English.">
+  <meta name="description" content="아이닉스 프로그래머블 고속 카운터 타이머(CTH 시리즈) 사용설명서 PDF 다운로드. 한국어 매뉴얼을 화면에서 바로 확인하고 내려받을 수 있습니다 (영문 매뉴얼 준비 중). INICS Programmable High-Speed Counter / Timer (CTH Series) user manual download in Korean; English manual coming soon.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <link rel="canonical" href="https://www.iinics.com/manual-programmable-high-speed-counter.html">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="INICS 아이닉스">
   <meta property="og:title" content="프로그래머블 고속 카운터 타이머 사용설명서 | Programmable High-Speed Counter / Timer Manual">
-  <meta property="og:description" content="CTH 시리즈 사용설명서 PDF — 한국어 · English. INICS high-speed counter/timer manual download.">
+  <meta property="og:description" content="CTH 시리즈 사용설명서 PDF — 한국어 (English coming soon). INICS high-speed counter/timer manual download.">
   <meta property="og:url" content="https://www.iinics.com/manual-programmable-high-speed-counter.html">
   <meta property="og:image" content="https://www.iinics.com/cth-ko.webp">
   <meta property="og:locale" content="ko_KR">
@@ -69,14 +69,6 @@
             "inLanguage": "ko",
             "encodingFormat": "application/pdf",
             "url": "https://www.iinics.com/cth-ko.pdf"
-          },
-          {
-            "@type": "DigitalDocument",
-            "position": 2,
-            "name": "Programmable High-Speed Counter / Timer — English Manual",
-            "inLanguage": "en",
-            "encodingFormat": "application/pdf",
-            "url": "https://www.iinics.com/cth-en.pdf"
           }
         ]
       }
@@ -507,6 +499,39 @@
       .mnl-nav li a:hover, .mnl-nav li a.active { padding-left: 12px; }
       .mnl-content { padding-left: 0; }
     }
+  /* ── COMING SOON 패널 (사용설명서 준비 중) ── */
+  .mnl-soon {
+    background: #FAFAFA; border: none; border-radius: 0;
+    padding: 44px 32px 40px; text-align: center; position: relative; overflow: hidden;
+  }
+  .mnl-soon::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--mnl-accent), #FFB347, transparent);
+  }
+  .mnl-soon-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Oxanium', monospace; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700;
+    color: #E06600; background: #FFF3E0; border: 1.5px solid rgba(255,127,0,0.45);
+    padding: 5px 14px; border-radius: 3px; margin-bottom: 18px;
+  }
+  .mnl-soon-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mnl-accent); animation: mnl-pulse 2s ease-in-out infinite; }
+  @keyframes mnl-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.7)} }
+  @media (prefers-reduced-motion: reduce) { .mnl-soon-dot { animation: none; } }
+  .mnl-soon-title { margin: 0 0 12px; font-size: clamp(18px, 2.4vw, 24px); font-weight: 700; color: #111111; word-break: keep-all; }
+  .mnl-soon-desc { margin: 0 auto 6px; max-width: 560px; font-size: 14px; line-height: 1.85; color: #333333; word-break: keep-all; }
+  .mnl-soon-desc-en { margin: 0 auto 24px; max-width: 560px; font-family: 'Oxanium', monospace; font-size: 12px; line-height: 1.7; color: #8A8A8A; letter-spacing: .2px; }
+  .mnl-soon-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .mnl-soon-btn {
+    display: inline-flex; align-items: center; padding: 11px 22px; border-radius: 4px;
+    font-family: 'Oxanium', monospace; font-size: 13px; font-weight: 700; letter-spacing: .08em;
+    text-decoration: none; color: #111111; background: #FFFFFF; border: 1.5px solid rgba(255,127,0,0.35);
+    transition: border-color .25s, color .25s, background .25s, transform .2s;
+  }
+  .mnl-soon-btn:hover { border-color: var(--mnl-accent); color: var(--mnl-accent); transform: translateY(-2px); }
+  .mnl-soon-btn.primary { background: var(--mnl-accent); border-color: var(--mnl-accent); color: #FFFFFF; }
+  .mnl-soon-btn.primary:hover { background: #E06600; border-color: #E06600; color: #FFFFFF; }
+  @media (max-width: 600px) { .mnl-soon { padding: 32px 18px 30px; } .mnl-soon-btn { width: 100%; justify-content: center; } }
+
     @media (max-width: 600px) {
       .mnl-layout { padding: 28px 16px 60px; }
       .mnl-title { font-size: clamp(24px, 7vw, 38px); }
@@ -749,57 +774,16 @@
               </div>
             </section>
 
-            <section class="mnl-item">
+            <!-- ★ English Manual — 준비 중 (cth-en.pdf / cth-en-1.webp / cth-en-2.webp 등록 시 이 블록을 한국어와 동일한 다운로드 블록으로 교체) -->
+            <section class="mnl-item" lang="en">
               <div class="mnl-item-head">
                 <div class="mnl-item-info">
-                  <h3 class="mnl-item-title" lang="en">English Manual</h3>
-                  <span class="mnl-item-file" lang="en">File name : <b>cth-en.pdf</b></span>
-                </div>
-                <a class="mnl-btn-dl" href="cth-en.pdf" download="cth-en.pdf" lang="en">
-                  <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2 L8 10 M5 7 L8 10 L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="2" y1="13" x2="14" y2="13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-                  Download PDF
-                </a>
-              </div>
-              <div class="mnl-sheet">
-                <div class="mnl-page-tag">Front</div>
-                <img src="cth-en-1.webp"
-                     alt="INICS Programmable High-Speed Counter / Timer CTH Series English user manual front page — model configuration, part names, wiring, ratings, input logic settings, counter and timer function settings"
-                     loading="lazy" decoding="async"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-                <div class="mnl-sheet-ph" style="display:none;">
-                  <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="4" y="4" width="72" height="92" rx="3" stroke="#E06600" stroke-width="1.5" fill="rgba(255,127,0,0.03)"/>
-                    <rect x="12" y="14" width="56" height="6" rx="1" fill="rgba(255,127,0,0.18)"/>
-                    <rect x="12" y="26" width="40" height="4" rx="1" fill="rgba(255,127,0,0.10)"/>
-                    <rect x="12" y="36" width="56" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
-                    <rect x="12" y="43" width="50" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
-                    <rect x="12" y="50" width="54" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
-                    <rect x="12" y="60" width="56" height="20" rx="2" fill="rgba(255,127,0,0.05)" stroke="rgba(255,127,0,0.15)" stroke-width="1"/>
-                    <text x="40" y="74" font-family="monospace" font-size="8" fill="#E06600" text-anchor="middle" opacity=".5">INICS</text>
-                  </svg>
-                  <div class="mnl-sheet-ph-label">cth-en-1.webp</div>
+                  <h3 class="mnl-item-title">English Manual</h3>
+                  <span class="mnl-item-file">File name : <b>cth-en.pdf</b></span>
                 </div>
               </div>
-
-              <div class="mnl-sheet">
-                <div class="mnl-page-tag">Back</div>
-                <img src="cth-en-2.webp"
-                     alt="INICS Programmable High-Speed Counter / Timer CTH Series English user manual back page — input operation modes, output operation modes, timer operation, RS232 communication control, dimensions, precautions"
-                     loading="lazy" decoding="async"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-                <div class="mnl-sheet-ph" style="display:none;">
-                  <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="4" y="4" width="72" height="92" rx="3" stroke="#E06600" stroke-width="1.5" fill="rgba(255,127,0,0.03)"/>
-                    <rect x="12" y="14" width="56" height="6" rx="1" fill="rgba(255,127,0,0.18)"/>
-                    <rect x="12" y="26" width="40" height="4" rx="1" fill="rgba(255,127,0,0.10)"/>
-                    <rect x="12" y="36" width="56" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
-                    <rect x="12" y="43" width="50" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
-                    <rect x="12" y="50" width="54" height="3" rx="1" fill="rgba(255,127,0,0.07)"/>
-                    <rect x="12" y="60" width="56" height="20" rx="2" fill="rgba(255,127,0,0.05)" stroke="rgba(255,127,0,0.15)" stroke-width="1"/>
-                    <text x="40" y="74" font-family="monospace" font-size="8" fill="#E06600" text-anchor="middle" opacity=".5">INICS</text>
-                  </svg>
-                  <div class="mnl-sheet-ph-label">cth-en-2.webp</div>
-                </div>
+              <div class="mnl-soon" aria-label="English manual coming soon">
+                <div class="mnl-soon-badge"><span class="mnl-soon-dot"></span>Coming Soon</div>
               </div>
             </section>
 
