@@ -72,7 +72,7 @@
       ],
       "mainEntity": {
         "@type": "ItemList",
-        "numberOfItems": 10,
+        "numberOfItems": 11,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -83,54 +83,60 @@
           {
             "@type": "ListItem",
             "position": 2,
+            "name": "고분해능 인덕티브 로터리 엔코더 (High-Resolution Inductive Rotary Encoder)",
+            "url": "https://www.iinics.com/high-resolution-inductive-rotary-encoder.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
             "name": "프로그래머블 고속 카운터 타이머 (Programmable High-Speed Counter)",
             "url": "https://www.iinics.com/programmable-high-speed-counter.html"
           },
           {
             "@type": "ListItem",
-            "position": 3,
+            "position": 4,
             "name": "에어리어센서 (Area Sensor)",
             "url": "https://www.iinics.com/area-sensor.html"
           },
           {
             "@type": "ListItem",
-            "position": 4,
+            "position": 5,
             "name": "마그네틱 리니어 엔코더 (Magnetic Linear Encoder)",
             "url": "https://www.iinics.com/magnetic-linear-encoder.html"
           },
           {
             "@type": "ListItem",
-            "position": 5,
+            "position": 6,
             "name": "광학식 로터리 엔코더 (Optical Rotary Encoder)",
             "url": "https://www.iinics.com/optical-rotary-encoder.html"
           },
           {
             "@type": "ListItem",
-            "position": 6,
+            "position": 7,
             "name": "마그네틱 로터리 엔코더 (Magnetic Rotary Encoder)",
             "url": "https://www.iinics.com/magnetic-rotary-encoder.html"
           },
           {
             "@type": "ListItem",
-            "position": 7,
+            "position": 8,
             "name": "인덕티브 로터리 엔코더 (Inductive Rotary Encoder)",
             "url": "https://www.iinics.com/inductive-rotary-encoder.html"
           },
           {
             "@type": "ListItem",
-            "position": 8,
+            "position": 9,
             "name": "바퀴형 로터리 엔코더 (Wheel Rotary Encoder)",
             "url": "https://www.iinics.com/wheel-rotary-encoder.html"
           },
           {
             "@type": "ListItem",
-            "position": 9,
+            "position": 10,
             "name": "엔코더 전용 카운터 (Encoder Counter / RPM)",
             "url": "https://www.iinics.com/encoder-counter.html"
           },
           {
             "@type": "ListItem",
-            "position": 10,
+            "position": 11,
             "name": "엘리베이터 비접촉 스위치 센서 (Elevator Non-Contact Switch Sensor)",
             "url": "https://www.iinics.com/elevator-non-contact-switch-sensor.html"
           }
@@ -747,6 +753,11 @@
   .ip-sen .ip-desc-en { background: var(--purple-lt); color: var(--purple); }
   .ip-sen .ip-pnum { color: var(--purple); }
 
+  /* ★ PC 3열일 때 마지막 줄에 카드가 1개만 남으면 가운데 칸에 배치 */
+  @media(min-width:1281px) {
+    .ip-grid-wrap > div:last-child:nth-child(3n+1) { grid-column: 2; }
+  }
+
   /* ── RESPONSIVE ── */
   @media(max-width:1280px) {
     .ip-grid-wrap { grid-template-columns: repeat(2, 1fr); }
@@ -861,6 +872,7 @@
         <ul class="submenu">
           <li><a href="product-lineup.html" class="active"><span class="menu-kr">제품 라인업</span><span class="menu-en" lang="en">Product Line-up</span></a></li>
           <li><a href="inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+          <li><a href="high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">고분해능 인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">High-Resolution Inductive Rotary Encoder</span></a></li>
           <li><a href="programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
           <li><a href="area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
           <li><a href="magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
@@ -877,6 +889,7 @@
         <a href="manuals.html">Manual <span class="arrow">▾</span></a>
         <ul class="submenu">
           <li><a href="manual-inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+          <li><a href="manual-high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">고분해능 인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">High-Resolution Inductive Rotary Encoder</span></a></li>
           <li><a href="manual-programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
           <li><a href="manual-area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
           <li><a href="manual-magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
@@ -926,6 +939,7 @@
         <ul class="pct-nav">
           <li><a href="product-lineup.html" class="active" aria-current="page"><span class="menu-kr">제품 라인업</span><span class="menu-en" lang="en">Product Line-up</span></a></li>
           <li><a href="inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+          <li><a href="high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">고분해능 인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">High-Resolution Inductive Rotary Encoder</span></a></li>
           <li><a href="programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
           <li><a href="area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
           <li><a href="magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
@@ -996,13 +1010,26 @@
               <div class="ip-cat" lang="en">Inductive Bearingless Encoder</div>
               <h4 class="ip-name-kr">인덕티브 베어링리스 엔코더 - Coming Soon</h4>
               <div class="ip-sep"></div>
-              <div class="ip-desc">베어링 없는 로터 + 스테이터 구조의 초박형 비접촉 엔코더. 로봇 관절 · 서보 모터 등 경량 고정밀 회전 제어에 적합.</div>
-              <div class="ip-desc-en" lang="en">A bearingless, ultra-thin, non-contact inductive encoder for lightweight, high-precision rotary control such as robot joints and servo motors.</div>
+              <div class="ip-desc">외경 Ø70~Ø100 · 최대 19bit 초박형 베어링리스 엔코더. 로봇 관절 · 서보 모터에 적합.</div>
+              <div class="ip-desc-en" lang="en">Large Ø70–Ø100 hollow bore, up to 19-bit. A bearingless, ultra-thin, non-contact inductive encoder for lightweight, high-precision rotary control such as robot joints and servo motors.</div>
             </div></a></div>
 
-            <!-- No.02 -->
-            <div class="ip-cnt"><a class="ip-link" href="programmable-high-speed-counter.html"><div class="ip-card">
+            <!-- No.02 고분해능 인덕티브 로터리 엔코더 -->
+            <div class="ip-enc"><a class="ip-link" href="high-resolution-inductive-rotary-encoder.html"><div class="ip-card">
               <div class="ip-pnum">No.02</div>
+              <div class="ip-photo">
+                <img src="inductive-bearingless-encoder.jpg" alt="아이닉스 고분해능 인덕티브 로터리 엔코더 IH 시리즈 내부 검출부 제품 사진 (INICS High-Resolution Inductive Rotary Encoder, IH Series)" width="600" height="450" loading="lazy" decoding="async">
+              </div>
+              <div class="ip-cat" lang="en">High-Resolution Inductive Rotary</div>
+              <h4 class="ip-name-kr">고분해능 인덕티브 로터리 엔코더 - Coming Soon</h4>
+              <div class="ip-sep"></div>
+              <div class="ip-desc">외경 Ø40~Ø50 소형 하우징. 베어링리스 엔코더와 같은 인덕티브 검출부를 샤프트 · 중공축 · 빌트인 타입에 담은 고분해능 엔코더.</div>
+              <div class="ip-desc-en" lang="en">Compact Ø40–Ø50 housing. The same inductive sensing core as the bearingless encoder in shaft, hollow-shaft and built-in types, with high resolution.</div>
+            </div></a></div>
+
+            <!-- No.03 -->
+            <div class="ip-cnt"><a class="ip-link" href="programmable-high-speed-counter.html"><div class="ip-card">
+              <div class="ip-pnum">No.03</div>
               <div class="ip-photo">
               <img src="programmable-high-speed-counter.jpg" alt="아이닉스 프로그래머블 고속 카운터 타이머 제품 사진 (INICS Programmable High-Speed Counter)" width="600" height="450" loading="lazy" decoding="async">
               </div>
@@ -1013,9 +1040,9 @@
               <div class="ip-desc-en" lang="en">Precise counting of ultra-high-speed pulses down to microseconds. Supports encoder x4 multiplication, batch counting, time-interval measurement and timing control.</div>
             </div></a></div>
 
-            <!-- No.03 -->
+            <!-- No.04 -->
             <div class="ip-sen"><a class="ip-link" href="area-sensor.html"><div class="ip-card">
-              <div class="ip-pnum">No.03</div>
+              <div class="ip-pnum">No.04</div>
               <div class="ip-photo">
                 <img src="area-sensor.jpg" alt="아이닉스 에어리어센서 제품 사진 (INICS Area Sensor)" width="600" height="450" loading="lazy" decoding="async">
               </div>
@@ -1026,9 +1053,9 @@
               <div class="ip-desc-en" lang="en">An area detection sensor used to judge the presence, size and shape of objects and to detect their height.</div>
             </div></a></div>
 
-            <!-- No.04 -->
+            <!-- No.05 -->
             <div class="ip-lin"><a class="ip-link" href="magnetic-linear-encoder.html"><div class="ip-card">
-              <div class="ip-pnum">No.04</div>
+              <div class="ip-pnum">No.05</div>
               <div class="ip-photo">
                 <img src="magnetic-linear-encoder.jpg" alt="아이닉스 마그네틱 리니어 엔코더 제품 사진 (INICS Magnetic Linear Encoder)" width="600" height="450" loading="lazy" decoding="async">
               </div>
@@ -1039,9 +1066,9 @@
               <div class="ip-desc-en" lang="en">Precise linear position measurement with a magnetic scale and read head. High-precision control for CNC machine tools and semiconductor equipment.</div>
             </div></a></div>
 
-            <!-- No.05 -->
+            <!-- No.06 -->
             <div class="ip-enc"><a class="ip-link" href="optical-rotary-encoder.html"><div class="ip-card">
-              <div class="ip-pnum">No.05</div>
+              <div class="ip-pnum">No.06</div>
               <div class="ip-photo">
                 <img src="optical-rotary-encoder-hollow-shaft.jpg" alt="아이닉스 광학식 로터리 엔코더 중공축 타입 제품 사진 (INICS Optical Rotary Encoder, Hollow-shaft Type)" width="600" height="450" loading="lazy" decoding="async">
               </div>
@@ -1052,9 +1079,9 @@
               <div class="ip-desc-en" lang="en">A high-precision rotary position sensor using an LED light source and a slit disk. The starting point of the INICS sensor business.</div>
             </div></a></div>
 
-            <!-- No.06 -->
+            <!-- No.07 -->
             <div class="ip-enc"><a class="ip-link" href="magnetic-rotary-encoder.html"><div class="ip-card">
-              <div class="ip-pnum">No.06</div>
+              <div class="ip-pnum">No.07</div>
               <div class="ip-photo">
                 <img src="magnetic-rotary-encoder-shaft.jpg" alt="아이닉스 마그네틱 로터리 엔코더 샤프트 타입 제품 사진 (INICS Magnetic Rotary Encoder, Shaft Type)" width="600" height="450" loading="lazy" decoding="async">
               </div>
@@ -1065,9 +1092,9 @@
               <div class="ip-desc-en" lang="en">A non-contact method based on changes in the magnetic field. Highly reliable even in harsh environments with dust and oil.</div>
             </div></a></div>
 
-            <!-- No.07 -->
+            <!-- No.08 -->
             <div class="ip-enc"><a class="ip-link" href="inductive-rotary-encoder.html"><div class="ip-card">
-              <div class="ip-pnum">No.07</div>
+              <div class="ip-pnum">No.08</div>
               <div class="ip-photo">
                 <img src="inductive-rotary-encoder-built-in.jpg" alt="아이닉스 인덕티브 로터리 엔코더 빌트인 타입 제품 사진 (INICS Inductive Rotary Encoder, Built-in Type)" width="600" height="450" loading="lazy" decoding="async">
               </div>
@@ -1078,9 +1105,9 @@
               <div class="ip-desc-en" lang="en">Non-contact sensing based on electromagnetic induction. Strong immunity to external magnetic interference, built for contaminated and humid environments.</div>
             </div></a></div>
 
-            <!-- No.08 -->
+            <!-- No.09 -->
             <div class="ip-enc"><a class="ip-link" href="wheel-rotary-encoder.html"><div class="ip-card">
-              <div class="ip-pnum">No.08</div>
+              <div class="ip-pnum">No.09</div>
               <div class="ip-photo">
                 <img src="wheel-rotary-encoder.jpg" alt="아이닉스 바퀴형 로터리 엔코더 제품 사진 (INICS Wheel Rotary Encoder)" width="600" height="450" loading="lazy" decoding="async">
               </div>
@@ -1091,9 +1118,9 @@
               <div class="ip-desc-en" lang="en">A compact roller-integrated design. Optimized for measuring linear travel distance and speed on conveyors and transfer equipment.</div>
             </div></a></div>
 
-            <!-- No.09 -->
+            <!-- No.10 -->
             <div class="ip-cnt"><a class="ip-link" href="encoder-counter.html"><div class="ip-card">
-              <div class="ip-pnum">No.09</div>
+              <div class="ip-pnum">No.10</div>
               <div class="ip-photo">
                 <img src="encoder-counter.jpg" alt="아이닉스 엔코더 전용 카운터 RPM 제품 사진 (INICS Encoder Counter RPM)" width="600" height="450" loading="lazy" decoding="async">
               </div>
