@@ -946,7 +946,7 @@
                   <span class="seg fixed"><b>24</b><i>전원</i></span>
                 </div>
                 <div class="ibe-oc-foot">
-                  <p class="ibe-oc-read">광축 피치 20mm · 광축 8개 · 검출폭 140mm · NPN 오픈 콜렉터 · 12~24VDC</p>
+                  <p class="ibe-oc-read">광축 피치 20mm · 광축 8개 · NPN 오픈 콜렉터 · 12~24VDC</p>
                   <button type="button" class="ibe-oc-copy">코드 복사</button>
                 </div>
               </div>
@@ -980,7 +980,6 @@
 
             <ul class="ibe-oc-notes">
               <li>전원전압 <b>24</b> = 12 ~ 24VDC (공통)</li>
-              <li>최소 검출 물체: Ø30mm 이상의 불투명체</li>
             </ul>
           </section>
 
@@ -1203,7 +1202,7 @@
     btns('axes').forEach(function (b) {
       var v = b.getAttribute('data-v'), ok = v in list;
       b.disabled = !ok;
-      b.querySelector('small').textContent = ok ? '검출폭 ' + list[v] + 'mm' : v + '개';
+      b.querySelector('small').textContent = v + '개';
     });
   }
 
@@ -1221,7 +1220,7 @@
       }
     });
     p.querySelector('.ibe-oc-read').textContent = [
-      txt('pitch'), '광축 ' + state.axes + '개', '검출폭 ' + WIDTH[state.pitch][state.axes] + 'mm', txt('out'), '12~24VDC'
+      txt('pitch'), '광축 ' + state.axes + '개', txt('out'), '12~24VDC'
     ].join(' · ');
   }
 
