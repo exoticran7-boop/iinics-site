@@ -601,6 +601,251 @@
     header .submenu .menu-en { font-size: 0.78em; }
   }
 </style>
+<style>
+  /* ════════════════════════════════════════
+     ★ 주문 코드 빌더 — 베어링리스 · 고분해능 매뉴얼(ibe-oc-*)과 동일 디자인
+  ════════════════════════════════════════ */
+  :root {
+    --ibe-blue:      #E06600;
+    --ibe-orange:    #FF7F00;
+    --ibe-orange-lt: #FFF3E0;
+  }
+  .ibe-oc, .ibe-oc *, .ibe-oc *::before, .ibe-oc *::after { box-sizing: border-box; }
+  .ibe-oc { font-family: 'Noto Sans KR', sans-serif; line-height: 1.6; animation: mnl-up .7s .14s ease both; }
+  .ibe-oc [hidden] { display: none !important; }
+  /* ════════════════════════════════════════
+     ★★★ 주문 코드 빌더 (ibe-oc-*) — 라이트 패널
+  ════════════════════════════════════════ */
+  .ibe-oc {
+    background: linear-gradient(160deg, #FFF8EF 0%, #FFFFFF 55%, #FFF6EA 100%);
+    border: 1.5px solid #FFD8A0;
+    border-radius: 14px;
+    padding: 30px 30px 24px;
+    margin-bottom: 44px;
+    position: relative;
+    overflow: hidden;
+    color: #111;
+    scroll-margin-top: 90px;
+    box-shadow: 0 6px 28px rgba(255,127,0,0.07);
+  }
+  .ibe-oc::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,127,0,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,127,0,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: radial-gradient(ellipse at 90% 0%, #000 0%, transparent 65%);
+    mask-image: radial-gradient(ellipse at 90% 0%, #000 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .ibe-oc::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--ibe-orange), #FFB347, transparent);
+  }
+  .ibe-oc > * { position: relative; z-index: 1; }
+
+  .ibe-oc-top {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end;
+    gap: 18px; margin-bottom: 22px;
+  }
+  .ibe-oc-eyebrow {
+    font-family: 'Oxanium', monospace; font-size: 12px; letter-spacing: 3px;
+    color: var(--ibe-blue); text-transform: uppercase; font-weight: 700; margin-bottom: 10px;
+  }
+  .ibe-oc-title {
+    margin: 0 0 6px; color: #111;
+    font-size: clamp(18px, 2.2vw, 23px); font-weight: 700; letter-spacing: -0.3px;
+    word-break: keep-all;
+  }
+  .ibe-oc-title em { font-style: normal; color: var(--ibe-orange); }
+  .ibe-oc-title-en { margin: 0; font-family: 'Oxanium', monospace; font-size: 12px; color: #888; }
+
+  /* 탭 */
+  .ibe-oc-tabs {
+    display: inline-flex; padding: 4px; gap: 4px;
+    background: #fff;
+    border: 1.5px solid #FFD8A0;
+    border-radius: 999px;
+  }
+  .ibe-oc-tabs button {
+    appearance: none; border: 0; cursor: pointer;
+    background: transparent; color: #555;
+    font: 700 13px 'Noto Sans KR', sans-serif;
+    padding: 9px 18px; border-radius: 999px;
+    display: inline-flex; align-items: baseline; gap: 6px;
+    transition: background .2s, color .2s;
+  }
+  .ibe-oc-tabs button span { font-family: 'Oxanium', monospace; font-size: 10.5px; font-weight: 500; opacity: .75; }
+  .ibe-oc-tabs button[aria-selected="true"] { background: var(--ibe-orange); color: #fff; }
+  .ibe-oc-tabs button:focus-visible { outline: 2px solid var(--ibe-orange); outline-offset: 2px; }
+
+  /* 코드 디스플레이 */
+  .ibe-oc-display {
+    background: #FFFFFF;
+    border: 1.5px solid #FFC98A;
+    border-radius: 12px;
+    padding: 20px 20px 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 18px rgba(255,127,0,0.08);
+  }
+  .ibe-oc-code { display: flex; flex-wrap: nowrap; align-items: stretch; gap: 8px; width: 100%; }
+  /* 박스가 코드 줄 전체 폭을 나눠 채움 */
+  .ibe-oc-code .seg { flex: 1 1 0; min-width: 0; }
+  .ibe-oc-code .seg.wide { flex-grow: 1.7; }
+  .ibe-oc-code .dash {
+    flex: 0 0 auto; align-self: center;
+    margin-top: -18px;   /* 아래 라벨 높이만큼 올려 숫자 줄에 맞춤 */
+    font-family: 'Oxanium', monospace; font-weight: 800;
+    font-size: clamp(18px, 2.4vw, 26px); line-height: 1; color: var(--ibe-orange);
+  }
+  .ibe-oc-code .seg {
+    display: flex; flex-direction: column; align-items: center;
+    min-width: 0; padding: 10px 12px 8px;
+    border-radius: 8px;
+    background: #FAFAFA;
+    border: 1px solid #EEE;
+    border-bottom: 3px solid #FFB347;
+    transition: background .25s, border-color .25s;
+  }
+  .ibe-oc-code .seg b {
+    font-family: 'Oxanium', monospace; font-size: clamp(18px, 2.4vw, 26px);
+    font-weight: 800; color: #111; letter-spacing: 0.5px; line-height: 1.1;
+  }
+  .ibe-oc-code .seg i {
+    font-style: normal; margin-top: 5px;
+    font-size: 10.5px; color: #888; white-space: nowrap;
+  }
+  .ibe-oc-code .seg.fixed { background: var(--ibe-orange-lt); border-color: #FFE0BA; border-bottom-color: var(--ibe-orange); }
+  .ibe-oc-code .seg.fixed b { color: var(--ibe-blue); }
+  .ibe-oc-code .seg.flash { background: #FFE6C7; border-bottom-color: var(--ibe-orange); }
+
+  .ibe-oc-foot {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    gap: 10px; margin-top: 14px; padding-top: 12px;
+    border-top: 1px dashed #F3DDC0;
+  }
+  .ibe-oc-read { margin: 0; font-size: 12.5px; color: #444; word-break: keep-all; }
+  .ibe-oc-copy {
+    appearance: none; cursor: pointer;
+    background: #fff; color: var(--ibe-blue);
+    border: 1.5px solid var(--ibe-orange); border-radius: 6px;
+    font: 700 12px 'Noto Sans KR', sans-serif; padding: 7px 14px;
+    transition: background .2s, color .2s;
+  }
+  .ibe-oc-copy:hover { background: var(--ibe-orange); color: #fff; }
+
+  /* 옵션 행 */
+  .ibe-oc-row {
+    display: grid; grid-template-columns: 132px 1fr; gap: 6px 16px;
+    padding: 12px 0; border-top: 1px solid #F3E6D6;
+    align-items: start;
+  }
+  .ibe-oc-row .lbl { font-size: 13px; font-weight: 700; color: #111; padding-top: 7px; }
+  .ibe-oc-row .lbl .n { font-family: 'Oxanium', monospace; color: var(--ibe-orange); margin-right: 8px; font-size: 12px; }
+  .ibe-oc-row .lbl em {
+    display: block; font-style: normal; margin: 2px 0 0 24px;
+    font-family: 'Oxanium', monospace; font-size: 10.5px; color: #999; font-weight: 500;
+  }
+  /* 모든 옵션 박스 동일 폭 · 동일 높이 (행끼리 세로 정렬) */
+  .ibe-oc-row .chips {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 104px);   /* 칸 폭 고정 — 빈 여백 줄이기 */
+    gap: 8px;
+  }
+  .ibe-oc-row .chips button {
+    appearance: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%; min-width: 0; min-height: 52px; padding: 7px 6px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #E3D3BF; border-radius: 7px;
+    color: #222; font: 800 13.5px 'Oxanium', monospace; letter-spacing: 0.4px;
+    transition: background .2s, border-color .2s, color .2s, opacity .2s;
+  }
+  .ibe-oc-row .chips button small {
+    font: 500 10.5px 'Noto Sans KR', sans-serif; color: #888; margin-top: 2px; letter-spacing: 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+  }
+  .ibe-oc-row .chips button:hover:not(:disabled) { border-color: var(--ibe-orange); background: #FFF8EF; }
+  .ibe-oc-row .chips button[aria-pressed="true"] {
+    background: var(--ibe-orange); border-color: var(--ibe-orange); color: #fff;
+  }
+  .ibe-oc-row .chips button[aria-pressed="true"] small { color: #FFF3E0; }
+  /* 선택된 옵션에 마우스를 올려도 주황 배경 유지 (흰 글씨가 안 보이는 문제 방지) */
+  .ibe-oc-row .chips button[aria-pressed="true"]:hover { background: var(--ibe-orange); border-color: var(--ibe-orange); color: #fff; }
+  .ibe-oc-row .chips button:disabled { opacity: .3; cursor: not-allowed; }
+  .ibe-oc-row .chips button:focus-visible { outline: 2px solid var(--ibe-orange); outline-offset: 2px; }
+  .ibe-oc-row .hint { grid-column: 2; margin: 2px 0 0; font-size: 11.5px; color: #888; }
+
+  .ibe-oc-notes {
+    list-style: none; margin: 14px 0 0; padding: 14px 0 0;
+    border-top: 1px solid #F3E6D6;
+    font-size: 11.5px; line-height: 1.8; color: #666;
+  }
+  .ibe-oc-notes li { position: relative; padding-left: 14px; word-break: keep-all; }
+  .ibe-oc-notes li::before { content: '※'; position: absolute; left: 0; color: var(--ibe-orange); }
+  .ibe-oc-notes b { font-family: 'Oxanium', monospace; color: var(--ibe-blue); }
+
+  @media (max-width: 600px) {
+    .ibe-oc { padding: 22px 16px 18px; }
+    .ibe-oc-tabs { width: 100%; }
+    .ibe-oc-tabs button { flex: 1; justify-content: center; padding: 9px 10px; }
+    .ibe-oc-tabs button span { display: none; }
+    .ibe-oc-tabs button { white-space: nowrap; font-size: 12.5px; }
+    .ibe-oc-display { padding: 14px 12px 12px; }
+    .ibe-oc-code { gap: 3px; }
+    .ibe-oc-code .seg { padding: 8px 1px 6px; border-radius: 6px; }
+    .ibe-oc-code .seg b { font-size: 13px; letter-spacing: 0; }
+    .ibe-oc-code .seg i { font-size: 9px; max-width: 100%; white-space: normal; word-break: break-all; text-align: center; line-height: 1.25; letter-spacing: -0.3px; }
+    .ibe-oc-code .seg.wide { flex-grow: 2; }
+    .ibe-oc-code .dash { font-size: 13px; margin-top: -14px; }
+    .ibe-oc-row { grid-template-columns: 1fr; }
+    .ibe-oc-row .lbl { padding-top: 0; }
+    .ibe-oc-row .hint { grid-column: 1; }
+    .ibe-oc-row .chips { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .ibe-oc-row .chips button { min-height: 52px; padding: 7px 9px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ibe-oc-code .seg { transition: none; }
+  }
+  /* 보호구조 '무표시'일 때 마지막 하이픈 · 칸 숨김 */
+  .ibe-oc-code .opt-off { display: none; }
+  /* IA40HB 처럼 긴 시리즈명이 모바일에서 넘치지 않도록 */
+  @media (max-width: 600px) { .ibe-oc-code .seg[data-show="ser"] { flex-grow: 2.5; } }
+</style>
+<style>
+  /* ── 주문 코드 테마: 다크 차콜 (제품 소개 페이지 히어로와 같은 톤) ── */
+  .ibe-oc { background: linear-gradient(150deg, #15161A 0%, #1B1D21 60%, #221F1B 100%); border-color: #2E3033; color: #fff; box-shadow: 0 10px 34px rgba(0,0,0,0.18); }
+  .ibe-oc::before { background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px); }
+  .ibe-oc-eyebrow { color: #F0A860; }
+  .ibe-oc-title { color: #fff; }
+  .ibe-oc-title em { color: #FF9633; }
+  .ibe-oc-title-en { color: #8E959D; }
+  .ibe-oc-tabs { background: #1E2023; border-color: #3A3C40; }
+  .ibe-oc-tabs button { color: #C9CDD2; }
+  .ibe-oc-tabs button[aria-selected="true"] { background: var(--ibe-orange); color: #fff; }
+  .ibe-oc-display { background: #212327; border-color: #3A3C40; box-shadow: none; }
+  .ibe-oc-code .seg { background: #2A2C31; border-color: #3A3C40; border-bottom-color: #FFB347; }
+  .ibe-oc-code .seg b { color: #fff; }
+  .ibe-oc-code .seg i { color: #8E959D; }
+  .ibe-oc-code .seg.fixed { background: rgba(255,127,0,0.16); border-color: rgba(255,150,51,0.35); border-bottom-color: var(--ibe-orange); }
+  .ibe-oc-code .seg.fixed b { color: #FFB347; }
+  .ibe-oc-code .seg.flash { background: rgba(255,127,0,0.30); }
+  .ibe-oc-foot { border-top-color: #3A3C40; }
+  .ibe-oc-read { color: #C9CDD2; }
+  .ibe-oc-copy { background: transparent; color: #FFB347; }
+  .ibe-oc-row { border-top-color: #2E3033; }
+  .ibe-oc-row .lbl { color: #fff; }
+  .ibe-oc-row .lbl em, .ibe-oc-row .hint { color: #8E959D; }
+  .ibe-oc-row .chips button { background: #24262A; border-color: #3A3C40; color: #E6E6E6; }
+  .ibe-oc-row .chips button small { color: #8E959D; }
+  .ibe-oc-row .chips button:hover:not(:disabled) { background: #2C2E33; border-color: var(--ibe-orange); }
+  .ibe-oc-row .chips button[aria-pressed="true"]:hover { background: var(--ibe-orange); border-color: var(--ibe-orange); color: #fff; }  /* 선택된 칸은 마우스를 올려도 주황 유지 */
+  .ibe-oc-notes { border-top-color: #2E3033; color: #FFFFFF; }          /* 하단 안내 2줄 — 흰색 */
+  .ibe-oc-notes b { color: var(--ibe-orange); }                          /* 전원전압 24 — 주황 */
+</style>
 </head>
 
 <body>
@@ -629,6 +874,7 @@
           <ul class="submenu">
             <li><a href="product-lineup.html"><span class="menu-kr">제품 라인업</span><span class="menu-en" lang="en">Product Line-up</span></a></li>
             <li><a href="inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+            <li><a href="high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">고분해능 인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">High-Resolution Inductive Rotary Encoder</span></a></li>
             <li><a href="programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
             <li><a href="area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
             <li><a href="magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
@@ -645,6 +891,7 @@
           <a href="manuals.html">Manual <span class="arrow">▾</span></a>
           <ul class="submenu">
             <li><a href="manual-inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+            <li><a href="manual-high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">고분해능 인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">High-Resolution Inductive Rotary Encoder</span></a></li>
             <li><a href="manual-programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
             <li><a href="manual-area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
             <li><a href="manual-magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
@@ -693,6 +940,7 @@
           <div class="mnl-sidebar-label">Manual Line-up</div>
           <ul class="mnl-nav">
             <li><a href="manual-inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Encoder</span></a></li>
+            <li><a href="manual-high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">고분해능 인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">High-Resolution Inductive Rotary Encoder</span></a></li>
             <li><a href="manual-programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
             <li><a href="manual-area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
             <li><a href="manual-magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
@@ -714,6 +962,198 @@
             <h1 class="mnl-title"><em>인덕티브</em> 로터리 엔코더</h1>
             <p class="mnl-subtitle" lang="en">Inductive Rotary Encoder &nbsp;|&nbsp; IA Series</p>
           </div>
+
+
+          <!-- ★ 주문 코드 (제품 설명서 모델 구성 기준) -->
+          <h2 class="mnl-section-label" id="ordering-code">주문 코드 · Ordering Code</h2>
+
+          <section class="ibe-oc" aria-label="주문 코드">
+            <div class="ibe-oc-top">
+              <div>
+                <div class="ibe-oc-eyebrow" lang="en">Build Your Part Number</div>
+                <h3 class="ibe-oc-title">옵션을 고르면 <em>주문 코드</em>가 완성됩니다</h3>
+                <p class="ibe-oc-title-en" lang="en">Pick each option to build your IA ordering code.</p>
+              </div>
+              <div class="ibe-oc-tabs" role="tablist" aria-label="회전 방식">
+                <button type="button" role="tab" id="oc-tab-multi" aria-controls="oc-multi" aria-selected="true" data-mode="multi">멀티턴 앱솔루트<span lang="en">Multi-turn Absolute</span></button>
+                <button type="button" role="tab" id="oc-tab-single" aria-controls="oc-single" aria-selected="false" data-mode="single">싱글턴 앱솔루트<span lang="en">Single-turn Absolute</span></button>
+              </div>
+            </div>
+
+            <!-- ── 멀티턴 앱솔루트 — SSI 출력 (BFS) ── -->
+            <div class="ibe-oc-panel" id="oc-multi" role="tabpanel" aria-labelledby="oc-tab-multi" data-mode="multi">
+              <div class="ibe-oc-display">
+                <div class="ibe-oc-code" aria-live="polite">
+                  <span class="seg wide" data-show="ser"><b>IA50S</b><i>시리즈</i></span>
+                  <span class="seg" data-show="sh"><b>8</b><i>축경</i></span>
+                  <span class="dash" aria-hidden="true">-</span>
+                  <span class="seg wide" data-show="res"><b>1024</b><i>분해능</i></span>
+                  <span class="dash" aria-hidden="true">-</span>
+                  <span class="seg" data-show="code"><b>B</b><i>출력코드</i></span>
+                  <span class="seg" data-show="dir"><b>F</b><i>회전방향</i></span>
+                  <span class="seg fixed"><b>S</b><i>출력형태</i></span>
+                  <span class="dash" aria-hidden="true">-</span>
+                  <span class="seg" data-show="pwr"><b>24</b><i>전원전압</i></span>
+                </div>
+                <div class="ibe-oc-foot">
+                  <p class="ibe-oc-read"></p>
+                  <button type="button" class="ibe-oc-copy">코드 복사</button>
+                </div>
+              </div>
+
+              <div class="ibe-oc-opts">
+                <div class="ibe-oc-row" data-key="ser">
+                  <div class="lbl"><span class="n">01</span>시리즈<em lang="en">Series</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="IA50S" data-txt="IA50S" aria-pressed="true">IA50S<small>축형 Ø50</small></button>
+                    <button type="button" data-v="IA40S" data-txt="IA40S">IA40S<small>축형 Ø40</small></button>
+                    <button type="button" data-v="IA40H" data-txt="IA40H">IA40H<small>중공축 Ø40</small></button>
+                    <button type="button" data-v="IA40HB" data-txt="IA40HB">IA40HB<small>중공축 Built-in</small></button>
+                  </div>
+                </div>
+                <div class="ibe-oc-row" data-key="sh">
+                  <div class="lbl"><span class="n">02</span>축경<em lang="en">Shaft Ø</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="6" data-txt="Ø6mm">6<small>Ø6mm</small></button>
+                    <button type="button" data-v="8" data-txt="Ø8mm" aria-pressed="true">8<small>Ø8mm</small></button>
+                  </div>
+                  <p class="hint">IA50S는 Ø8mm 전용 · IA40H / IA40HB는 축내경(중공축 내경)</p>
+                </div>
+                <div class="ibe-oc-row" data-key="body">
+                  <div class="lbl"><span class="n">03</span>바디 재질<em lang="en">Body</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="" data-txt="알루미늄 바디" aria-pressed="true">무표시<small>알루미늄</small></button>
+                  </div>
+                  <p class="hint">무표시 = 알루미늄 (코드에 표기하지 않음)</p>
+                </div>
+                <div class="ibe-oc-row" data-key="res">
+                  <div class="lbl"><span class="n">04</span>분해능<em lang="en">Resolution</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="60" data-txt="분해능 60">60</button>
+                    <button type="button" data-v="64" data-txt="분해능 64">64</button>
+                    <button type="button" data-v="128" data-txt="분해능 128">128</button>
+                    <button type="button" data-v="256" data-txt="분해능 256">256</button>
+                    <button type="button" data-v="360" data-txt="분해능 360">360</button>
+                    <button type="button" data-v="512" data-txt="분해능 512">512</button>
+                    <button type="button" data-v="720" data-txt="분해능 720">720</button>
+                    <button type="button" data-v="1000" data-txt="분해능 1,000">1000</button>
+                    <button type="button" data-v="1024" data-txt="분해능 1,024" aria-pressed="true">1024</button>
+                  </div>
+                  <p class="hint">60 ~ 1024 · 바이너리 · 그레이 코드 모두 동일</p>
+                </div>
+                <div class="ibe-oc-row" data-key="code">
+                  <div class="lbl"><span class="n">05</span>출력코드<em lang="en">Output Code</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="B" data-txt="바이너리 코드" aria-pressed="true">B<small>바이너리 코드</small></button>
+                    <button type="button" data-v="G" data-txt="그레이 코드">G<small>그레이 코드</small></button>
+                  </div>
+                </div>
+                <div class="ibe-oc-row" data-key="dir">
+                  <div class="lbl"><span class="n">06</span>회전방향<em lang="en">Count Direction</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="F" data-txt="시계방향 증가" aria-pressed="true">F<small>시계방향 증가</small></button>
+                    <button type="button" data-v="R" data-txt="반시계방향 증가">R<small>반시계방향 증가</small></button>
+                  </div>
+                </div>
+                <div class="ibe-oc-row" data-key="pwr">
+                  <div class="lbl"><span class="n">07</span>전원전압<em lang="en">Power Supply</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="5" data-txt="5VDC">5<small>5VDC</small></button>
+                    <button type="button" data-v="24" data-txt="12~24VDC" aria-pressed="true">24<small>12~24VDC</small></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── 싱글턴 앱솔루트 — Parallel NPN 출력 (BFN) ── -->
+            <div class="ibe-oc-panel" id="oc-single" role="tabpanel" aria-labelledby="oc-tab-single" data-mode="single">
+              <div class="ibe-oc-display">
+                <div class="ibe-oc-code" aria-live="polite">
+                  <span class="seg wide" data-show="ser"><b>IA50S</b><i>시리즈</i></span>
+                  <span class="seg" data-show="sh"><b>8</b><i>축경</i></span>
+                  <span class="dash" aria-hidden="true">-</span>
+                  <span class="seg wide" data-show="res"><b>1024</b><i>분해능</i></span>
+                  <span class="dash" aria-hidden="true">-</span>
+                  <span class="seg" data-show="code"><b>B</b><i>출력코드</i></span>
+                  <span class="seg" data-show="dir"><b>F</b><i>회전방향</i></span>
+                  <span class="seg fixed"><b>N</b><i>출력형태</i></span>
+                  <span class="dash" aria-hidden="true">-</span>
+                  <span class="seg" data-show="pwr"><b>24</b><i>전원전압</i></span>
+                </div>
+                <div class="ibe-oc-foot">
+                  <p class="ibe-oc-read"></p>
+                  <button type="button" class="ibe-oc-copy">코드 복사</button>
+                </div>
+              </div>
+
+              <div class="ibe-oc-opts">
+                <div class="ibe-oc-row" data-key="ser">
+                  <div class="lbl"><span class="n">01</span>시리즈<em lang="en">Series</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="IA50S" data-txt="IA50S" aria-pressed="true">IA50S<small>축형 Ø50</small></button>
+                    <button type="button" data-v="IA40S" data-txt="IA40S">IA40S<small>축형 Ø40</small></button>
+                    <button type="button" data-v="IA40H" data-txt="IA40H">IA40H<small>중공축 Ø40</small></button>
+                    <button type="button" data-v="IA40HB" data-txt="IA40HB">IA40HB<small>중공축 Built-in</small></button>
+                  </div>
+                </div>
+                <div class="ibe-oc-row" data-key="sh">
+                  <div class="lbl"><span class="n">02</span>축경<em lang="en">Shaft Ø</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="6" data-txt="Ø6mm">6<small>Ø6mm</small></button>
+                    <button type="button" data-v="8" data-txt="Ø8mm" aria-pressed="true">8<small>Ø8mm</small></button>
+                  </div>
+                  <p class="hint">IA50S는 Ø8mm 전용 · IA40H / IA40HB는 축내경(중공축 내경)</p>
+                </div>
+                <div class="ibe-oc-row" data-key="body">
+                  <div class="lbl"><span class="n">03</span>바디 재질<em lang="en">Body</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="" data-txt="알루미늄 바디" aria-pressed="true">무표시<small>알루미늄</small></button>
+                  </div>
+                  <p class="hint">무표시 = 알루미늄 (코드에 표기하지 않음)</p>
+                </div>
+                <div class="ibe-oc-row" data-key="res">
+                  <div class="lbl"><span class="n">04</span>분해능<em lang="en">Resolution</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="60" data-txt="분해능 60">60</button>
+                    <button type="button" data-v="64" data-txt="분해능 64">64</button>
+                    <button type="button" data-v="128" data-txt="분해능 128">128</button>
+                    <button type="button" data-v="256" data-txt="분해능 256">256</button>
+                    <button type="button" data-v="360" data-txt="분해능 360">360</button>
+                    <button type="button" data-v="512" data-txt="분해능 512">512</button>
+                    <button type="button" data-v="720" data-txt="분해능 720">720</button>
+                    <button type="button" data-v="1000" data-txt="분해능 1,000">1000</button>
+                    <button type="button" data-v="1024" data-txt="분해능 1,024" aria-pressed="true">1024</button>
+                  </div>
+                  <p class="hint">60 ~ 1024 · 바이너리 · 그레이 코드 모두 동일</p>
+                </div>
+                <div class="ibe-oc-row" data-key="code">
+                  <div class="lbl"><span class="n">05</span>출력코드<em lang="en">Output Code</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="B" data-txt="바이너리 코드" aria-pressed="true">B<small>바이너리 코드</small></button>
+                    <button type="button" data-v="G" data-txt="그레이 코드">G<small>그레이 코드</small></button>
+                  </div>
+                </div>
+                <div class="ibe-oc-row" data-key="dir">
+                  <div class="lbl"><span class="n">06</span>회전방향<em lang="en">Count Direction</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="F" data-txt="시계방향 증가" aria-pressed="true">F<small>시계방향 증가</small></button>
+                    <button type="button" data-v="R" data-txt="반시계방향 증가">R<small>반시계방향 증가</small></button>
+                  </div>
+                </div>
+                <div class="ibe-oc-row" data-key="pwr">
+                  <div class="lbl"><span class="n">07</span>전원전압<em lang="en">Power Supply</em></div>
+                  <div class="chips">
+                    <button type="button" data-v="5" data-txt="5VDC">5<small>5VDC</small></button>
+                    <button type="button" data-v="24" data-txt="12~24VDC" aria-pressed="true">24<small>12~24VDC</small></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ul class="ibe-oc-notes">
+              <li><b>멀티턴 앱솔루트</b> = SSI Line driver 출력 (S) · <b>싱글턴 앱솔루트</b> = Parallel NPN 오픈 콜렉터 출력 (N)</li>
+            </ul>
+          </section>
 
           <!-- 섹션 레이블 -->
           <h2 class="mnl-section-label">매뉴얼 다운로드 · Manual Downloads</h2>
@@ -1098,6 +1538,90 @@
 })();
 </script>
 
+
+<!-- ★ 주문 코드 빌더 동작 -->
+<script>
+(function () {
+  var root = document.querySelector('.ibe-oc');
+  if (!root) return;
+  var OUT = { single: { code: 'N', txt: 'Parallel NPN 출력' }, multi: { code: 'S', txt: 'SSI Line driver 출력' } };
+  var state = {
+    single: { ser: 'IA50S', sh: '8', body: '', res: '1024', code: 'B', dir: 'F', pwr: '24' },
+    multi:  { ser: 'IA50S', sh: '8', body: '', res: '1024', code: 'B', dir: 'F', pwr: '24' }
+  };
+
+  function panel(mode) { return root.querySelector('.ibe-oc-panel[data-mode="' + mode + '"]'); }
+  function btns(mode, key) { return panel(mode).querySelectorAll('.ibe-oc-row[data-key="' + key + '"] .chips button'); }
+  function btn(mode, key, v) { return panel(mode).querySelector('.ibe-oc-row[data-key="' + key + '"] button[data-v="' + v + '"]'); }
+  function txt(mode, key) { var b = btn(mode, key, state[mode][key]); return b ? b.getAttribute('data-txt') : state[mode][key]; }
+
+  // 제약: IA50S는 Ø8mm 전용
+  function constrain(mode) {
+    var s = state[mode];
+    if (s.ser === 'IA50S') s.sh = '8';
+    btn(mode, 'sh', '6').disabled = (s.ser === 'IA50S');
+    // 중공축(H/HB)은 축내경
+    panel(mode).querySelector('.seg[data-show="sh"] i').textContent = (s.ser.indexOf('H') >= 0) ? '축내경' : '축경';
+  }
+
+  function render(mode) {
+    var p = panel(mode), s = state[mode];
+    Object.keys(s).forEach(function (k) {
+      btns(mode, k).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-v') === s[k] ? 'true' : 'false'); });
+      var seg = p.querySelector('.seg[data-show="' + k + '"]');
+      if (seg && s[k]) {
+        var v = seg.querySelector('b');
+        if (v.textContent !== s[k]) {
+          v.textContent = s[k];
+          seg.classList.add('flash');
+          setTimeout(function () { seg.classList.remove('flash'); }, 450);
+        }
+      }
+    });
+    p.querySelector('.ibe-oc-read').textContent = [
+      s.ser, txt(mode, 'sh'), txt(mode, 'body'), txt(mode, 'res'), txt(mode, 'code'), txt(mode, 'dir'), OUT[mode].txt, txt(mode, 'pwr')
+    ].join(' · ');
+  }
+
+  function codeString(mode) {
+    var s = state[mode];
+    return s.ser + s.sh + '-' + s.res + '-' + s.code + s.dir + OUT[mode].code + '-' + s.pwr;
+  }
+
+  ['multi', 'single'].forEach(function (mode) {
+    panel(mode).querySelectorAll('.ibe-oc-row').forEach(function (row) {
+      var key = row.getAttribute('data-key');
+      row.querySelectorAll('.chips button').forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (b.disabled) return;
+          state[mode][key] = b.getAttribute('data-v');
+          constrain(mode);
+          render(mode);
+        });
+      });
+    });
+    var copy = panel(mode).querySelector('.ibe-oc-copy');
+    copy.addEventListener('click', function () {
+      var code = codeString(mode);
+      function done() { copy.textContent = '복사됨 ✓'; setTimeout(function () { copy.textContent = '코드 복사'; }, 1500); }
+      try {
+        navigator.clipboard.writeText(code).then(done, function () { window.prompt('주문 코드', code); });
+      } catch (e) { window.prompt('주문 코드', code); }
+    });
+    constrain(mode);
+    render(mode);
+  });
+
+  // 탭 전환 (JS가 없으면 두 패널 모두 보임)
+  var tabs = root.querySelectorAll('.ibe-oc-tabs [role="tab"]');
+  function show(mode) {
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', t.getAttribute('data-mode') === mode ? 'true' : 'false'); });
+    ['single', 'multi'].forEach(function (m) { panel(m).hidden = (m !== mode); });
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.getAttribute('data-mode')); }); });
+  show('multi');
+})();
+</script>
 
 </body>
 </html>
