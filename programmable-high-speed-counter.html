@@ -489,7 +489,17 @@
   .cth-tick.t3 { animation-delay: 1.0s; }
   .cth-tick.t4 { animation-delay: 1.5s; }
   @keyframes cth-blink { 0%, 100% { opacity: 0.45; } 12% { opacity: 1; } 24% { opacity: 0.45; } }
-  @media (prefers-reduced-motion: reduce) { .cth-tick { animation: none; opacity: 1; } }
+  /* ★ 동그라미 1~4가 켜질 때 해당 점선(A·B 에지)도 같은 순간 함께 켜짐 */
+  .cth-edge { animation: cth-edge-glow 4s ease-in-out infinite; }
+  .cth-edge.t2 { animation-delay: 0.5s; }
+  .cth-edge.t3 { animation-delay: 1.0s; }
+  .cth-edge.t4 { animation-delay: 1.5s; }
+  @keyframes cth-edge-glow {
+    0%, 100% { stroke: rgba(255,178,90,0.35); stroke-width: 1; }
+    12%      { stroke: #FFB347; stroke-width: 2; }
+    24%      { stroke: rgba(255,178,90,0.35); stroke-width: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cth-tick { animation: none; opacity: 1; } .cth-edge { animation: none; } }
 
   .cth-x4-txt { position: relative; z-index: 1; padding: 38px 36px 38px 14px; }
   .cth-x4-eyebrow { font-family: 'Oxanium', monospace; font-size: 12px; letter-spacing: 3px; color: #F0A860; text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
@@ -891,10 +901,10 @@
                 <path d="M40 130 H110 V170 H190 V130 H270 V170 H350 V130 H420"
                       fill="none" stroke="#FFC48A" stroke-width="2.5" stroke-linejoin="round"/>
                 <g stroke="rgba(255,178,90,0.35)" stroke-width="1" stroke-dasharray="3 4">
-                  <line x1="70"  y1="44" x2="70"  y2="232"/>
-                  <line x1="110" y1="44" x2="110" y2="232"/>
-                  <line x1="150" y1="44" x2="150" y2="232"/>
-                  <line x1="190" y1="44" x2="190" y2="232"/>
+                  <line class="cth-edge"    x1="70"  y1="44" x2="70"  y2="232"/>
+                  <line class="cth-edge t2" x1="110" y1="44" x2="110" y2="232"/>
+                  <line class="cth-edge t3" x1="150" y1="44" x2="150" y2="232"/>
+                  <line class="cth-edge t4" x1="190" y1="44" x2="190" y2="232"/>
                 </g>
                 <path d="M70 218 V226 H190 V218" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
                 <text x="130" y="244" font-family="Oxanium, monospace" font-size="10" font-weight="700"
