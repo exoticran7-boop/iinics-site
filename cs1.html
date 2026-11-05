@@ -944,6 +944,25 @@
   ════════════════════════════════════════════════════════════ */
   const BOARD_API = 'https://script.google.com/macros/s/AKfycbxBkhQz-T4VebshBfN2368rj_15fN8SQtKXRuBbp108jmygOxDsTopckdB31BYjyy25/exec?board=cs';
   const PER_PAGE = 10;
+
+  /* ════════════════════════════════════════════════════════════
+     ★ 고정 자료 — 스프레드시트와 상관없이 항상 목록 맨 위에 표시됩니다.
+       PDF 파일은 홈페이지 서버(cs1.html과 같은 폴더)에 올려 두세요.
+       새 고정 자료를 추가하려면 아래 { … } 한 덩어리를 복사해 고치면 됩니다.
+       (같은 자료를 스프레드시트에도 올리면 목록에 두 번 나오니 한 곳에만 등록하세요)
+  ════════════════════════════════════════════════════════════ */
+  const STATIC_POSTS = [
+    {
+      id: 'cth-comm-v300',
+      title: '프로그래머블 고속 카운터 / 타이머 CTH Series _ REV3',
+      content: '프로그래머블 고속 카운터 / 타이머 CTH Series 매뉴얼 _ REV3',
+      author: '아이닉스',
+      date: '2026.11.05',
+      cat: '매뉴얼',
+      file: 'cth-comm-ko_Rev3.pdf',
+      fileName: 'cth-comm-ko_Rev3.pdf'
+    }
+  ];
   let allPosts      = [];
   let filteredPosts = [];
   let currentPage   = 1;
@@ -963,14 +982,21 @@
       clearTimeout(t);
       const data = await res.json();
       if (!Array.isArray(data)) throw new Error('bad data');
-      allPosts = data;
+      allPosts = [...STATIC_POSTS, ...data];
       filteredPosts = [...allPosts];
       emptyText.innerHTML = '등록된 게시물이 없습니다<br>No posts yet';
       render();
       openFromHash();
     } catch (e) {
-      emptyText.innerHTML = '자료를 불러오지 못했습니다. 잠시 후 새로고침해 주세요.<br>Failed to load. Please refresh.';
-      document.getElementById('pagination').innerHTML = '';
+      // 스프레드시트를 못 불러와도 고정 자료는 보여 줍니다
+      allPosts = [...STATIC_POSTS];
+      filteredPosts = [...allPosts];
+      render();
+      openFromHash();
+      if (!allPosts.length) {
+        emptyText.innerHTML = '자료를 불러오지 못했습니다. 잠시 후 새로고침해 주세요.<br>Failed to load. Please refresh.';
+        document.getElementById('pagination').innerHTML = '';
+      }
     }
   }
 
