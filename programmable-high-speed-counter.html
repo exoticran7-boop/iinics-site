@@ -380,8 +380,14 @@
   }
   .cth-badge.series { color: #FFC48A; border: 1.5px solid rgba(255,196,138,0.45); background: rgba(255,127,0,0.16); }
   .cth-badge.new { color: #B9E8C9; border: 1.5px solid rgba(140,220,170,0.45); background: rgba(13,122,82,0.25); }
+  /* 시리즈 배지 — 고분해능 인덕티브(IH) 페이지와 같은 주황 배지
+     (Product Line-up 기준 Counter·Timer Series = 주황 #FF7F00) */
+  .cth-badge.model { color: #FFC48A; border: 1.5px solid rgba(255,196,138,0.45); background: rgba(255,127,0,0.16); }
+  /* Coming Soon — 제품군 색이 아닌 "상태" 표시: 화이트 · 실버 (전 제품 공통) */
+  .cth-badge.soon { color: #F1F3F5; border: 1.5px solid rgba(255,255,255,0.55); background: rgba(255,255,255,0.10); }
+  .cth-badge-row-soon { margin-bottom: 8px; }  /* Coming Soon — 항상 맨 윗줄 단독 */
   .cth-badge-dot {
-    width: 6px; height: 6px; border-radius: 50%; background: #7FD8A4;
+    width: 6px; height: 6px; border-radius: 50%; background: #FFFFFF;
     animation: cth-pulse 2s ease-in-out infinite; flex-shrink: 0;
   }
   @keyframes cth-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
@@ -521,6 +527,20 @@
     .cth-statgrid { gap: 10px; }
     .cth-stat { padding: 14px 10px 12px; }
   }
+
+  /* ── 자료 내려받기 (사용설명서 · 통신 매뉴얼) ── */
+  .cth-hero-cta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .cth-hero-cta a {
+    display: inline-flex; align-items: center; gap: 7px; text-decoration: none;
+    font: 700 13px 'Noto Sans KR', sans-serif; padding: 9px 16px; border-radius: 6px;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .cth-hero-cta a svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .cth-hero-cta .pri { background: var(--cth-orange); color: #fff; border: 1.5px solid var(--cth-orange); }
+  .cth-hero-cta .pri:hover { background: var(--cth-accent); border-color: var(--cth-accent); }
+  .cth-hero-cta .sec { color: #FFC48A; border: 1.5px solid rgba(255,196,138,0.45); background: rgba(255,127,0,0.08); }
+  .cth-hero-cta .sec:hover { color: #fff; border-color: #FFC48A; }
+
 </style>
 
 <style>
@@ -691,9 +711,12 @@
           <!-- HERO -->
           <section class="cth-hero" aria-label="제품 소개">
             <div class="cth-hero-txt">
+              <div class="cth-badge-row cth-badge-row-soon">
+                <span class="cth-badge soon" lang="en"><span class="cth-badge-dot"></span>Coming Soon</span>
+              </div>
               <div class="cth-badge-row">
                 <span class="cth-badge series" lang="en">Counter · Timer Series</span>
-                <span class="cth-badge new"><span class="cth-badge-dot"></span>NEW · CTH Series</span>
+                <span class="cth-badge model" lang="en">CTH Series</span>
               </div>
               <h2 class="cth-name-kr">프로그래머블 고속 카운터 타이머</h2>
               <div class="cth-name-en" lang="en">Programmable High-Speed Counter Timer</div>
@@ -708,6 +731,9 @@
                 multiplication. Counts pulses up to 200 kcps and combines counter,
                 timer, batch counting and prescale in one unit.
               </p>
+              <div class="cth-hero-cta">
+                <a class="pri" href="cs1.html#cth-comm-v300"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.5" y="4" width="13" height="8" rx="1.5" stroke="currentColor" stroke-width="1.4"/><circle cx="5" cy="8" r=".9" fill="currentColor"/><circle cx="8" cy="8" r=".9" fill="currentColor"/><circle cx="11" cy="8" r=".9" fill="currentColor"/></svg>통신 매뉴얼 내려받기 (자료실)</a>
+              </div>
             </div>
             <div class="cth-hero-photo">
               <img src="programmable-high-speed-counter.jpg"
@@ -917,6 +943,7 @@
               </ul>
             </div>
           </section>
+
 
         </div><!-- /cth-wrap -->
       </div><!-- /pct-content -->
