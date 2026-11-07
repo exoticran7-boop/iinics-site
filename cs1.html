@@ -409,7 +409,7 @@
   .brd-table-wrap { animation: brd-up .7s .18s ease both; }
   .brd-thead {
     display: grid;
-    grid-template-columns: 60px 1fr 90px 80px 80px;
+    grid-template-columns: 60px 1fr 90px 80px 100px;
     padding: 11px 16px;
     background: rgba(255,127,0,.05);
     border: 1px solid var(--brd-divider); border-bottom: none;
@@ -422,7 +422,7 @@
   .brd-tbody { border: 1px solid var(--brd-divider); }
   .brd-row {
     display: grid;
-    grid-template-columns: 60px 1fr 90px 80px 80px;
+    grid-template-columns: 60px 1fr 90px 80px 100px;
     align-items: center;
     border-bottom: 1px solid rgba(255,127,0,0.09);
     transition: background .2s;
@@ -430,7 +430,7 @@
   .brd-row:last-child { border-bottom: none; }
   .brd-row:hover { background: rgba(255,127,0,.04); }
   .brd-row-num { padding: 15px 16px; text-align: center; font-family: 'Oxanium', monospace; font-size: 13px; color: #000000; }
-  .brd-row-title-wrap { padding: 15px 8px 15px 0; cursor: pointer; }
+  .brd-row-title-wrap { padding: 15px 8px 15px 0; cursor: pointer; min-width: 0; }
   .brd-row-title {
     font-size: 14px; color: #111111; line-height: 1.4; margin-bottom: 4px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 400px;
@@ -611,6 +611,9 @@
     .brd-thead span:nth-child(3), .brd-thead span:nth-child(4), .brd-thead span:nth-child(5) { display: none; }
     .brd-row { grid-template-columns: 44px 1fr; }
     .brd-row-category, .brd-row-author, .brd-row-date { display: none; }
+    /* ★ 모바일: 긴 제목이 칸 밖으로 넘치지 않도록 줄바꿈 */
+    .brd-row-title { white-space: normal; overflow: visible; text-overflow: clip; word-break: keep-all; overflow-wrap: anywhere; line-height: 1.5; }
+    .brd-row-title-wrap { padding-right: 14px; }
     .brd-header { flex-direction: column; align-items: flex-start; }
     .brd-header-btns { width: 100%; }
     .brd-form-btns { flex-direction: column; }
