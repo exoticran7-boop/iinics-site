@@ -171,8 +171,9 @@
 <style>
   /* ★ 로고 비율 고정 — width="200" 속성 때문에 모바일(480px↓)에서 style.css가
      높이만 54px로 줄이면 가로로 늘어나 보이므로, 폭은 항상 비율에 맞게 자동 계산 */
-  header h1 img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
-  @media (max-width: 480px) { header h1 img { height: 54px; width: auto; } }
+  header .site-logo { margin: 0; padding: 0; }
+  header h1 img, header .site-logo img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
+  @media (max-width: 480px) { header h1 img, header .site-logo img { height: 54px; width: auto; } }
 </style>
 
 <style>
@@ -181,6 +182,7 @@
   ════════════════════════════════════════ */
   header::before, header::after,
   header h1::before, header h1::after,
+  header .site-logo::before, header .site-logo::after,
   header nav::before, header nav::after,
   header ul::before, header ul::after {
     content: none !important;
@@ -369,7 +371,7 @@
   .ibs-badge.series { color: #CDB5EE; border: 1.5px solid rgba(205,181,238,0.45); background: rgba(107,63,160,0.28); }
   .ibs-badge.model { color: #FFC48A; border: 1.5px solid rgba(255,196,138,0.45); background: rgba(255,127,0,0.16); }
 
-  .ibs-hero h2.ibs-name-kr {
+  .ibs-hero .ibs-name-kr {
     margin: 0 0 8px; font-size: clamp(22px, 3vw, 32px); font-weight: 700;
     line-height: 1.25; color: #FFFFFF; letter-spacing: -0.5px; word-break: keep-all;
   }
@@ -523,11 +525,11 @@
 <body>
 
 <header>
-  <h1>
+  <div class="site-logo">
     <a href="index.html">
       <img src="logo.png" alt="아이닉스 INICS 로고 - 홈으로" width="200" height="70">
     </a>
-  </h1>
+  </div>
 
   <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
     <span></span>
@@ -634,7 +636,7 @@
                 <span class="ibs-badge series" lang="en">Area Sensor Series</span>
                 <span class="ibs-badge model" lang="en">IB Series</span>
               </div>
-              <h2 class="ibs-name-kr">에어리어 센서</h2>
+              <h1 class="ibs-name-kr">에어리어 센서</h1>
               <div class="ibs-name-en" lang="en">Single-Beam Area Sensor</div>
               <p class="ibs-hero-desc">
                 투광기와 수광기 사이에 빛의 커튼을 만드는 투과형 에어리어 센서.
