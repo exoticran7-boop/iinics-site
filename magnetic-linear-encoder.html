@@ -179,8 +179,9 @@
 <style>
   /* ★ 로고 비율 고정 — width="200" 속성 때문에 모바일(480px↓)에서 style.css가
      높이만 54px로 줄이면 가로로 늘어나 보이므로, 폭은 항상 비율에 맞게 자동 계산 */
-  header h1 img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
-  @media (max-width: 480px) { header h1 img { height: 54px; width: auto; } }
+  header .site-logo { margin: 0; padding: 0; }
+  header h1 img, header .site-logo img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
+  @media (max-width: 480px) { header h1 img, header .site-logo img { height: 54px; width: auto; } }
 </style>
 
 <style>
@@ -189,6 +190,7 @@
   ════════════════════════════════════════ */
   header::before, header::after,
   header h1::before, header h1::after,
+  header .site-logo::before, header .site-logo::after,
   header nav::before, header nav::after,
   header ul::before, header ul::after {
     content: none !important;
@@ -366,7 +368,7 @@
   .mle-badge.series { color: #A9E3C8; border: 1.5px solid rgba(140,220,180,0.45); background: rgba(13,122,82,0.25); }
   .mle-badge.model { color: #FFC48A; border: 1.5px solid rgba(255,196,138,0.45); background: rgba(255,127,0,0.16); }
 
-  .mle-hero h2.mle-name-kr { margin: 0 0 8px; font-size: clamp(22px, 3vw, 32px); font-weight: 700; line-height: 1.25; color: #FFFFFF; letter-spacing: -0.5px; word-break: keep-all; }
+  .mle-hero .mle-name-kr { margin: 0 0 8px; font-size: clamp(22px, 3vw, 32px); font-weight: 700; line-height: 1.25; color: #FFFFFF; letter-spacing: -0.5px; word-break: keep-all; }
   .mle-name-en { font-family: 'Oxanium', monospace; font-size: clamp(14px, 1.6vw, 18px); color: #F0A860; letter-spacing: 1px; margin-bottom: 18px; font-weight: 700; }
   .mle-hero-desc { font-size: 13.5px; line-height: 1.8; color: #C9CDD2; max-width: 440px; word-break: keep-all; margin-bottom: 8px; }
   .mle-hero-desc-en { font-family: 'Oxanium', monospace; font-size: 12px; line-height: 1.7; color: #8E959D; max-width: 440px; letter-spacing: 0.2px; }
@@ -515,11 +517,11 @@
 <body>
 
 <header>
-  <h1>
+  <div class="site-logo">
     <a href="index.html">
       <img src="logo.png" alt="아이닉스 INICS 로고 - 홈으로" width="200" height="70">
     </a>
-  </h1>
+  </div>
 
   <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
     <span></span>
@@ -626,7 +628,7 @@
                 <span class="mle-badge series" lang="en">Linear Encoder Series</span>
                 <span class="mle-badge model" lang="en">ML Series</span>
               </div>
-              <h2 class="mle-name-kr">마그네틱 리니어 엔코더</h2>
+              <h1 class="mle-name-kr">마그네틱 리니어 엔코더</h1>
               <div class="mle-name-en" lang="en">Magnetic Linear Incremental Encoder</div>
               <p class="mle-hero-desc">
                 자기 스케일 위를 리드 헤드가 비접촉으로 읽어내는
