@@ -1,56 +1,68 @@
 # 아이닉스 (INICS)
 
-> 대한민국 센서 전문기업. 로터리 엔코더, 리니어 엔코더, 카운터 타이머, 에어리어 센서, 엘리베이터 비접촉 스위치 센서를 개발·제조합니다. Korean manufacturer of rotary/linear encoders, counters, area sensors and touchless elevator switch sensors. Made in Korea.
+> 아이닉스(INICS, 주식회사 아이닉스)는 2020년 설립된 대한민국 산업용 센서 제조기업입니다. 로터리 엔코더(인덕티브·광학식·마그네틱·바퀴형), 마그네틱 리니어 엔코더, 에어리어 센서, 고속 카운터 타이머, 엔코더 카운터, 엘리베이터 비접촉 스위치 센서를 연구·개발·생산·판매·기술지원까지 국내에서 직접 수행합니다. 전 제품 CE 인증, 특허등록 6건. INICS is a Korean manufacturer of industrial sensors — rotary and linear encoders, area sensors, counters and touchless elevator switch sensors — with in-house R&D, production and support. Made in Korea.
 
 슬로건: 세상을 편리하게 하는 센서 전문기업 (A sensor specialist company that makes the world more convenient)
 
-- 웹사이트: https://www.iinics.com/
-- 문의: master@iinics.com
+## 회사 정보 (Company Facts)
+
+- 회사명: 주식회사 아이닉스 / INICS Co., Ltd.
+- 설립: 2020년
+- 본사: 부산광역시 영도구 태종로 727 산학허브관 703호 (우 49112) / 703, Sanhak Hub, 727 Taejong-ro, Yeongdo-gu, Busan, Korea
+- 연구소: 경상남도 창원시 의창구 차룡로 48번길 54, 2층 8호 / R&D Center, Changwon, Gyeongnam, Korea
+- 전화: 070-7548-0034 (+82-70-7548-0034)
+- 이메일: master@iinics.com
 - 온라인 구매: https://smartstore.naver.com/iinics
-- 사용 언어: 한국어(ko), 영어(en)
+- 문의 언어: 한국어, English
+- 인증: 전 제품 CE 인증 / 특허등록 6건
 
 ## 제품 (Products)
 
-- [인덕티브 베어링리스 엔코더 / Inductive Bearingless Encoder](https://www.iinics.com/inductive-bearingless-encoder.html): 베어링이 없는 구조의 인덕티브 방식 엔코더
-- [프로그래머블 고속 카운터 타이머 / Programmable High-speed Counter Timer](https://www.iinics.com/programmable-high-speed-counter.html): 고속 계수 및 타이머 기능 제공
-- [에어리어 센서 / Area Sensor](https://www.iinics.com/area-sensor.html): 영역 감지용 센서
-- [마그네틱 리니어 엔코더 / Magnetic Linear Encoder](https://www.iinics.com/magnetic-linear-encoder.html): 자기식 직선 위치 측정 엔코더
-- [광학식 로터리 엔코더 / Optical Rotary Encoder](https://www.iinics.com/optical-rotary-encoder.html): 축형·중공축형·빌트인 타입 광학식 회전 엔코더
-- [마그네틱 로터리 엔코더 / Magnetic Rotary Encoder](https://www.iinics.com/magnetic-rotary-encoder.html): 자기식 회전 엔코더, 싱글턴·멀티턴 앱솔루트
-- [인덕티브 로터리 엔코더 / Inductive Rotary Encoder](https://www.iinics.com/inductive-rotary-encoder.html): 인덕티브 방식 회전 엔코더, 싱글턴·멀티턴 앱솔루트
-- [바퀴형 로터리 엔코더 / Wheel Type Rotary Encoder](https://www.iinics.com/wheel-rotary-encoder.html): 측정 휠이 결합된 회전 엔코더
-- [엔코더 전용 카운터 / Encoder Counter](https://www.iinics.com/encoder-counter.html): 엔코더 신호 전용 카운터
-- [엘리베이터 비접촉 스위치 센서 / Elevator Non-Contact Switch Sensor](https://www.iinics.com/elevator-non-contact-switch-sensor.html): 접촉 없이 동작하는 엘리베이터용 스위치 센서
-- [전체 제품 라인업 / Product Line-up](https://www.iinics.com/product-lineup.html): 전 제품 목록
+시리즈명 · 제품명 · 핵심 사양 순서입니다. 상세 사양은 각 제품 페이지에 있습니다.
 
-## 매뉴얼 (Manuals)
+- [IAH · 인덕티브 베어링리스 엔코더 / Inductive Bearingless Encoder](https://www.iinics.com/inductive-bearingless-encoder.html): 베어링 없는 로터+스테이터 분리형 초박형 인덕티브 엔코더. 외경 Ø70~Ø100 · 중공 내경 Ø20~Ø50, 앱솔루트 최대 19bit · 인크리멘탈 최대 32,768 PPR, 정확도 ±0.05°(옵션 ±0.01°), BiSS-C·SSI·UART·ABZ 출력. 로봇 관절·서보 모터용.
+- [IH · 고분해능 인덕티브 로터리 엔코더 / High-Resolution Inductive Rotary Encoder](https://www.iinics.com/high-resolution-inductive-rotary-encoder.html): 샤프트(IH50S/IH40S)·중공축(IH40H)·빌트인(IH40HB) 3타입, 앱솔루트 최대 19bit · 인크리멘탈 최대 16,384 PPR, 정확도 ±0.05°, BiSS-C·SSI·UART·ABZ 출력.
+- [IA · 인덕티브 앱솔루트 로터리 엔코더 / Inductive Absolute Rotary Encoder](https://www.iinics.com/inductive-rotary-encoder.html): 샤프트(IA50S/IA40S)·중공축(IA40H)·빌트인(IA40HB), 최대 12bit(4096), SSI 멀티턴 16,384회전, Binary/Gray, Parallel NPN(BFN)·SSI(BFS) 출력.
+- [MA · 마그네틱 앱솔루트 로터리 엔코더 / Magnetic Absolute Rotary Encoder](https://www.iinics.com/magnetic-rotary-encoder.html): 샤프트형, 최대 12bit(4096), SSI 멀티턴 16,384회전, Binary/Gray, Parallel NPN(BFN)·SSI(BFS) 출력, 최대 5,000rpm.
+- [E · 광학식 인크리멘탈 로터리 엔코더 / Optical Incremental Rotary Encoder](https://www.iinics.com/optical-rotary-encoder.html): 샤프트(E50S/E40S)·중공축(E40H)·빌트인(E40HB), 60~3,600 P/R, 최대 응답 150kHz, A·B·Z 출력.
+- [EW · 바퀴형 로터리 엔코더 / Wheel-Type Rotary Encoder](https://www.iinics.com/wheel-rotary-encoder.html): 휠 둘레 200mm, 1펄스 = 1mm~1yd 길이 단위 측정. 컨베이어·이송장치의 이동거리·속도 측정.
+- [ML · 마그네틱 리니어 엔코더 / Magnetic Linear Incremental Encoder](https://www.iinics.com/magnetic-linear-encoder.html): 분해능 1µm~1mm, 응답속도 1µs, IP65/IP67. CNC·반도체 장비 직선 위치 측정.
+- [IB · 에어리어 센서 / Single-Beam Area Sensor](https://www.iinics.com/area-sensor.html): 투과형, 검출거리 0.1~5.0m, 광축피치 20/40mm, 광축수 4~20, IP65, NPN/PNP 출력.
+- [CTH · 프로그래머블 고속 카운터 타이머 / Programmable High-Speed Counter Timer](https://www.iinics.com/programmable-high-speed-counter.html): DIN레일형, 최고 계수속도 200kcps(엔코더 x4 체배), 계수범위 -99999~999999, BATCH 카운터, RS232 Modbus RTU 통신.
+- [ECT · 엔코더 전용 카운터 / RPM / Encoder Counter / RPM](https://www.iinics.com/encoder-counter.html): DIN레일형, 계수범위 -99999~999999, RPM 10~10,000, 엔코더 입력 TNV·라인드라이버·SSI 3모델.
+- [엘리베이터 비접촉 스위치 센서 / Elevator Non-Contact Switch Sensor](https://www.iinics.com/elevator-non-contact-switch-sensor.html): 손을 가까이 대기만 하면 버튼이 눌리는 비접촉 스위치. 외광 오동작 방지 특허, 32비트 MCU, 기존 엘리베이터 개조 설치 가능. 인천공항·KTX 역사 등 설치.
+- [전체 제품 라인업 / Product Line-up](https://www.iinics.com/product-lineup.html): 전 제품 목록 (총 11종)
 
-- [매뉴얼 전체 목록](https://www.iinics.com/manuals.html)
-- [인덕티브 베어링리스 엔코더 매뉴얼](https://www.iinics.com/manual-inductive-bearingless-encoder.html)
-- [프로그래머블 고속 카운터 타이머 매뉴얼](https://www.iinics.com/manual-programmable-high-speed-counter.html)
-- [에어리어 센서 매뉴얼](https://www.iinics.com/manual-area-sensor.html)
-- [마그네틱 리니어 엔코더 매뉴얼](https://www.iinics.com/manual-magnetic-linear-encoder.html)
-- [광학식 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-optical-rotary-encoder.html)
-- [마그네틱 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-magnetic-rotary-encoder.html)
-- [인덕티브 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-inductive-rotary-encoder.html)
-- [바퀴형 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-wheel-rotary-encoder.html)
-- [엔코더 전용 카운터 매뉴얼](https://www.iinics.com/manual-encoder-counter.html)
+## 사용설명서 (Manuals)
 
-## 회사 정보 (Company)
+- [사용설명서 목록 / All Manuals](https://www.iinics.com/manuals.html): 시리즈별 설명서 페이지로 연결되는 목록
+- [IAH 인덕티브 베어링리스 엔코더 매뉴얼](https://www.iinics.com/manual-inductive-bearingless-encoder.html): 주문 코드 + PDF (한국어)
+- [IH 고분해능 인덕티브 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-high-resolution-inductive-rotary-encoder.html): 주문 코드 + PDF (한국어)
+- [CTH 프로그래머블 고속 카운터 타이머 매뉴얼](https://www.iinics.com/manual-programmable-high-speed-counter.html): 주문 코드 + PDF (한국어), RS232 Modbus RTU 통신 매뉴얼: https://www.iinics.com/cth-comm-ko_Rev3.pdf
+- [IB 에어리어 센서 매뉴얼](https://www.iinics.com/manual-area-sensor.html): PDF (한국어 · English)
+- [ML 마그네틱 리니어 엔코더 매뉴얼](https://www.iinics.com/manual-magnetic-linear-encoder.html): PDF (한국어 · English)
+- [E 광학식 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-optical-rotary-encoder.html): E50S 샤프트 · E40H 중공축 PDF (한국어 · English)
+- [MA 마그네틱 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-magnetic-rotary-encoder.html): BFN(Parallel) · BFS(SSI) PDF (한국어 · English)
+- [IA 인덕티브 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-inductive-rotary-encoder.html): 샤프트(S) · 중공축(H) × BFN · BFS PDF (한국어 · English)
+- [EW 바퀴형 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-wheel-rotary-encoder.html): PDF (한국어 · English)
+- [ECT 엔코더 전용 카운터 매뉴얼](https://www.iinics.com/manual-encoder-counter.html): PDF (한국어 · English)
 
-- [회사소개 / About](https://www.iinics.com/about.html)
-- [연혁 / Timeline](https://www.iinics.com/timeline.html)
-- [오시는 길 / Location](https://www.iinics.com/location.html)
-- [환경·인증 / Environment](https://www.iinics.com/env.html)
+PDF 파일명 규칙: 시리즈-타입-출력-언어.pdf (예: ia-h-bfs-en.pdf = IA 인덕티브 · 중공축(H) · SSI 출력(BFS) · 영어). S=샤프트, H=중공축, BFN=Parallel 출력, BFS=SSI 출력, ko=한국어, en=영어. IAH·IH·CTH 영문 매뉴얼은 준비 중이며 요청 시 문의 바랍니다.
+
+## 회사 소개 (Company)
+
+- [회사소개 / About Us](https://www.iinics.com/about.html): 연구·개발·생산·판매·지원 국내 직접 수행, CE 인증, 특허 6건
+- [제품 개발 타임라인 / Product Development Timeline](https://www.iinics.com/timeline.html): 제품군별 개발 순서와 설명
+- [제품 사용환경 / Application Environments](https://www.iinics.com/env.html): 적용 분야별 추천 시리즈 — 로봇 관절, 서빙·물류 로봇, 생산 라인, 드론, 정밀 가공·반도체, 전기차, 건설 중장비, 방산
+- [오시는 길 / Directions](https://www.iinics.com/location.html): 부산 본사 · 창원 연구소 위치
 
 ## 고객지원 (Customer Service)
 
-- [문의하기 / Contact](https://www.iinics.com/cs2.html)
-- [게시판 / Board](https://www.iinics.com/cs1.html)
-- [공지사항 / Notice](https://www.iinics.com/notice.html)
+- [고객문의 / Contact Us](https://www.iinics.com/cs2.html): 제품 선택 · 사양 확인 · 기술 지원 문의 (전화 070-7548-0034, master@iinics.com)
+- [자료실 / Downloads](https://www.iinics.com/cs1.html): 통신 매뉴얼 등 기술 자료
+- [공지사항 / Notice](https://www.iinics.com/notice.html): 회사 소식 및 공지
 
-## 참고 (Notes)
+## Optional
 
-- 각 제품 페이지에는 schema.org Product 구조화 데이터가 포함되어 있으며, 상세 사양은 additionalProperty(PropertyValue) 항목으로 제공됩니다.
-- 매뉴얼 페이지에는 schema.org DigitalDocument 구조화 데이터로 한국어·영어 PDF 링크가 제공됩니다.
-- 전체 페이지 목록: https://www.iinics.com/sitemap.xml
+- [사이트맵 / Sitemap](https://www.iinics.com/sitemap.xml): 전체 페이지 및 PDF 목록
+- 각 제품 페이지에는 schema.org Product 구조화 데이터(상세 사양은 additionalProperty)가, 각 매뉴얼 페이지에는 DigitalDocument(PDF) 구조화 데이터가 포함되어 있습니다.
