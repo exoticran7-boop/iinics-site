@@ -18,6 +18,68 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.iinics.com/location.html">
 
+<!-- 구조화 데이터(JSON-LD): 구글·AI 에이전트가 회사 주소·연락처를 '데이터'로 읽는 부분 (화면에는 보이지 않음) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.iinics.com/#organization",
+      "name": "아이닉스",
+      "alternateName": ["INICS", "INICS Co., Ltd.", "(주)아이닉스"],
+      "legalName": "주식회사 아이닉스",
+      "url": "https://www.iinics.com/",
+      "logo": "https://www.iinics.com/logo.png",
+      "telephone": "+82-70-7548-0034",
+      "email": "master@iinics.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "태종로 727 산학허브관 703호",
+        "addressLocality": "영도구",
+        "addressRegion": "부산광역시",
+        "postalCode": "49112",
+        "addressCountry": "KR"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "telephone": "+82-70-7548-0034",
+        "email": "master@iinics.com",
+        "url": "https://www.iinics.com/cs2.html",
+        "availableLanguage": ["ko", "en"]
+      },
+      "department": {
+        "@type": "Organization",
+        "name": "아이닉스 연구소 (INICS R&D Center)",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "차룡로 48번길 54, 2층 8호",
+          "addressLocality": "창원시 의창구",
+          "addressRegion": "경상남도",
+          "addressCountry": "KR"
+        }
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.iinics.com/location.html",
+      "url": "https://www.iinics.com/location.html",
+      "name": "오시는 길 | INICS Location",
+      "inLanguage": ["ko", "en"],
+      "about": { "@id": "https://www.iinics.com/#organization" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://www.iinics.com/" },
+        { "@type": "ListItem", "position": 2, "name": "오시는 길" }
+      ]
+    }
+  ]
+}
+</script>
+
 <link rel="stylesheet" href="style.css">
 
 <style>
