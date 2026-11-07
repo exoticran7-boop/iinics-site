@@ -176,8 +176,9 @@
 <style>
   /* ★ 로고 비율 고정 — width="200" 속성 때문에 모바일(480px↓)에서 style.css가
      높이만 54px로 줄이면 가로로 늘어나 보이므로, 폭은 항상 비율에 맞게 자동 계산 */
-  header h1 img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
-  @media (max-width: 480px) { header h1 img { height: 54px; width: auto; } }
+  header .site-logo { margin: 0; padding: 0; }
+  header h1 img, header .site-logo img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
+  @media (max-width: 480px) { header h1 img, header .site-logo img { height: 54px; width: auto; } }
 </style>
 
 <style>
@@ -186,6 +187,7 @@
   ════════════════════════════════════════ */
   header::before, header::after,
   header h1::before, header h1::after,
+  header .site-logo::before, header .site-logo::after,
   header nav::before, header nav::after,
   header ul::before, header ul::after {
     content: none !important;
@@ -363,7 +365,7 @@
   .ore-badge.series { color: #9CC4EE; border: 1.5px solid rgba(156,196,238,0.4); background: rgba(26,95,168,0.22); }
   .ore-badge.model { color: #FFC48A; border: 1.5px solid rgba(255,196,138,0.45); background: rgba(255,127,0,0.16); }
 
-  .ore-hero h2.ore-name-kr { margin: 0 0 8px; font-size: clamp(22px, 3vw, 32px); font-weight: 700; line-height: 1.25; color: #FFFFFF; letter-spacing: -0.5px; word-break: keep-all; }
+  .ore-hero .ore-name-kr { margin: 0 0 8px; font-size: clamp(22px, 3vw, 32px); font-weight: 700; line-height: 1.25; color: #FFFFFF; letter-spacing: -0.5px; word-break: keep-all; }
   .ore-name-en { font-family: 'Oxanium', monospace; font-size: clamp(14px, 1.6vw, 18px); color: #F0A860; letter-spacing: 1px; margin-bottom: 24px; font-weight: 700; }
 
   .ore-hero-photos { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
@@ -515,11 +517,11 @@
 <body>
 
 <header>
-  <h1>
+  <div class="site-logo">
     <a href="index.html">
       <img src="logo.png" alt="아이닉스 INICS 로고 - 홈으로" width="200" height="70">
     </a>
-  </h1>
+  </div>
 
   <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
     <span></span>
@@ -626,7 +628,7 @@
                 <span class="ore-badge series" lang="en">Rotary Encoder Series</span>
                 <span class="ore-badge model" lang="en">E Series</span>
               </div>
-              <h2 class="ore-name-kr">광학식 로터리 엔코더</h2>
+              <h1 class="ore-name-kr">광학식 로터리 엔코더</h1>
               <div class="ore-name-en" lang="en">Optical Incremental Rotary Encoder</div>
             </div>
 

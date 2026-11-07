@@ -172,8 +172,9 @@
 <style>
   /* ★ 로고 비율 고정 — width="200" 속성 때문에 모바일(480px↓)에서 style.css가
      높이만 54px로 줄이면 가로로 늘어나 보이므로, 폭은 항상 비율에 맞게 자동 계산 */
-  header h1 img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
-  @media (max-width: 480px) { header h1 img { height: 54px; width: auto; } }
+  header .site-logo { margin: 0; padding: 0; }
+  header h1 img, header .site-logo img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
+  @media (max-width: 480px) { header h1 img, header .site-logo img { height: 54px; width: auto; } }
 </style>
 
 <style>
@@ -182,6 +183,7 @@
   ════════════════════════════════════════ */
   header::before, header::after,
   header h1::before, header h1::after,
+  header .site-logo::before, header .site-logo::after,
   header nav::before, header nav::after,
   header ul::before, header ul::after {
     content: none !important;
@@ -392,7 +394,7 @@
   }
   @keyframes cth-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
-  .cth-hero h2.cth-name-kr {
+  .cth-hero .cth-name-kr {
     margin: 0 0 8px; font-size: clamp(22px, 3vw, 32px); font-weight: 700;
     line-height: 1.25; color: #FFFFFF; letter-spacing: -0.5px; word-break: keep-all;
   }
@@ -614,11 +616,11 @@
 <body>
 
 <header>
-  <h1>
+  <div class="site-logo">
     <a href="index.html">
       <img src="logo.png" alt="아이닉스 INICS 로고 - 홈으로" width="200" height="70">
     </a>
-  </h1>
+  </div>
 
   <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
     <span></span>
@@ -725,7 +727,7 @@
                 <span class="cth-badge series" lang="en">Counter · Timer Series</span>
                 <span class="cth-badge model" lang="en">CTH Series</span>
               </div>
-              <h2 class="cth-name-kr">프로그래머블 고속 카운터 타이머</h2>
+              <h1 class="cth-name-kr">프로그래머블 고속 카운터 타이머</h1>
               <div class="cth-name-en" lang="en">Programmable High-Speed Counter Timer</div>
               <p class="cth-hero-desc">
                 DIN-Rail 취부형 프로그래머블 고속 카운터/타이머 (엔코더 ×4 체배 지원).

@@ -235,8 +235,9 @@
 <style>
   /* ★ 로고 비율 고정 — width="200" 속성 때문에 모바일(480px↓)에서 style.css가
      높이만 54px로 줄이면 가로로 늘어나 보이므로, 폭은 항상 비율에 맞게 자동 계산 */
-  header h1 img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
-  @media (max-width: 480px) { header h1 img { height: 54px; width: auto; } }
+  header .site-logo { margin: 0; padding: 0; }
+  header h1 img, header .site-logo img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
+  @media (max-width: 480px) { header h1 img, header .site-logo img { height: 54px; width: auto; } }
 </style>
 
 <style>
@@ -245,6 +246,7 @@
   ════════════════════════════════════════ */
   header::before, header::after,
   header h1::before, header h1::after,
+  header .site-logo::before, header .site-logo::after,
   header nav::before, header nav::after,
   header ul::before, header ul::after {
     content: none !important;
@@ -853,11 +855,11 @@
 <body>
 
 <header>
-  <h1>
+  <div class="site-logo">
     <a href="index.html">
       <img src="logo.png" alt="아이닉스 INICS 로고 - 홈으로" width="200" height="70">
     </a>
-  </h1>
+  </div>
 
   <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
     <span></span>
@@ -962,7 +964,7 @@
             <div class="ip-hero-glow"></div>
             <div class="ip-hero-inner">
               <div>
-                <h2 class="ip-headline">산업용 센서의 기준, <em>아이닉스</em></h2>
+                <h1 class="ip-headline">산업용 센서의 기준, <em>아이닉스</em></h1>
                 <div class="ip-headline-en" lang="en">INICS — The Standard in Industrial Sensing</div>
                 <p class="ip-sub">
                   로터리 엔코더 · 리니어 엔코더 · 에어리어 센서 · 고속 카운터 타이머까지 —
