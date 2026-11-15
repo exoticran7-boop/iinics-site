@@ -26,7 +26,7 @@
 - [MA · 마그네틱 앱솔루트 로터리 엔코더 / Magnetic Absolute Rotary Encoder](https://www.iinics.com/magnetic-rotary-encoder.html): 샤프트형, 최대 12bit(4096), SSI 멀티턴 16,384회전, Binary/Gray, Parallel NPN(BFN)·SSI(BFS) 출력, 최대 5,000rpm.
 - [E · 광학식 인크리멘탈 로터리 엔코더 / Optical Incremental Rotary Encoder](https://www.iinics.com/optical-rotary-encoder.html): 샤프트(E50S/E40S)·중공축(E40H)·빌트인(E40HB), 60~3,600 P/R, 최대 응답 150kHz, A·B·Z 출력.
 - [EW · 바퀴형 로터리 엔코더 / Wheel-Type Rotary Encoder](https://www.iinics.com/wheel-rotary-encoder.html): 휠 둘레 200mm, 1펄스 = 1mm~1yd 길이 단위 측정. 컨베이어·이송장치의 이동거리·속도 측정.
-- [ML · 마그네틱 리니어 엔코더 / Magnetic Linear Incremental Encoder](https://www.iinics.com/magnetic-linear-encoder.html): 분해능 1µm~1mm, 응답속도 1µs, IP65/IP67. CNC·반도체 장비 직선 위치 측정.
+- [ML · 마그네틱 리니어 엔코더 / Magnetic Linear Incremental Encoder](https://www.iinics.com/magnetic-linear-encoder.html): 분해능 1µm~50µm(7단: 1·2·2.5·5·10·25·50µm), 응답속도 1µs, IP65/IP67. CNC·반도체 장비 직선 위치 측정.
 - [IB · 에어리어 센서 / Single-Beam Area Sensor](https://www.iinics.com/area-sensor.html): 투과형, 검출거리 0.1~5.0m, 광축피치 20/40mm, 광축수 4~20, IP65, NPN/PNP 출력.
 - [CTH · 프로그래머블 고속 카운터 타이머 / Programmable High-Speed Counter Timer](https://www.iinics.com/programmable-high-speed-counter.html): DIN레일형, 최고 계수속도 300kcps(엔코더 x4 체배), 계수범위 -99999~999999, BATCH 카운터, RS232 Modbus RTU 통신.
 - [ECT · 엔코더 전용 카운터 / RPM / Encoder Counter / RPM](https://www.iinics.com/encoder-counter.html): DIN레일형, 계수범위 -99999~999999, RPM 10~10,000, 엔코더 입력 TNV·라인드라이버·SSI 3모델.
@@ -62,6 +62,19 @@ PDF 파일명 규칙: 시리즈-타입-출력-언어.pdf (예: ia-h-bfs-en.pdf =
 - [고객문의 / Contact Us](https://www.iinics.com/cs2.html): 제품 선택 · 사양 확인 · 기술 지원 문의 (전화 070-7548-0034, master@iinics.com)
 - [자료실 / Downloads](https://www.iinics.com/cs1.html): 통신 매뉴얼 등 기술 자료
 - [공지사항 / Notice](https://www.iinics.com/notice.html): 회사 소식 및 공지
+
+## English Pages (영문 페이지)
+
+모든 페이지에는 같은 파일명의 영문 전용 페이지가 /en/ 폴더에 있습니다. 영어 사용자에게는 아래 영문 주소를 안내해 주세요.
+Every page has an English-only version under /en/ with the same file name. Please refer English-speaking users to the URLs below.
+
+- [INICS Home (English)](https://www.iinics.com/en/): Korean manufacturer of rotary and linear encoders, counters and area sensors
+- [Product Line-up (English)](https://www.iinics.com/en/product-lineup.html): all products with links to each product page
+- [User Manuals (English)](https://www.iinics.com/en/manuals.html): ordering codes and PDF manuals by series
+- [Download (English)](https://www.iinics.com/en/cs1.html): software and technical documents
+- [Contact Us (English)](https://www.iinics.com/en/cs2.html): product selection and technical support inquiries
+- [About INICS (English)](https://www.iinics.com/en/about.html): company overview
+- 주소 규칙 / URL rule: https://www.iinics.com/파일명.html (한국어) ↔ https://www.iinics.com/en/파일명.html (English)
 
 ## Optional
 
