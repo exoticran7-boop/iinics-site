@@ -1,41 +1,44 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-
-<link href="/favicon.ico" rel="icon" sizes="any"/>
-<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
-
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-8NR5DQJS5L"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 파비콘 (검색결과·브라우저 탭 아이콘) -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- ═══ 방문자 분석 · Google Analytics 4 ═══
+     ★ 사용법: https://analytics.google.com 에서 계정 생성 후
+       발급받은 측정 ID(G-로 시작)로 아래 2곳의 G-8NR5DQJS5L 를 교체하세요. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8NR5DQJS5L"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-8NR5DQJS5L');
 </script>
-<title>Download - INICS</title>
-<link rel="canonical" href="https://www.iinics.com/en/cs1.html">
+<title>자료실 | Download - INICS(아이닉스)</title>
+<meta name="description" content="INICS(아이닉스) 자료실 — 카탈로그, 제품 자료, 뉴스 등 다운로드. INICS download center.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.iinics.com/cs1.html">
 <link rel="alternate" hreflang="ko" href="https://www.iinics.com/cs1.html">
 <link rel="alternate" hreflang="en" href="https://www.iinics.com/en/cs1.html">
 <link rel="alternate" hreflang="x-default" href="https://www.iinics.com/en/cs1.html">
-<meta content="INICS Downloads — catalogs, product documents, news and other downloads. INICS download center." name="description"/>
-<meta content="index, follow" name="robots"/>
 
-<link href="../style.css" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+
 <style>
   @font-face {
     font-family: 'Oxanium';
-    src: url('../oxanium-v21-latin-regular.woff2') format('woff2');
+    src: url('oxanium-v21-latin-regular.woff2') format('woff2');
     font-weight: 400 800; font-style: normal; font-display: swap;
   }
   @font-face {
     font-family: 'Noto Sans KR';
-    src: url('../noto-sans-kr-v39-latin-regular.woff2') format('woff2');
+    src: url('noto-sans-kr-v39-latin-regular.woff2') format('woff2');
     font-weight: 300 700; font-style: normal; font-display: swap;
   }
 </style>
+
 <style>
   /* ════════════════════════════════════════════
      ★★★ 상단 헤더 서브메뉴 색상 패치 ★★★
@@ -89,6 +92,7 @@
     color: #FF7F00 !important;
   }
 </style>
+
 <style>
   /* ★ 로고 비율 고정 — width="200" 속성 때문에 모바일(480px↓)에서 style.css가
      높이만 54px로 줄이면 가로로 늘어나 보이므로, 폭은 항상 비율에 맞게 자동 계산 */
@@ -96,6 +100,7 @@
   header h1 img, header .site-logo img { height: 70px; width: auto; max-width: 60vw; object-fit: contain; }
   @media (max-width: 480px) { header h1 img, header .site-logo img { height: 54px; width: auto; } }
 </style>
+
 <style>
   /* ════════════════════════════════════════
      ★★★ 외부 style.css의 빈 박스 강제 제거 패치 ★★★
@@ -122,6 +127,7 @@
     }
   }
 </style>
+
 <style>
   /* ════════════════════════════════════════
      ★ 제품 상세 공통 사이드바 (pct-* 네임스페이스)
@@ -247,6 +253,7 @@
     .pct-layout { padding: 28px 16px 60px; }
   }
 </style>
+
 <style>
   /* ════════════════════════════════════════
      자료실 콘텐츠 전용 — brd-* 네임스페이스
@@ -640,6 +647,7 @@
     .brd-detail-foot { padding: 12px 18px; }
   }
 </style>
+
 <style>
   /* ════════════════════════════════════════
      ★ 메뉴 · 사이드바 한/영 병기 (menu-kr / menu-en) — 전 페이지 공통
@@ -699,191 +707,211 @@
 </style>
 </head>
 <body>
+
 <header>
-<div class="site-logo">
-<a href="index.html">
-<img alt="INICS logo - Home" height="70" src="../logo-en.png" width="200"/>
-</a>
-</div>
-<button aria-label="Open menu" class="hamburger" id="hamburger">
-<span></span>
-<span></span>
-<span></span>
-</button>
-<nav aria-label="Main menu" id="main-nav">
-<ul>
-<li class="has-submenu">
-<a href="product-lineup.html">Product <span class="arrow">▾</span></a>
-<ul class="submenu">
-<li><a href="product-lineup.html"><span class="menu-kr">Product Line-up</span></a></li>
-<li><a href="inductive-bearingless-encoder.html"><span class="menu-kr">Inductive Bearingless Rotary Encoder</span></a></li>
-<li><a href="high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">High-Resolution Inductive Rotary Encoder</span></a></li>
-<li><a href="programmable-high-speed-counter.html"><span class="menu-kr">Programmable High-Speed Counter Timer</span></a></li>
-<li><a href="area-sensor.html"><span class="menu-kr">Area Sensor</span></a></li>
-<li><a href="magnetic-linear-encoder.html"><span class="menu-kr">Magnetic Linear Encoder</span></a></li>
-<li><a href="optical-rotary-encoder.html"><span class="menu-kr">Optical Rotary Encoder</span></a></li>
-<li><a href="magnetic-rotary-encoder.html"><span class="menu-kr">Magnetic Rotary Encoder</span></a></li>
-<li><a href="inductive-rotary-encoder.html"><span class="menu-kr">Inductive Rotary Encoder</span></a></li>
-<li><a href="wheel-rotary-encoder.html"><span class="menu-kr">Wheel Type Rotary Encoder</span></a></li>
-<li><a href="encoder-counter.html"><span class="menu-kr">Encoder Counter</span></a></li>
-<li><a href="elevator-non-contact-switch-sensor.html"><span class="menu-kr">Elevator Non-Contact Switch Sensor</span></a></li>
-</ul>
-</li>
-<li class="has-submenu">
-<a href="manuals.html">Manual <span class="arrow">▾</span></a>
-<ul class="submenu">
-<li><a href="manual-inductive-bearingless-encoder.html"><span class="menu-kr">Inductive Bearingless Rotary Encoder</span></a></li>
-<li><a href="manual-high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">High-Resolution Inductive Rotary Encoder</span></a></li>
-<li><a href="manual-programmable-high-speed-counter.html"><span class="menu-kr">Programmable High-Speed Counter Timer</span></a></li>
-<li><a href="manual-area-sensor.html"><span class="menu-kr">Area Sensor</span></a></li>
-<li><a href="manual-magnetic-linear-encoder.html"><span class="menu-kr">Magnetic Linear Encoder</span></a></li>
-<li><a href="manual-optical-rotary-encoder.html"><span class="menu-kr">Optical Rotary Encoder</span></a></li>
-<li><a href="manual-magnetic-rotary-encoder.html"><span class="menu-kr">Magnetic Rotary Encoder</span></a></li>
-<li><a href="manual-inductive-rotary-encoder.html"><span class="menu-kr">Inductive Rotary Encoder</span></a></li>
-<li><a href="manual-wheel-rotary-encoder.html"><span class="menu-kr">Wheel Type Rotary Encoder</span></a></li>
-<li><a href="manual-encoder-counter.html"><span class="menu-kr">Encoder Counter</span></a></li>
-</ul>
-</li>
-<li class="has-submenu">
-<a class="active" href="cs1.html">Customer Service <span class="arrow">▾</span></a>
-<ul class="submenu">
-<li><a class="active" href="cs1.html"><span class="menu-kr">Downloads</span></a></li>
-<li><a href="cs2.html"><span class="menu-kr">Contact Us</span></a></li>
-</ul>
-</li>
-<li><a href="notice.html">Notice</a></li>
-<li class="has-submenu">
-<a href="about.html">Company <span class="arrow">▾</span></a>
-<ul class="submenu">
-<li><a href="about.html"><span class="menu-kr">About Us</span></a></li>
-<li><a href="timeline.html"><span class="menu-kr">Product Development Timeline</span></a></li>
-<li><a href="env.html"><span class="menu-kr">Application Environments</span></a></li>
-<li><a href="location.html"><span class="menu-kr">Directions</span></a></li>
-</ul>
-</li>
-<li>
-<a class="shop-link" href="https://smartstore.naver.com/iinics" rel="noopener noreferrer" target="_blank">Shopping Mall</a>
-</li>
-  <li class="lang-switch"><span aria-current="true" class="lang-cur">EN</span><span aria-hidden="true" class="lang-sep">|</span><a href="../cs1.html" hreflang="ko" lang="ko">한국어</a></li>
+  <div class="site-logo">
+    <a href="index.html">
+      <img src="logo.png" alt="INICS(아이닉스) 로고 - 홈으로" width="200" height="70">
+    </a>
+  </div>
+
+  <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav id="main-nav" aria-label="주요 메뉴">
+    <ul>
+      <li class="has-submenu">
+        <a href="product-lineup.html">Product <span class="arrow">▾</span></a>
+        <ul class="submenu">
+          <li><a href="product-lineup.html"><span class="menu-kr">제품 라인업</span><span class="menu-en" lang="en">Product Line-up</span></a></li>
+          <li><a href="inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 로터리 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Rotary Encoder</span></a></li>
+          <li><a href="high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">고분해능 인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">High-Resolution Inductive Rotary Encoder</span></a></li>
+          <li><a href="programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
+          <li><a href="area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
+          <li><a href="magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
+          <li><a href="optical-rotary-encoder.html"><span class="menu-kr">광학식 로터리 엔코더</span><span class="menu-en" lang="en">Optical Rotary Encoder</span></a></li>
+          <li><a href="magnetic-rotary-encoder.html"><span class="menu-kr">마그네틱 로터리 엔코더</span><span class="menu-en" lang="en">Magnetic Rotary Encoder</span></a></li>
+          <li><a href="inductive-rotary-encoder.html"><span class="menu-kr">인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">Inductive Rotary Encoder</span></a></li>
+          <li><a href="wheel-rotary-encoder.html"><span class="menu-kr">바퀴형 로터리 엔코더</span><span class="menu-en" lang="en">Wheel-Type Rotary Encoder</span></a></li>
+          <li><a href="encoder-counter.html"><span class="menu-kr">엔코더 전용 카운터</span><span class="menu-en" lang="en">Encoder Counter</span></a></li>
+          <li><a href="elevator-non-contact-switch-sensor.html"><span class="menu-kr">엘리베이터 비접촉 스위치 센서</span><span class="menu-en" lang="en">Elevator Non-Contact Switch Sensor</span></a></li>
+        </ul>
+      </li>
+
+      <li class="has-submenu">
+        <a href="manuals.html">Manual <span class="arrow">▾</span></a>
+        <ul class="submenu">
+          <li><a href="manual-inductive-bearingless-encoder.html"><span class="menu-kr">인덕티브 베어링리스 로터리 엔코더</span><span class="menu-en" lang="en">Inductive Bearingless Rotary Encoder</span></a></li>
+          <li><a href="manual-high-resolution-inductive-rotary-encoder.html"><span class="menu-kr">고분해능 인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">High-Resolution Inductive Rotary Encoder</span></a></li>
+          <li><a href="manual-programmable-high-speed-counter.html"><span class="menu-kr">프로그래머블 고속 카운터 타이머</span><span class="menu-en" lang="en">Programmable High-Speed Counter Timer</span></a></li>
+          <li><a href="manual-area-sensor.html"><span class="menu-kr">에어리어센서</span><span class="menu-en" lang="en">Area Sensor</span></a></li>
+          <li><a href="manual-magnetic-linear-encoder.html"><span class="menu-kr">마그네틱 리니어 엔코더</span><span class="menu-en" lang="en">Magnetic Linear Encoder</span></a></li>
+          <li><a href="manual-optical-rotary-encoder.html"><span class="menu-kr">광학식 로터리 엔코더</span><span class="menu-en" lang="en">Optical Rotary Encoder</span></a></li>
+          <li><a href="manual-magnetic-rotary-encoder.html"><span class="menu-kr">마그네틱 로터리 엔코더</span><span class="menu-en" lang="en">Magnetic Rotary Encoder</span></a></li>
+          <li><a href="manual-inductive-rotary-encoder.html"><span class="menu-kr">인덕티브 로터리 엔코더</span><span class="menu-en" lang="en">Inductive Rotary Encoder</span></a></li>
+          <li><a href="manual-wheel-rotary-encoder.html"><span class="menu-kr">바퀴형 로터리 엔코더</span><span class="menu-en" lang="en">Wheel-Type Rotary Encoder</span></a></li>
+          <li><a href="manual-encoder-counter.html"><span class="menu-kr">엔코더 전용 카운터</span><span class="menu-en" lang="en">Encoder Counter</span></a></li>
+        </ul>
+      </li>
+
+      <li class="has-submenu">
+        <a href="cs1.html" class="active">Customer Service <span class="arrow">▾</span></a>
+        <ul class="submenu">
+          <li><a href="cs1.html" class="active"><span class="menu-kr">자료실</span><span class="menu-en" lang="en">Downloads</span></a></li>
+          <li><a href="cs2.html"><span class="menu-kr">고객문의</span><span class="menu-en" lang="en">Contact Us</span></a></li>
+        </ul>
+      </li>
+
+      <li><a href="notice.html">Notice</a></li>
+
+      <li class="has-submenu">
+        <a href="about.html">Company <span class="arrow">▾</span></a>
+        <ul class="submenu">
+          <li><a href="about.html"><span class="menu-kr">회사소개</span><span class="menu-en" lang="en">About Us</span></a></li>
+          <li><a href="timeline.html"><span class="menu-kr">제품 개발 타임라인</span><span class="menu-en" lang="en">Product Development Timeline</span></a></li>
+          <li><a href="env.html"><span class="menu-kr">제품 사용환경</span><span class="menu-en" lang="en">Application Environments</span></a></li>
+          <li><a href="location.html"><span class="menu-kr">오시는 길</span><span class="menu-en" lang="en">Directions</span></a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="https://smartstore.naver.com/iinics" target="_blank" rel="noopener noreferrer" class="shop-link">Shopping Mall</a>
+      </li>
+
+      <li class="lang-switch"><span class="lang-cur" aria-current="true">한국어</span><span class="lang-sep" aria-hidden="true">|</span><a href="en/cs1.html" lang="en" hreflang="en">EN</a></li>
     </ul>
-</nav>
+  </nav>
 </header>
+
 <main>
-<div class="pct-page">
-<div class="pct-layout">
+  <div class="pct-page">
+    <div class="pct-layout">
 
-<aside class="pct-sidebar">
-<nav aria-label="Customer service menu">
-<div class="pct-sidebar-label">Customer Service</div>
-<ul class="pct-nav">
-<li><a aria-current="page" class="active" href="cs1.html"><span class="menu-kr">Downloads</span></a></li>
-<li><a href="cs2.html"><span class="menu-kr">Contact Us</span></a></li>
-</ul>
-</nav>
-</aside>
+      <!-- ══ 사이드바 (Customer Service 그룹 · 표준 pct-* 사이드바) ══ -->
+      <aside class="pct-sidebar">
+        <nav aria-label="고객 서비스 메뉴">
+        <div class="pct-sidebar-label">Customer Service</div>
+        <ul class="pct-nav">
+          <li><a href="cs1.html" class="active" aria-current="page"><span class="menu-kr">자료실</span><span class="menu-en" lang="en">Downloads</span></a></li>
+          <li><a href="cs2.html"><span class="menu-kr">고객문의</span><span class="menu-en" lang="en">Contact Us</span></a></li>
+        </ul>
+        </nav>
+      </aside>
 
-<div class="pct-content">
-<div class="brd-wrap">
-<div class="brd-header">
-<div>
-<div class="brd-series-tag">INICS · Customer Service</div>
-<h1 class="brd-title"><em>Downloads</em></h1>
-<p class="brd-subtitle">DOWNLOAD</p>
-</div>
-</div>
-<div id="listView">
-<div class="brd-search-bar">
-<input class="brd-search-input" id="searchInput" oninput="doSearch()" placeholder="Search title, content, author..." type="text"/>
-<button class="brd-btn outline" onclick="doSearch()" style="padding:10px 16px;">
-<svg fill="none" height="13" viewBox="0 0 16 16" width="13">
-<circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"></circle>
-<line stroke="currentColor" stroke-linecap="round" stroke-width="1.4" x1="11" x2="15" y1="11" y2="15"></line>
-</svg>
-                Search
+      <!-- ══ 콘텐츠 ══ -->
+      <div class="pct-content">
+        <div class="brd-wrap">
+
+          <div class="brd-header">
+            <div>
+              <div class="brd-series-tag">INICS · Customer Service</div>
+              <h1 class="brd-title"><em>자료실</em></h1>
+              <p class="brd-subtitle">DOWNLOAD</p>
+            </div>
+          </div>
+
+          <div id="listView">
+            <div class="brd-search-bar">
+              <input class="brd-search-input" id="searchInput" type="text" placeholder="제목, 내용, 작성자 검색..." oninput="doSearch()" />
+              <button class="brd-btn outline" onclick="doSearch()" style="padding:10px 16px;">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                  <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/>
+                  <line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                검색
               </button>
-</div>
-<div class="brd-table-wrap">
-<div class="brd-thead">
-<span>No.</span>
-<span>Title</span>
-<span style="text-align:center;">Category</span>
-<span style="text-align:center;">Author</span>
-<span style="text-align:center;">Date</span>
-</div>
-<div class="brd-tbody" id="brdTbody"></div>
-<div class="brd-empty" id="brdEmpty" style="display:none;">
-<svg fill="none" viewBox="0 0 48 48">
-<rect height="32" rx="4" stroke="#aaaaaa" stroke-width="1.5" width="32" x="8" y="8"></rect>
-<line stroke="#aaaaaa" stroke-width="1.3" x1="16" x2="32" y1="20" y2="20"></line>
-<line stroke="#aaaaaa" stroke-width="1.3" x1="16" x2="26" y1="26" y2="26"></line>
-</svg>
-<div class="brd-empty-text" id="brdEmptyText">No posts yet</div>
-</div>
-</div>
-<div class="brd-pagination" id="pagination"></div>
-</div>
-<div class="brd-detail" id="detailView">
-<button class="brd-detail-back" onclick="closeDetail()">
-<svg fill="none" viewBox="0 0 14 14">
-<path d="M9 2 L4 7 L9 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"></path>
-</svg>
-              Back to list
+            </div>
+
+            <div class="brd-table-wrap">
+              <div class="brd-thead">
+                <span>번호</span>
+                <span>제목</span>
+                <span style="text-align:center;">분류</span>
+                <span style="text-align:center;">작성자</span>
+                <span style="text-align:center;">날짜</span>
+              </div>
+              <div class="brd-tbody" id="brdTbody"></div>
+              <div class="brd-empty" id="brdEmpty" style="display:none;">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <rect x="8" y="8" width="32" height="32" rx="4" stroke="#aaaaaa" stroke-width="1.5"/>
+                  <line x1="16" y1="20" x2="32" y2="20" stroke="#aaaaaa" stroke-width="1.3"/>
+                  <line x1="16" y1="26" x2="26" y2="26" stroke="#aaaaaa" stroke-width="1.3"/>
+                </svg>
+                <div class="brd-empty-text" id="brdEmptyText">등록된 게시물이 없습니다<br>No posts yet</div>
+              </div>
+            </div>
+            <div class="brd-pagination" id="pagination"></div>
+          </div>
+
+          <div class="brd-detail" id="detailView">
+            <button class="brd-detail-back" onclick="closeDetail()">
+              <svg viewBox="0 0 14 14" fill="none">
+                <path d="M9 2 L4 7 L9 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              목록으로
             </button>
-<div class="brd-detail-card">
-<div class="brd-detail-head">
-<div class="brd-detail-meta" id="detailMeta"></div>
-<div class="brd-detail-h" id="detailTitle"></div>
-<div id="detailTags"></div>
-</div>
-<div class="brd-detail-body">
-<div class="brd-detail-text" id="detailContent"></div>
-<figure class="brd-shot" id="detailShot" style="display:none;">
-<figcaption class="brd-shot-cap">
-<span class="brd-shot-label">Program Screen</span>
-<span class="brd-shot-text" id="detailShotCap"></span>
-</figcaption>
-<img alt="" class="brd-detail-img" id="detailImg" src=""/>
-<div class="brd-shot-hint">Click the image to enlarge.</div>
-</figure>
-<div class="brd-attach" id="detailAttach" style="display:none;">
-<svg fill="none" viewBox="0 0 24 24">
-<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="#cc7700" stroke-linecap="round" stroke-width="1.5"></path>
-<polyline points="17 8 12 3 7 8" stroke="#cc7700" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></polyline>
-<line stroke="#cc7700" stroke-linecap="round" stroke-width="1.5" x1="12" x2="12" y1="3" y2="15"></line>
-</svg>
-<div class="brd-attach-name" id="detailAttachName"></div>
-<a class="brd-attach-dl" download="" href="#" id="detailAttachDl">
-<svg fill="none" viewBox="0 0 16 16">
-<path d="M8 2 L8 10 M5 7 L8 10 L11 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"></path>
-<line stroke="currentColor" stroke-linecap="round" stroke-width="1.4" x1="2" x2="14" y1="13" y2="13"></line>
-</svg>
-                    Download
+            <div class="brd-detail-card">
+              <div class="brd-detail-head">
+                <div class="brd-detail-meta" id="detailMeta"></div>
+                <div class="brd-detail-h" id="detailTitle"></div>
+                <div id="detailTags"></div>
+              </div>
+              <div class="brd-detail-body">
+                <div class="brd-detail-text" id="detailContent"></div>
+                <figure class="brd-shot" id="detailShot" style="display:none;">
+                  <figcaption class="brd-shot-cap">
+                    <span class="brd-shot-label" lang="en">Program Screen</span>
+                    <span class="brd-shot-text" id="detailShotCap"></span>
+                  </figcaption>
+                  <img class="brd-detail-img" id="detailImg" src="" alt="" />
+                  <div class="brd-shot-hint">화면을 누르면 크게 볼 수 있습니다.</div>
+                </figure>
+                <div class="brd-attach" id="detailAttach" style="display:none;">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="#cc7700" stroke-width="1.5" stroke-linecap="round"/>
+                    <polyline points="17 8 12 3 7 8" stroke="#cc7700" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="12" y1="3" x2="12" y2="15" stroke="#cc7700" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  <div class="brd-attach-name" id="detailAttachName"></div>
+                  <a class="brd-attach-dl" id="detailAttachDl" href="#" download>
+                    <svg viewBox="0 0 16 16" fill="none">
+                      <path d="M8 2 L8 10 M5 7 L8 10 L11 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line x1="2" y1="13" x2="14" y2="13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                    다운로드
                   </a>
-</div>
-</div>
-<div class="brd-detail-foot">
-<div class="brd-detail-foot-left">
-<button class="brd-nav-btn" id="prevBtn" onclick="navigatePost(-1)">
-<svg fill="none" viewBox="0 0 12 12"><path d="M8 2 L4 6 L8 10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"></path></svg>
-                    Previous
+                </div>
+              </div>
+              <div class="brd-detail-foot">
+                <div class="brd-detail-foot-left">
+                  <button class="brd-nav-btn" id="prevBtn" onclick="navigatePost(-1)">
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M8 2 L4 6 L8 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    이전
                   </button>
-<button class="brd-nav-btn" id="nextBtn" onclick="navigatePost(1)">
-                    Next
-                    <svg fill="none" viewBox="0 0 12 12"><path d="M4 2 L8 6 L4 10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"></path></svg>
-</button>
-</div>
-<div class="brd-detail-foot-right">
-<button class="brd-nav-btn" onclick="closeDetail()">List</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+                  <button class="brd-nav-btn" id="nextBtn" onclick="navigatePost(1)">
+                    다음
+                    <svg viewBox="0 0 12 12" fill="none"><path d="M4 2 L8 6 L4 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+                <div class="brd-detail-foot-right">
+                  <button class="brd-nav-btn" onclick="closeDetail()">목록</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /brd-wrap -->
+      </div><!-- /pct-content -->
+    </div><!-- /pct-layout -->
+  </div><!-- /pct-page -->
 </main>
 
+<!-- ════════════════════════════════════════
+     ★ 햄버거 메뉴 동작 스크립트 — 표준 동일
+════════════════════════════════════════ -->
 <script>
   (function() {
     function removeHamburgerOnPC() {
@@ -905,6 +933,7 @@
     window.addEventListener('resize', removeHamburgerOnPC);
   })();
 </script>
+
 <script>
   const hamburger = document.getElementById('hamburger');
   const nav = document.getElementById('main-nav');
@@ -939,7 +968,12 @@
   });
 </script>
 
-<script>
+
+
+<!-- ════════════════════════════════════════
+     ★ 자료실 게시판 동작 스크립트
+════════════════════════════════════════ -->
+  <script>
   /* ════════════════════════════════════════════════════════════
      ★ 자료실 데이터는 구글 스프레드시트 "자료실" 탭에서 불러옵니다.
      ★ 공지사항(notice.html)과 같은 Apps Script 웹 앱 URL을 사용하며,
@@ -957,41 +991,41 @@
   const STATIC_POSTS = [
     {
       id: 'cth-modbus-monitor',
-      image: '../cth-modbus-monitor.webp',
-      imageAlt: 'CTH Modbus Monitor screen: live status display, reset buttons, direct Modbus commands with frame log, and the full settings table',
-      imageCaption: 'CTH Modbus Monitor main screen',
-      title: 'CTH Modbus Monitor — PC Software for the High-Speed Counter / Timer',
-      content: `■ Key functions
-· Live status — count value, presets, BATCH value and output/input indicators shown like the front panel of the unit.
-· Remote control — count reset, BATCH reset, and writing presets (PS1 · PS2 · BATCH)
-· Device settings — view and change every setting in a table; save, load and restore factory settings.
-· Development & diagnostics — direct Modbus commands and a TX/RX frame log
-· Built-in documents — user manual, communication manual, connection guide and C example code (dsPIC · STM32 · AVR)`,
-      author: 'INICS',
+      image: 'cth-modbus-monitor.webp',
+      imageAlt: 'CTH Modbus Monitor 프로그램 화면 — 실시간 상태 표시, 리셋 버튼, Modbus 직접 명령과 프레임 기록, 전체 제품 설정 표',
+      imageCaption: 'CTH Modbus Monitor 실행 화면',
+      title: 'CTH Modbus Monitor — 고속 카운터 / 타이머 PC 프로그램',
+      content: `■ 주요 기능
+· 실시간 상태 표시 — 계수값 · 설정값 · BATCH 값과 출력 · 입력 표시등을 제품 앞면처럼 보여 줍니다.
+· 원격 제어 — 카운트 리셋 · BATCH 리셋, 설정값(PS1 · PS2 · BATCH) 쓰기
+· 제품 설정 — 전체 설정 항목을 표로 확인 · 변경하고, 설정 저장 · 읽기와 출하 설정 복원을 지원합니다.
+· 개발 · 점검 — Modbus 직접 명령, 통신 프레임(TX/RX) 기록
+· 자료 내장 — 사용설명서 · 통신 매뉴얼 · 연결 가이드 · C 예제 코드(dsPIC · STM32 · AVR)`,
+      author: '아이닉스',
       date: '2026.11.16',
-      cat: 'Software',
-      file: '../CTH_Modbus_Monitor_EN.zip',
-      fileName: 'CTH_Modbus_Monitor_EN.zip'
+      cat: '소프트웨어',
+      file: 'CTH_Modbus_Monitor_KR.zip',
+      fileName: 'CTH_Modbus_Monitor_KR.zip'
     },
     {
       id: 'cth-comm-v300',
-      title: 'Programmable High-Speed Counter Timer CTH Series Communication Manual',
-      content: 'Programmable High-Speed Counter Timer CTH Series RS232 (Modbus RTU) Communication Manual',
-      author: 'INICS',
+      title: '프로그래머블 고속 카운터 / 타이머 CTH Series 통신 매뉴얼',
+      content: '프로그래머블 고속 카운터 / 타이머 CTH Series RS232 (Modbus RTU) 통신 매뉴얼',
+      author: '아이닉스',
       date: '2026.11.16',
-      cat: 'Manual',
-      file: '../cth-comm-en_Rev1.pdf',
-      fileName: 'cth-comm-en_Rev1.pdf'
+      cat: '매뉴얼',
+      file: 'cth-comm-ko_Rev1.pdf',
+      fileName: 'cth-comm-ko_Rev1.pdf'
     },
     {
       id: 'cth-guide-v300',
-      title: 'Programmable High-Speed Counter Timer CTH Series Modbus Connection Guide',
-      content: 'Programmable High-Speed Counter Timer CTH Series Modbus Connection Guide (CTH communication program · QModMaster · PLC)',
-      author: 'INICS',
+      title: '프로그래머블 고속 카운터 / 타이머 CTH Series Modbus 연결 가이드',
+      content: '프로그래머블 고속 카운터 / 타이머 CTH Series Modbus 연결 가이드 (CTH 통신 프로그램 · QModMaster · PLC)',
+      author: '아이닉스',
       date: '2026.11.16',
-      cat: 'Manual',
-      file: '../cth-guide-en.pdf',
-      fileName: 'cth-guide-en.pdf'
+      cat: '매뉴얼',
+      file: 'cth-guide-ko.pdf',
+      fileName: 'cth-guide-ko.pdf'
     }
   ];
   let allPosts      = [];
@@ -1005,7 +1039,7 @@
     const empty = document.getElementById('brdEmpty');
     const emptyText = document.getElementById('brdEmptyText');
     empty.style.display = 'block';
-    emptyText.innerHTML = 'Loading…';
+    emptyText.innerHTML = '자료를 불러오는 중입니다…<br>Loading…';
     try {
       const ctrl = new AbortController();
       const t = setTimeout(() => ctrl.abort(), 15000);
@@ -1013,11 +1047,9 @@
       clearTimeout(t);
       const data = await res.json();
       if (!Array.isArray(data)) throw new Error('bad data');
-      /* English page: show only posts that have an English title (sheet columns title_en / content_en) */
-      const en = data.filter(p => p.title_en).map(p => ({ ...p, title: p.title_en, content: p.content_en || '', author: 'INICS' }));
-      allPosts = [...STATIC_POSTS, ...en];
+      allPosts = [...STATIC_POSTS, ...data];
       filteredPosts = [...allPosts];
-      emptyText.innerHTML = 'No posts yet';
+      emptyText.innerHTML = '등록된 게시물이 없습니다<br>No posts yet';
       render();
       openFromHash();
     } catch (e) {
@@ -1027,7 +1059,7 @@
       render();
       openFromHash();
       if (!allPosts.length) {
-        emptyText.innerHTML = 'Failed to load. Please refresh.';
+        emptyText.innerHTML = '자료를 불러오지 못했습니다. 잠시 후 새로고침해 주세요.<br>Failed to load. Please refresh.';
         document.getElementById('pagination').innerHTML = '';
       }
     }
@@ -1057,7 +1089,7 @@
       const gi = start + li;
       const num = total - gi;
       const tags = [
-        post.file ? '<span class="brd-tag file">File</span>' : '',
+        post.file ? '<span class="brd-tag file">첨부</span>' : '',
         isNewPost(post.date) ? '<span class="brd-tag new">NEW</span>' : '',
         post.cat ? `<span class="brd-tag cat">${escHtml(post.cat)}</span>` : '',
       ].join('');
@@ -1129,11 +1161,11 @@
     document.getElementById('detailMeta').innerHTML =
       `<span>No.${filteredPosts.length-idx}</span>` +
       (post.cat ? `<span>${escHtml(post.cat)}</span>` : '') +
-      (post.author ? `<span>By ${escHtml(post.author)}</span>` : '') +
+      (post.author ? `<span>작성자: ${escHtml(post.author)}</span>` : '') +
       `<span>${escHtml(post.date)}</span>`;
     document.getElementById('detailTitle').textContent = post.title;
     document.getElementById('detailTags').innerHTML = [
-      post.file ? '<span class="brd-tag file">Attachment</span>' : '',
+      post.file ? '<span class="brd-tag file">첨부파일</span>' : '',
       isNewPost(post.date) ? '<span class="brd-tag new">NEW</span>' : '',
     ].join('');
     const isImg = /\.(png|jpe?g|gif|webp)(\?.*)?$/i.test(post.file || '');
@@ -1145,13 +1177,13 @@
     shot.style.display = imgSrc ? 'block' : 'none';
     if (imgSrc) {
       img.src = imgSrc; img.alt = post.imageAlt || post.title; img.style.display = 'block';
-      img.style.cursor = 'zoom-in'; img.title = 'Click to enlarge';
+      img.style.cursor = 'zoom-in'; img.title = '누르면 크게 볼 수 있습니다';
       img.onclick = () => window.open(imgSrc, '_blank', 'noopener');
     } else { img.src=''; img.alt=''; img.style.display='none'; img.onclick = null; img.style.cursor=''; img.title=''; }
     document.getElementById('detailContent').textContent = post.content;
     const attach = document.getElementById('detailAttach');
     if (post.file) {
-      document.getElementById('detailAttachName').textContent = post.fileName || 'Attachment';
+      document.getElementById('detailAttachName').textContent = post.fileName || '첨부파일';
       const dl = document.getElementById('detailAttachDl');
       dl.href = post.file; dl.target = '_blank'; dl.rel = 'noopener';
       attach.style.display = 'flex';
@@ -1226,6 +1258,7 @@
   function escHtml(s) { return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   </script>
 
+<!-- ★ 방문자 IP 추적 -->
 <script>
 let resolveVisitGeo;
 window.visitGeoReady = new Promise(r => { resolveVisitGeo = r; });
@@ -1264,6 +1297,6 @@ window.visitGeoReady = new Promise(r => { resolveVisitGeo = r; });
     .catch(() => {});
 })();
 </script>
-<script defer="" src="../lang.js"></script>
+<script src="lang.js" defer></script>
 </body>
 </html>

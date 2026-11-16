@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>페이지를 찾을 수 없습니다 (404) | 아이닉스 INICS</title>
+<!-- 파비콘 (검색결과·브라우저 탭 아이콘) -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>페이지를 찾을 수 없습니다 (404) | INICS(아이닉스)</title>
 <meta name="robots" content="noindex, follow">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,6 +54,7 @@
   try { p = decodeURIComponent(location.pathname); } catch (e) { return; }
   var rules = [
     ["cth-comm-ko_Rev3", "cth-comm-ko_Rev1.pdf"],
+    ["CTH_Modbus_Monitor.zip", "CTH_Modbus_Monitor_KR.zip"],
     ["베어링리스", "inductive-bearingless-encoder.html"],
     ["바퀴", "wheel-rotary-encoder.html"],
     ["리니어", "magnetic-linear-encoder.html"],
