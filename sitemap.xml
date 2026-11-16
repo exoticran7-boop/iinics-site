@@ -66,7 +66,7 @@
   </url>
   <url>
     <loc>https://www.iinics.com/programmable-high-speed-counter.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://www.iinics.com/programmable-high-speed-counter.jpg</image:loc>
@@ -156,7 +156,7 @@
   </url>
   <url>
     <loc>https://www.iinics.com/manuals.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -183,7 +183,7 @@
   </url>
   <url>
     <loc>https://www.iinics.com/manual-programmable-high-speed-counter.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://www.iinics.com/cth-ko-1.webp</image:loc>
@@ -196,6 +196,18 @@
     </image:image>
     <image:image>
       <image:loc>https://www.iinics.com/cth-ko-4.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.iinics.com/cth-en-1.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.iinics.com/cth-en-2.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.iinics.com/cth-en-3.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.iinics.com/cth-en-4.webp</image:loc>
     </image:image>
   </url>
   <url>
@@ -307,7 +319,7 @@
   </url>
   <url>
     <loc>https://www.iinics.com/cs1.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -353,12 +365,32 @@
   </url>
   <url>
     <loc>https://www.iinics.com/cth-ko.pdf</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.iinics.com/cth-comm-ko_Rev1.pdf</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.iinics.com/cth-en.pdf</loc>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.iinics.com/cth-comm-en_Rev1.pdf</loc>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.iinics.com/cth-guide-ko.pdf</loc>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.iinics.com/cth-guide-en.pdf</loc>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
@@ -499,7 +531,7 @@
   </url>
   <url>
     <loc>https://www.iinics.com/en/cs1.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -594,7 +626,7 @@
   </url>
   <url>
     <loc>https://www.iinics.com/en/manual-programmable-high-speed-counter.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
@@ -604,7 +636,7 @@
   </url>
   <url>
     <loc>https://www.iinics.com/en/manuals.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -624,7 +656,7 @@
   </url>
   <url>
     <loc>https://www.iinics.com/en/programmable-high-speed-counter.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>

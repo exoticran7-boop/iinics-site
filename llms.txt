@@ -38,8 +38,8 @@
 - [사용설명서 목록 / All Manuals](https://www.iinics.com/manuals.html): 시리즈별 설명서 페이지로 연결되는 목록
 - [IAH 인덕티브 베어링리스 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-inductive-bearingless-encoder.html): 주문 코드 + PDF (한국어)
 - [IH 고분해능 인덕티브 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-high-resolution-inductive-rotary-encoder.html): 주문 코드 + PDF (한국어)
-- [CTH 프로그래머블 고속 카운터 타이머 매뉴얼](https://www.iinics.com/manual-programmable-high-speed-counter.html): 주문 코드 + PDF (한국어), RS232 Modbus RTU 통신 매뉴얼: https://www.iinics.com/cth-comm-ko_Rev1.pdf
-- [CTH Modbus Monitor V1.0 (PC 프로그램)](https://www.iinics.com/cs1.html#cth-modbus-monitor): CTH 실시간 모니터링 · 설정 읽기/쓰기 · 리셋, Windows 10/11 64비트, RS232 연결. 내려받기: https://www.iinics.com/CTH_Modbus_Monitor.zip
+- [CTH 프로그래머블 고속 카운터 타이머 매뉴얼](https://www.iinics.com/manual-programmable-high-speed-counter.html): 주문 코드 + PDF (한국어 · English), RS232 Modbus RTU 통신 매뉴얼: https://www.iinics.com/cth-comm-ko_Rev1.pdf
+- [CTH Modbus Monitor (PC 프로그램)](https://www.iinics.com/cs1.html#cth-modbus-monitor): CTH 실시간 모니터링 · 설정 읽기/쓰기 · 리셋, Windows 10/11 64비트, RS232 연결. 내려받기: https://www.iinics.com/CTH_Modbus_Monitor_KR.zip
 - [IB 에어리어 센서 매뉴얼](https://www.iinics.com/manual-area-sensor.html): PDF (한국어 · English)
 - [ML 마그네틱 리니어 엔코더 매뉴얼](https://www.iinics.com/manual-magnetic-linear-encoder.html): PDF (한국어 · English)
 - [E 광학식 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-optical-rotary-encoder.html): E50S 샤프트 · E40H 중공축 PDF (한국어 · English)
@@ -48,7 +48,7 @@
 - [EW 바퀴형 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-wheel-rotary-encoder.html): PDF (한국어 · English)
 - [ECT 엔코더 전용 카운터 매뉴얼](https://www.iinics.com/manual-encoder-counter.html): PDF (한국어 · English)
 
-PDF 파일명 규칙: 시리즈-타입-출력-언어.pdf (예: ia-h-bfs-en.pdf = IA 인덕티브 · 중공축(H) · SSI 출력(BFS) · 영어). S=샤프트, H=중공축, BFN=Parallel 출력, BFS=SSI 출력, ko=한국어, en=영어. IAH·IH·CTH 영문 매뉴얼은 준비 중이며 요청 시 문의 바랍니다.
+PDF 파일명 규칙: 시리즈-타입-출력-언어.pdf (예: ia-h-bfs-en.pdf = IA 인덕티브 · 중공축(H) · SSI 출력(BFS) · 영어). S=샤프트, H=중공축, BFN=Parallel 출력, BFS=SSI 출력, ko=한국어, en=영어. IAH·IH 영문 매뉴얼은 준비 중이며 요청 시 문의 바랍니다.
 
 ## 회사 소개 (Company)
 
