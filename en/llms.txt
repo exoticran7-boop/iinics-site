@@ -1,0 +1,81 @@
+# INICS
+
+> INICS (INICS Co., Ltd.) is a Korean manufacturer of industrial sensors, founded in 2020. It carries out R&D, production, sales and technical support in-house in Korea for rotary encoders (inductive, optical, magnetic and wheel type), magnetic linear encoders, area sensors, high-speed counter timers, encoder counters and elevator non-contact switch sensors. All products are CE certified, and the company holds 6 registered patents. Made in Korea.
+
+Slogan: A sensor specialist company that makes the world more convenient
+
+This is the English version of the site summary. The Korean version is at https://www.iinics.com/llms.txt
+
+## Company Facts
+
+- Company name: INICS Co., Ltd. (주식회사 아이닉스)
+- Founded: 2020
+- Head office: 703, Sanhak Hub, 727 Taejong-ro, Yeongdo-gu, Busan 49112, Korea
+- R&D center: 8ho, 2F, 54 Charyong-ro 48beon-gil, Uichang-gu, Changwon, Gyeongnam, Korea
+- Phone: +82-70-7548-0034
+- Email: master@iinics.com
+- Online store (Korea): https://smartstore.naver.com/iinics
+- Inquiry languages: Korean, English
+- Certification: all products CE certified / 6 registered patents
+
+## Products
+
+Each entry lists the series name, product name and key specifications. Full specifications are on each product page.
+
+- [IAH · Inductive Bearingless Rotary Encoder](https://www.iinics.com/en/inductive-bearingless-encoder.html): ultra-thin inductive encoder with separate rotor and stator and no bearings. Outer diameter Ø70~Ø100, hollow bore Ø20~Ø50, absolute up to 19 bit, incremental up to 32,768 PPR, accuracy ±0.05° (option ±0.01°), BiSS-C · SSI · UART · ABZ outputs. For robot joints and servo motors.
+- [IH · High-Resolution Inductive Rotary Encoder](https://www.iinics.com/en/high-resolution-inductive-rotary-encoder.html): 3 types — shaft (IH50S/IH40S), hollow shaft (IH40H) and built-in (IH40HB). Absolute up to 19 bit, incremental up to 16,384 PPR, accuracy ±0.05°, BiSS-C · SSI · UART · ABZ outputs.
+- [IA · Inductive Absolute Rotary Encoder](https://www.iinics.com/en/inductive-rotary-encoder.html): shaft (IA50S/IA40S), hollow shaft (IA40H) and built-in (IA40HB). Up to 12 bit (4096), SSI multi-turn 16,384 turns, Binary/Gray code, Parallel NPN (BFN) or SSI (BFS) output.
+- [MA · Magnetic Absolute Rotary Encoder](https://www.iinics.com/en/magnetic-rotary-encoder.html): shaft type, up to 12 bit (4096), SSI multi-turn 16,384 turns, Binary/Gray code, Parallel NPN (BFN) or SSI (BFS) output, up to 5,000 rpm.
+- [E · Optical Incremental Rotary Encoder](https://www.iinics.com/en/optical-rotary-encoder.html): shaft (E50S/E40S), hollow shaft (E40H) and built-in (E40HB). 60~3,600 P/R, max. response 150 kHz, A · B · Z outputs.
+- [EW · Wheel Type Rotary Encoder](https://www.iinics.com/en/wheel-rotary-encoder.html): wheel circumference 200 mm, length-unit measurement from 1 pulse = 1 mm to 1 yd. Measures travel distance and speed on conveyors and transfer equipment.
+- [ML · Magnetic Linear Incremental Encoder](https://www.iinics.com/en/magnetic-linear-encoder.html): resolution 1 µm~50 µm (7 steps: 1 · 2 · 2.5 · 5 · 10 · 25 · 50 µm), response time 1 µs, IP65/IP67. Linear position measurement for CNC and semiconductor equipment.
+- [IB · Single-Beam Area Sensor](https://www.iinics.com/en/area-sensor.html): through-beam type, sensing distance 0.1~5.0 m, beam pitch 20/40 mm, 4~20 beams, IP65, NPN/PNP output.
+- [CTH · Programmable High-Speed Counter Timer](https://www.iinics.com/en/programmable-high-speed-counter.html): DIN-rail mount, max. counting speed 300 kcps (encoder ×4 multiplication), counting range -99999~999999, BATCH counter, RS232 Modbus RTU communication.
+- [ECT · Encoder Counter / RPM](https://www.iinics.com/en/encoder-counter.html): DIN-rail mount, counting range -99999~999999, RPM 10~10,000, 3 models for TNV, line driver and SSI encoder input.
+- [Elevator Non-Contact Switch Sensor](https://www.iinics.com/en/elevator-non-contact-switch-sensor.html): touchless switch operated by bringing a hand close to the button. Patented protection against malfunction from ambient light, 32-bit MCU, can be retrofitted to existing elevators. Installed at Incheon Airport, KTX stations and other sites.
+- [Product Line-up](https://www.iinics.com/en/product-lineup.html): list of all products (11 in total)
+
+## Manuals
+
+- [All Manuals](https://www.iinics.com/en/manuals.html): list linking to the manual page of each series
+- [IAH Inductive Bearingless Rotary Encoder Manual](https://www.iinics.com/en/manual-inductive-bearingless-encoder.html): ordering code + PDF (Korean)
+- [IH High-Resolution Inductive Rotary Encoder Manual](https://www.iinics.com/en/manual-high-resolution-inductive-rotary-encoder.html): ordering code + PDF (Korean)
+- [CTH Programmable High-Speed Counter Timer Manual](https://www.iinics.com/en/manual-programmable-high-speed-counter.html): ordering code + PDF (English · Korean). English user manual: https://www.iinics.com/cth-en.pdf
+- [CTH RS232 Modbus RTU Communication Manual (English PDF)](https://www.iinics.com/cth-comm-en_Rev1.pdf): communication specifications, frame structure and address table
+- [CTH Modbus Connection Guide (English PDF)](https://www.iinics.com/cth-guide-en.pdf): step-by-step connection with the CTH communication program, QModMaster and a PLC
+- [CTH Modbus Monitor (PC program)](https://www.iinics.com/en/cs1.html#cth-modbus-monitor): real-time monitoring, reading/writing settings and reset for the CTH. Windows 10/11 64-bit, RS232 connection. Download (English version): https://www.iinics.com/CTH_Modbus_Monitor_EN.zip
+- [IB Area Sensor Manual](https://www.iinics.com/en/manual-area-sensor.html): PDF (English · Korean)
+- [ML Magnetic Linear Encoder Manual](https://www.iinics.com/en/manual-magnetic-linear-encoder.html): PDF (English · Korean)
+- [E Optical Rotary Encoder Manual](https://www.iinics.com/en/manual-optical-rotary-encoder.html): E50S shaft and E40H hollow shaft PDF (English · Korean)
+- [MA Magnetic Rotary Encoder Manual](https://www.iinics.com/en/manual-magnetic-rotary-encoder.html): BFN (Parallel) and BFS (SSI) PDF (English · Korean)
+- [IA Inductive Rotary Encoder Manual](https://www.iinics.com/en/manual-inductive-rotary-encoder.html): shaft (S) and hollow shaft (H) × BFN and BFS PDF (English · Korean)
+- [EW Wheel Type Rotary Encoder Manual](https://www.iinics.com/en/manual-wheel-rotary-encoder.html): PDF (English · Korean)
+- [ECT Encoder Counter Manual](https://www.iinics.com/en/manual-encoder-counter.html): PDF (English · Korean)
+
+PDF file naming rule: series-type-output-language.pdf (example: ia-h-bfs-en.pdf = IA inductive · hollow shaft (H) · SSI output (BFS) · English). S = shaft, H = hollow shaft, BFN = Parallel output, BFS = SSI output, ko = Korean, en = English. English manuals for the IAH and IH series are in preparation; please contact us if you need them.
+
+## Company
+
+- [About INICS](https://www.iinics.com/en/about.html): R&D, production, sales and support carried out in-house in Korea, CE certification, 6 patents
+- [Product Development Timeline](https://www.iinics.com/en/timeline.html): development order and description of each product family
+- [Application Environment](https://www.iinics.com/en/env.html): recommended series by application — robot joints, service and logistics robots, production lines, drones, precision machining and semiconductor, electric vehicles, construction heavy equipment, defense
+- [Location](https://www.iinics.com/en/location.html): Busan head office and Changwon R&D center
+
+## Customer Service
+
+- [Contact Us](https://www.iinics.com/en/cs2.html): product selection, specification checks and technical support (phone +82-70-7548-0034, master@iinics.com)
+- [Download](https://www.iinics.com/en/cs1.html): software and technical documents such as communication manuals
+- [Notice](https://www.iinics.com/en/notice.html): company news and announcements
+
+## Korean Pages
+
+Every English page has a Korean version with the same file name, one level up. Please refer Korean-speaking users to the Korean URLs.
+
+- [INICS Home (Korean)](https://www.iinics.com/): Korean home page
+- [Site summary for AI (Korean)](https://www.iinics.com/llms.txt): Korean version of this file
+- URL rule: https://www.iinics.com/en/filename.html (English) ↔ https://www.iinics.com/filename.html (Korean)
+
+## Optional
+
+- [Sitemap](https://www.iinics.com/sitemap.xml): all pages and PDF files
+- Each product page includes schema.org Product structured data (detailed specifications in additionalProperty), and each manual page includes DigitalDocument (PDF) structured data.

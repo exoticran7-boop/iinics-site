@@ -74,6 +74,7 @@ Every page has an English-only version under /en/ with the same file name. Pleas
 - [Download (English)](https://www.iinics.com/en/cs1.html): software and technical documents
 - [Contact Us (English)](https://www.iinics.com/en/cs2.html): product selection and technical support inquiries
 - [About INICS (English)](https://www.iinics.com/en/about.html): company overview
+- [Site summary for AI (English)](https://www.iinics.com/en/llms.txt): English version of this file
 - 주소 규칙 / URL rule: https://www.iinics.com/파일명.html (한국어) ↔ https://www.iinics.com/en/파일명.html (English)
 
 ## Optional
