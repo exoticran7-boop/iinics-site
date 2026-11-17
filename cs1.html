@@ -1217,7 +1217,7 @@
        · Google Analytics: 이벤트 cs_post_view / cs_file_download 로 집계됩니다.
        · 홈페이지 화면에는 아무것도 표시되지 않습니다. (관리자 전용 기록)
   ════════════════════════════════════════════════════════════ */
-  const CS_LOG_API = '';   // ← 자료실 이용 기록 시트의 웹 앱 주소 (https://script.google.com/macros/s/…/exec)
+  const CS_LOG_API = 'https://script.google.com/macros/s/AKfycbwbH0e5qxLACu143irtuugL_MQ5Q788c3XOkh8rwN7E075ohHQSBIu0XjeT3QUDq2AU/exec';   // ← 자료실 이용 기록 시트의 웹 앱 주소 (https://script.google.com/macros/s/…/exec)
   const VISIT_API = 'https://script.google.com/macros/s/AKfycbwbH0e5qxLACu143irtuugL_MQ5Q788c3XOkh8rwN7E075ohHQSBIu0XjeT3QUDq2AU/exec?';
   async function logCs(action, post) {
     if (!post) return;
