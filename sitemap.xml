@@ -161,7 +161,7 @@
   </url>
   <url>
     <loc>https://www.iinics.com/manual-inductive-bearingless-encoder.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://www.iinics.com/iah-ko-1.webp</image:loc>
@@ -169,16 +169,28 @@
     <image:image>
       <image:loc>https://www.iinics.com/iah-ko-2.webp</image:loc>
     </image:image>
+    <image:image>
+      <image:loc>https://www.iinics.com/iah-en-1.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.iinics.com/iah-en-2.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.iinics.com/manual-high-resolution-inductive-rotary-encoder.html</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://www.iinics.com/ih-ko-1.webp</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://www.iinics.com/ih-ko-2.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.iinics.com/ih-en-1.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.iinics.com/ih-en-2.webp</image:loc>
     </image:image>
   </url>
   <url>
@@ -355,12 +367,22 @@
   <!-- ═══ 사용설명서 PDF (manuals.html · cs1.html 자료) ═══ -->
   <url>
     <loc>https://www.iinics.com/iah-ko.pdf</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-22</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.iinics.com/iah-en.pdf</loc>
+    <lastmod>2026-11-22</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.iinics.com/ih-ko.pdf</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-22</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.iinics.com/ih-en.pdf</loc>
+    <lastmod>2026-11-22</lastmod>
     <priority>0.5</priority>
   </url>
   <url>

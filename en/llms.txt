@@ -38,8 +38,8 @@ Each entry lists the series name, product name and key specifications. Full spec
 ## Manuals
 
 - [All Manuals](https://www.iinics.com/en/manuals.html): list linking to the manual page of each series
-- [IAH Inductive Bearingless Rotary Encoder Manual](https://www.iinics.com/en/manual-inductive-bearingless-encoder.html): ordering code + PDF (Korean)
-- [IH High-Resolution Inductive Rotary Encoder Manual](https://www.iinics.com/en/manual-high-resolution-inductive-rotary-encoder.html): ordering code + PDF (Korean)
+- [IAH Inductive Bearingless Rotary Encoder Manual](https://www.iinics.com/en/manual-inductive-bearingless-encoder.html): ordering code + PDF (English · Korean)
+- [IH High-Resolution Inductive Rotary Encoder Manual](https://www.iinics.com/en/manual-high-resolution-inductive-rotary-encoder.html): ordering code + PDF (English · Korean)
 - [CTH Programmable High-Speed Counter Timer Manual](https://www.iinics.com/en/manual-programmable-high-speed-counter.html): ordering code + PDF (English · Korean). English user manual: https://www.iinics.com/cth-en.pdf
 - [CTH RS232 Modbus RTU Communication Manual (English PDF)](https://www.iinics.com/cth-comm-en_Rev1.pdf): communication specifications, frame structure and address table
 - [CTH Modbus Connection Guide (English PDF)](https://www.iinics.com/cth-guide-en.pdf): step-by-step connection with the CTH communication program, QModMaster and a PLC
@@ -52,7 +52,7 @@ Each entry lists the series name, product name and key specifications. Full spec
 - [EW Wheel Type Rotary Encoder Manual](https://www.iinics.com/en/manual-wheel-rotary-encoder.html): PDF (English · Korean)
 - [ECT Encoder Counter Manual](https://www.iinics.com/en/manual-encoder-counter.html): PDF (English · Korean)
 
-PDF file naming rule: series-type-output-language.pdf (example: ia-h-bfs-en.pdf = IA inductive · hollow shaft (H) · SSI output (BFS) · English). S = shaft, H = hollow shaft, BFN = Parallel output, BFS = SSI output, ko = Korean, en = English. English manuals for the IAH and IH series are in preparation; please contact us if you need them.
+PDF file naming rule: series-type-output-language.pdf (example: ia-h-bfs-en.pdf = IA inductive · hollow shaft (H) · SSI output (BFS) · English). S = shaft, H = hollow shaft, BFN = Parallel output, BFS = SSI output, ko = Korean, en = English.
 
 ## Company
 
