@@ -39,7 +39,7 @@
 - [IAH 인덕티브 베어링리스 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-inductive-bearingless-encoder.html): 주문 코드 + PDF (한국어 · English)
 - [IH 고분해능 인덕티브 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-high-resolution-inductive-rotary-encoder.html): 주문 코드 + PDF (한국어 · English)
 - [CTH 프로그래머블 고속 카운터 타이머 매뉴얼](https://www.iinics.com/manual-programmable-high-speed-counter.html): 주문 코드 + PDF (한국어 · English), RS232 Modbus RTU 통신 매뉴얼: https://www.iinics.com/cth-comm-ko_Rev1.pdf
-- [CTH Modbus Monitor (PC 프로그램)](https://www.iinics.com/cs1.html#cth-modbus-monitor): CTH 실시간 모니터링 · 설정 읽기/쓰기 · 리셋, Windows 10/11 64비트, RS232 연결. 내려받기: https://www.iinics.com/CTH_Modbus_Monitor_KR.zip
+- [CTH Modbus Monitor (PC 프로그램)](https://www.iinics.com/cs1.html#cth-modbus-monitor): CTH 실시간 모니터링 · 설정 읽기/쓰기 · 리셋, Windows 10/11 64비트, RS232 연결. 내려받기: 한국어판 https://www.iinics.com/CTH_Modbus_Monitor_KR.zip · 영문판 https://www.iinics.com/CTH_Modbus_Monitor_EN.zip
 - [IB 에어리어 센서 매뉴얼](https://www.iinics.com/manual-area-sensor.html): PDF (한국어 · English)
 - [ML 마그네틱 리니어 엔코더 매뉴얼](https://www.iinics.com/manual-magnetic-linear-encoder.html): PDF (한국어 · English)
 - [E 광학식 로터리 엔코더 매뉴얼](https://www.iinics.com/manual-optical-rotary-encoder.html): E50S 샤프트 · E40H 중공축 PDF (한국어 · English)

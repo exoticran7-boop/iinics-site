@@ -521,6 +521,7 @@
   .brd-detail-text { font-size: 15px; font-weight: 400; color: #222222; line-height: 2; white-space: pre-wrap; word-break: break-word; margin-bottom: 20px; }
 
   .brd-attach { padding: 14px 18px; background: rgba(204,119,0,.05); border: 1px solid rgba(204,119,0,.25); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .brd-attach + .brd-attach { margin-top: 8px; }
   .brd-attach svg { width: 22px; height: 22px; flex-shrink: 0; }
   .brd-attach-name { font-size: 13px; color: #111111; flex: 1; word-break: break-all; }
   .brd-attach-dl {
@@ -1004,6 +1005,10 @@
       author: '아이닉스',
       date: '2026.11.16',
       cat: '소프트웨어',
+      files: [
+        { label: '한국어판', file: 'CTH_Modbus_Monitor_KR.zip', fileName: 'CTH_Modbus_Monitor_KR.zip' },
+        { label: 'English version', file: 'CTH_Modbus_Monitor_EN.zip', fileName: 'CTH_Modbus_Monitor_EN.zip' }
+      ],
       file: 'CTH_Modbus_Monitor_KR.zip',
       fileName: 'CTH_Modbus_Monitor_KR.zip'
     },
@@ -1182,11 +1187,26 @@
     } else { img.src=''; img.alt=''; img.style.display='none'; img.onclick = null; img.style.cursor=''; img.title=''; }
     document.getElementById('detailContent').textContent = post.content;
     const attach = document.getElementById('detailAttach');
-    if (post.file) {
-      document.getElementById('detailAttachName').textContent = post.fileName || '첨부파일';
-      const dl = document.getElementById('detailAttachDl');
-      dl.href = post.file; dl.target = '_blank'; dl.rel = 'noopener';
-      attach.style.display = 'flex';
+    // 첨부파일이 여러 개(files)면 한 줄씩 추가해서 보여 줌 — 없으면 기존처럼 file 하나만
+    document.querySelectorAll('.brd-attach-extra').forEach(el => el.remove());
+    const files = (post.files && post.files.length) ? post.files : (post.file ? [{ file: post.file, fileName: post.fileName }] : []);
+    if (files.length) {
+      let last = attach;
+      files.forEach((f, i) => {
+        let box = attach;
+        if (i > 0) {
+          box = attach.cloneNode(true);
+          box.classList.add('brd-attach-extra');
+          box.removeAttribute('id');
+          box.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+          last.after(box); last = box;
+        }
+        box.querySelector('.brd-attach-name').textContent = (f.label ? f.label + ' · ' : '') + (f.fileName || '첨부파일');
+        const dl = box.querySelector('.brd-attach-dl');
+        dl.href = f.file; dl.target = '_blank'; dl.rel = 'noopener';
+        dl.onclick = () => logCs('download', post, f.fileName);
+        box.style.display = 'flex';
+      });
     } else attach.style.display = 'none';
     document.getElementById('prevBtn').disabled = idx <= 0;
     document.getElementById('nextBtn').disabled = idx >= filteredPosts.length - 1;
@@ -1219,13 +1239,13 @@
   ════════════════════════════════════════════════════════════ */
   const CS_LOG_API = 'https://script.google.com/macros/s/AKfycbwbH0e5qxLACu143irtuugL_MQ5Q788c3XOkh8rwN7E075ohHQSBIu0XjeT3QUDq2AU/exec';   // ← 자료실 이용 기록 시트의 웹 앱 주소 (https://script.google.com/macros/s/…/exec)
   const VISIT_API = 'https://script.google.com/macros/s/AKfycbwbH0e5qxLACu143irtuugL_MQ5Q788c3XOkh8rwN7E075ohHQSBIu0XjeT3QUDq2AU/exec?';
-  async function logCs(action, post) {
+  async function logCs(action, post, fileName) {
     if (!post) return;
     const label = action === 'download' ? '다운로드' : '글 보기';
     try {
       if (typeof gtag === 'function') {
         gtag('event', action === 'download' ? 'cs_file_download' : 'cs_post_view', {
-          post_id: String(post.id ?? ''), post_title: post.title || '', file_name: post.fileName || ''
+          post_id: String(post.id ?? ''), post_title: post.title || '', file_name: fileName || post.fileName || ''
         });
       }
     } catch (e) {}
@@ -1237,7 +1257,7 @@
       let url;
       if (CS_LOG_API) {
         url = CS_LOG_API + (CS_LOG_API.includes('?') ? '&' : '?') + new URLSearchParams({
-          action, id: String(post.id ?? ''), title: post.title || '', file: post.fileName || '',
+          action, id: String(post.id ?? ''), title: post.title || '', file: fileName || post.fileName || '',
           ip: geo.ip || '', country: geo.country_name || '', city: geo.city || '', org: geo.org || '',
           device, bot
         });
@@ -1251,9 +1271,6 @@
       fetch(url, { mode: 'no-cors', keepalive: true }).catch(() => {});
     } catch (e) {}
   }
-  document.getElementById('detailAttachDl').addEventListener('click', () => {
-    logCs('download', filteredPosts[currentIdx]);
-  });
 
   function escHtml(s) { return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   </script>

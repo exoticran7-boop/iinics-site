@@ -43,7 +43,7 @@ Each entry lists the series name, product name and key specifications. Full spec
 - [CTH Programmable High-Speed Counter Timer Manual](https://www.iinics.com/en/manual-programmable-high-speed-counter.html): ordering code + PDF (English · Korean). English user manual: https://www.iinics.com/cth-en.pdf
 - [CTH RS232 Modbus RTU Communication Manual (English PDF)](https://www.iinics.com/cth-comm-en_Rev1.pdf): communication specifications, frame structure and address table
 - [CTH Modbus Connection Guide (English PDF)](https://www.iinics.com/cth-guide-en.pdf): step-by-step connection with the CTH communication program, QModMaster and a PLC
-- [CTH Modbus Monitor (PC program)](https://www.iinics.com/en/cs1.html#cth-modbus-monitor): real-time monitoring, reading/writing settings and reset for the CTH. Windows 10/11 64-bit, RS232 connection. Download (English version): https://www.iinics.com/CTH_Modbus_Monitor_EN.zip
+- [CTH Modbus Monitor (PC program)](https://www.iinics.com/en/cs1.html#cth-modbus-monitor): real-time monitoring, reading/writing settings and reset for the CTH. Windows 10/11 64-bit, RS232 connection. Download: English version https://www.iinics.com/CTH_Modbus_Monitor_EN.zip · Korean version https://www.iinics.com/CTH_Modbus_Monitor_KR.zip
 - [IB Area Sensor Manual](https://www.iinics.com/en/manual-area-sensor.html): PDF (English · Korean)
 - [ML Magnetic Linear Encoder Manual](https://www.iinics.com/en/manual-magnetic-linear-encoder.html): PDF (English · Korean)
 - [E Optical Rotary Encoder Manual](https://www.iinics.com/en/manual-optical-rotary-encoder.html): E50S shaft and E40H hollow shaft PDF (English · Korean)
